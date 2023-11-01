@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="base">
+      <UniqueIdentifier>{f2425e99-2766-4392-8f43-a4e87afc6cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common_ex">
+      <UniqueIdentifier>{9f82fe68-c9d0-495b-8a6c-8f158ddabcec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{27eb8105-f817-4105-87e0-2e24ebce7ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glad_gl46_compat">
+      <UniqueIdentifier>{8316823c-8d7e-4d6b-b671-e908053ea308}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="con_basic.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_basic_wnd2.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_gl4_tri.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_vk_ubo.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="glad_gl46_compat\src\gl.c">
+      <Filter>glad_gl46_compat</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_s.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_vk_tex.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="gfx_shared.h">
+      <Filter>base</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

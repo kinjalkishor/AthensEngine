@@ -1,0 +1,45 @@
+martinus -
+robin-hood-hashing-3.11.5
+unordered_dense-4.1.0
+
+tessil -
+ordered-map-1.1.0
+
+ktprime -
+emhash 2023-06-11
+
+greg7mdp -
+parallel-hashmap-1.3.11
+
+plf - 
+2023-06-11
+plf_colony 
+plf_list
+plf_queue
+plf_rand
+plf_Stack
+
+wyhash -
+wyhash-wyhash_final4
+-----------
+
+rand --
+mt19937 -
+mt19937-64/ar_sep original single header
+
+xoshiro -
+2023-06-13 from 
+https://prng.di.unimi.it/
+---------------------
+hash --
+fnv1a_hash single header -
+http://www.isthe.com/chongo/tech/comp/fnv/index.html
+
+MurmurHash3 -
+2023-06-13
+https://github.com/aappleby/smhasher
+
+SpookyV2 -
+2023-06-13
+https://burtleburtle.net/bob/hash/spooky.html
+
