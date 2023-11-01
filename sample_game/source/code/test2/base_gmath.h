@@ -38,8 +38,9 @@ public:
 	vec2& operator /=(float s) { for_range(i, 0, size()) { e[i] /= s; } return *this; }
 
 	const static vec2 k_zero() { return {0, 0}; }
-	const static vec2 k_one() { return {1, 1}; }
 	const static vec2 k_identity() { return {1, 1}; }	
+    const static vec2 k_origin() { return {0, 0}; }
+    const static vec2 k_unit() { return {1, 1}; }
 };
 
 class vec3 {
@@ -70,10 +71,9 @@ public:
 
 
 	const static vec3 k_zero() { return {0, 0, 0}; }
-	const static vec3 k_one() { return {1, 1, 1}; }
-	const static vec3 k_identity() { return {1, 1, 1}; }
-
-	const static vec3 k_origin() { return {0, 0, 0}; }	
+    const static vec3 k_identity() { return {1, 1, 1}; }
+    const static vec3 k_origin() { return {0, 0, 0}; }
+    const static vec3 k_unit() { return {1, 1, 1}; }			
 };
 
 class vec4 {
@@ -103,8 +103,9 @@ public:
 	vec4& operator /=(float s) { for_range(i, 0, size()) { e[i] /= s; } return *this; }
 
 	const static vec4 k_zero() { return {0, 0, 0, 0}; }
-	const static vec4 k_one() { return {1, 1, 1, 1}; }
 	const static vec4 k_identity() { return {1, 1, 1, 1}; }	
+    const static vec4 k_origin() { return {0, 0, 0, 0}; }
+    const static vec4 k_unit() { return {1, 1, 1, 1}; }
 };
 
 class color4 {
@@ -183,8 +184,6 @@ public:
     float& operator [](int i)				{ return e[i]; }
 
 	const static plane k_zero() { return {0, 0, 0, 0}; }
-	// default (0, 1, 0, 0)
-	//constexpr static plane k_default() { return {0, 1, 0, 0}; }    
 };
 
 
@@ -482,7 +481,12 @@ template<class T> inline T vecnt_mul_angles(const T& a, const T& b, float s) { T
 
 //================================================================================================
 
-
+//---------------------------------------------------
+// Constants
+//---------------------------------------------------
+inline const vec3 k_vec3_one() { return {1, 1, 1}; }
+// default (0, 1, 0, 0)
+//inline const plane k_plane_default() { return {0, 1, 0, 0}; }    
 
 
 //---------------------------------------------------

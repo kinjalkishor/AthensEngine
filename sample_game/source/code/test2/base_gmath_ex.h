@@ -738,7 +738,7 @@ inline mat4 mat4_transformation_2d_ptr(const vec2 *pscalingcenter, float scaling
     quat qrot = quat::k_zero(); 
     quat qsrot = quat::k_zero();
 
-    vec3 vs = vec3::k_one();
+    vec3 vs = k_vec3_one();
 
     vec3 vrc = vec3::k_zero();    
     vec3 vsc = vec3::k_zero();
@@ -753,7 +753,7 @@ inline mat4 mat4_transformation_2d_ptr(const vec2 *pscalingcenter, float scaling
     if (pscaling) {
         vs = vec3_from_vec2(*pscaling, scast<float>(1.0));
     } else {
-        vs = vec3::k_one();
+        vs = k_vec3_one();
     }
 
     if (protationcenter) {
