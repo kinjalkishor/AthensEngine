@@ -1,5 +1,8 @@
 # AthensEngine
 AthensEngine Game Engine  
+Download Media Files from  
+https://github.com/kinjalkishor/aw_media  
+and put both AthensEngine and aw_media folder inside same folder (at same directory level)  
 Start compilation from "AthensEngine\sample_game\source\code" using Visual Studio Solution (.sln) files:  
 COMPILE in RELEASE (x64) mode only  
 Athens Engine - test2.sln  
