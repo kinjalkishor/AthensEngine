@@ -2,12 +2,13 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+
 #include "base_def.h"
-#include "base_ds_st.h"
 
 
 // implement sys_msg_box_print function
-#define fm_msg_box_ok(msg)		MessageBoxW(nullptr, L##msg, L"Error", MB_OK)
+// macro does not work as L## does not work with variable names. Make it in function.
+//#define fm_msg_box_ok(msg)		MessageBoxW(nullptr, L##msg, L"Error", MB_OK)
 #define fm_msg_box_ok_w(msg)	MessageBoxW(nullptr, msg, L"Error", MB_OK)
 
 inline void set_console_window_pos(int xpos, int ypos, int width, int height) {
@@ -25,22 +26,13 @@ inline void sys_win_title_append(HWND hwnd, const char* text) {
 	int wnd_text_len = GetWindowTextW(hwnd, wnd_text, sdf::arr_cap(wnd_text));
 	//wprintfln(L"%s: %d", prev_wnd_text, wnd_text_len);
 
-	//wchar_t wtitle[256] = {};
-	//isz wtitle_len = sdf::strf_assign(wtitle, sdf::strz_cap(wtitle), wnd_text, wnd_text_len);
-	//wchar_t wtext_to_add[256] = {};
-	//isz wtext_to_add_len = 0;
-	//wtext_to_add_len = sdf::strf_wcs_from_mbs(wtext_to_add, sdf::strz_cap(wtext_to_add), text, text_len);
-	//wtitle_len = sdf::strf_append(wtitle, wtitle_len, sdf::strz_cap(wtitle), wtext_to_add, wtext_to_add_len);
-	//SetWindowTextW(hwnd, wtitle);
-
-	sdf::wstring_st<255> wtitle;
-	wtitle.assign_data(wnd_text, wnd_text_len);
-	sdf::wstring_st<255> wtext_to_add;
-	sdf::string_st_wcs_from_mbs(wtext_to_add, text, sdf::strfz_len(text));
-	////wprintfln(L"%s: %d", wtext_to_add.c_str(), wtext_to_add.size());
-	wtitle.append_data(wtext_to_add.data(), wtext_to_add.size());
-	////wprintfln(L"%s: %d", wtitle.c_str(), wtitle.size());
-	SetWindowTextW(hwnd, wtitle.c_str());
+	wchar_t wtitle[256] = {};
+	isz wtitle_len = sdf::strf_assign(wtitle, sdf::strz_cap(wtitle), wnd_text, wnd_text_len);
+	wchar_t wtext_to_add[256] = {};
+	isz wtext_to_add_len = 0;
+	wtext_to_add_len = sdf::strf_assign_mbs(wtext_to_add, sdf::strz_cap(wtext_to_add), text, text_len);
+	wtitle_len = sdf::strf_append(wtitle, wtitle_len, sdf::strz_cap(wtitle), wtext_to_add, wtext_to_add_len);
+	SetWindowTextW(hwnd, wtitle);
 }
 
 inline bool get_async_key_state(int vkey) {

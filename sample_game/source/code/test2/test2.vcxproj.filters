@@ -11,102 +11,135 @@
       <UniqueIdentifier>{27eb8105-f817-4105-87e0-2e24ebce7ebd}</UniqueIdentifier>
     </Filter>
     <Filter Include="a_lib_src">
-      <UniqueIdentifier>{2325ff1f-5536-4b83-84cb-7dc54e251a2a}</UniqueIdentifier>
+      <UniqueIdentifier>{9164988a-6b95-4f41-82cb-defe91e34fec}</UniqueIdentifier>
     </Filter>
     <Filter Include="a_osen">
-      <UniqueIdentifier>{8816473f-0805-456f-aabe-635c32384b59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\rnd_t2">
-      <UniqueIdentifier>{c084ab80-d275-4e2b-8eff-18c05f3ff9d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\rnd_t3">
-      <UniqueIdentifier>{c5726f8e-5a37-4b53-a48e-684383157fbf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\gmath">
-      <UniqueIdentifier>{ae139c22-a5c8-47c2-9704-e6ab053edda0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\en_common">
-      <UniqueIdentifier>{e2c8c550-fc97-4886-85c5-c68b2aa69bd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\ds">
-      <UniqueIdentifier>{64101f33-8071-4f67-9136-ed959022a787}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\cfg">
-      <UniqueIdentifier>{c3239655-ab34-455c-bd03-41e73169278e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\exp">
-      <UniqueIdentifier>{c5e84b9c-06fe-48c4-81e5-f005fb0a7b7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\en_common\win32_loaders">
-      <UniqueIdentifier>{0518891b-a8a1-44ed-bd20-287ae8b0334b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_osen\humus">
-      <UniqueIdentifier>{34c388fc-7efb-499b-9d07-ce72a40d9814}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_osen\irr">
-      <UniqueIdentifier>{07fa24b1-9615-452a-b9fe-444031c3616f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_osen\jet">
-      <UniqueIdentifier>{7204d10b-00d7-4928-b850-9c438b2d4dea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_osen\sb">
-      <UniqueIdentifier>{53e0c216-b8d7-408f-a68d-92a370f8c67d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_osen\uni1">
-      <UniqueIdentifier>{c63c221b-04c1-4a26-b660-3d8753115d4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_osen\uni2">
-      <UniqueIdentifier>{c47275e6-92c1-4837-b6a7-1c43cfe39a08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_lib_src\d3dxlib">
-      <UniqueIdentifier>{c5e51b6f-5810-4e08-80bb-1f14c52ebd4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_lib_src\gl_loader">
-      <UniqueIdentifier>{68dac1fc-cd71-4f22-bf56-dbfb5f808b24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="a_lib_src\vk_loader">
-      <UniqueIdentifier>{681e9d03-9031-4476-b39e-3443060d8273}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\basic">
-      <UniqueIdentifier>{1228a8c6-6c66-4924-b2b5-f1c99f48a8af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\more">
-      <UniqueIdentifier>{575a70cf-8db3-41ce-a8fd-a9956347f348}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\fg">
-      <UniqueIdentifier>{6f970ced-bb7e-4441-a42f-a5ac659dee16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base\glm">
-      <UniqueIdentifier>{5c9cd721-8beb-486d-9b35-870579051c15}</UniqueIdentifier>
+      <UniqueIdentifier>{84cf64a8-9c47-4429-8cd6-8d524bb69543}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\chk_math">
-      <UniqueIdentifier>{4a7ded27-2a48-47e3-939d-cc3cd605ad00}</UniqueIdentifier>
+      <UniqueIdentifier>{1278765a-27a2-4a49-a455-94b2d130d22b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="base\stb">
-      <UniqueIdentifier>{1c9e3b53-97d7-4588-8b8d-51c2bb67899e}</UniqueIdentifier>
+    <Filter Include="main\basic">
+      <UniqueIdentifier>{3302e82b-7aef-4b15-8f5b-122c9b316f99}</UniqueIdentifier>
     </Filter>
-    <Filter Include="base\rnd_t2_prev">
-      <UniqueIdentifier>{a26a6e55-d8cf-4b73-93b2-597e6cdcfe6a}</UniqueIdentifier>
+    <Filter Include="main\fg">
+      <UniqueIdentifier>{f8b8f61d-e662-43ed-8ed6-dc3b4b70a37e}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\fw">
-      <UniqueIdentifier>{a80de5bb-b393-4aa8-9371-f9e3c955b677}</UniqueIdentifier>
+      <UniqueIdentifier>{b19ccf77-3bd2-45f1-8a4c-94ea7a59319a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\more">
+      <UniqueIdentifier>{a2fa2bb1-1c75-45bf-a877-87cbab6a71ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\tut">
+      <UniqueIdentifier>{d5d67077-f14d-4edc-a33d-d349bd2dc22c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\d3dxlib">
+      <UniqueIdentifier>{f79efb8a-68a5-445b-a854-eceb4c244727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\gl_loader">
+      <UniqueIdentifier>{c0667af3-2877-4762-98e5-4d79a468e01d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\vk_loader">
+      <UniqueIdentifier>{c61307e9-7f7d-494f-b66c-a8aec7134193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\humus">
+      <UniqueIdentifier>{8e443644-0440-44c9-b8ac-8d82b7e7f30c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\irr">
+      <UniqueIdentifier>{3ea115d3-0eee-47b6-8824-eaada3c5be8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\jet">
+      <UniqueIdentifier>{9800410e-cdf2-4178-b145-44b5d3c500b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\uni1">
+      <UniqueIdentifier>{3359da97-d3a4-48e1-b42e-b928264fde4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\uni2">
+      <UniqueIdentifier>{63a01f99-bc73-4163-b49f-19514cab64be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\sb">
+      <UniqueIdentifier>{2465ed10-b43f-4ae3-92f9-1970e6caa541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\cfg">
+      <UniqueIdentifier>{396f15f4-cd4d-424d-a290-0b7a44a7545a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\ds">
+      <UniqueIdentifier>{d182ec1e-2feb-4acb-a683-eaf398ef6a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\gmath">
+      <UniqueIdentifier>{33165421-6558-4a31-b14f-c8f557a95288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\exp">
+      <UniqueIdentifier>{22370cfe-8474-48c5-8994-ea72ddc862bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\glm">
+      <UniqueIdentifier>{56cce91e-7407-43f2-9933-4d3e7c97745f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rnd_t3">
+      <UniqueIdentifier>{66aa9c44-4b38-48a9-971d-984299b9c8a8}</UniqueIdentifier>
     </Filter>
     <Filter Include="base\z_base">
-      <UniqueIdentifier>{4529b608-ba8f-4fb3-a826-aaffb15e3dd8}</UniqueIdentifier>
+      <UniqueIdentifier>{74f785b2-f6dc-40f6-b48a-c2653607b6ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\stb">
+      <UniqueIdentifier>{5eda1a8f-240e-478a-b1ae-b7b8a0494be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rnd_t2">
+      <UniqueIdentifier>{be83323c-4286-4d45-98e9-888932c9c0a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\volk">
+      <UniqueIdentifier>{8e612857-8218-4e7a-b2bf-0b32f3e0ac62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\glad">
+      <UniqueIdentifier>{a2c1999f-c04d-4efc-9397-ba0dc6cc1411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\en_shared">
+      <UniqueIdentifier>{c38d1b4d-105d-41d3-8fc7-a43ce5b774ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rs_shared">
+      <UniqueIdentifier>{2c28a496-1e87-407f-b957-f4b81ddc2968}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="win_main_t3.cpp">
-      <Filter>main</Filter>
+    <ClCompile Include="con_basic.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="win_basic_wnd2.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="win_basic_wnd3.cpp">
+      <Filter>main\basic</Filter>
     </ClCompile>
     <ClCompile Include="win_main_s.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib_src\d3dxlib\DDSTextureLoader\DDSTextureLoader11.cpp">
-      <Filter>a_lib_src\d3dxlib</Filter>
+    <ClCompile Include="win_main_t3.cpp">
+      <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib_src\d3dxlib\WICTextureLoader\WICTextureLoader11.cpp">
-      <Filter>a_lib_src\d3dxlib</Filter>
+    <ClCompile Include="base_def.cpp">
+      <Filter>base\z_base</Filter>
+    </ClCompile>
+    <ClCompile Include="base_qshared.cpp">
+      <Filter>base\z_base</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_t2.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_irr.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_sb.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="base_win_util.cpp">
+      <Filter>base\z_base</Filter>
+    </ClCompile>
+    <ClCompile Include="win32_loader_gl_wgl.cpp">
+      <Filter>base\en_shared</Filter>
+    </ClCompile>
+    <ClCompile Include="win32_loader_vk.cpp">
+      <Filter>base\en_shared</Filter>
     </ClCompile>
     <ClCompile Include="..\lib_src\gl_loader\gl_loader_compat.cpp">
       <Filter>a_lib_src\gl_loader</Filter>
@@ -120,35 +153,11 @@
     <ClCompile Include="..\lib_src\vk_loader\vk_loader_win32.cpp">
       <Filter>a_lib_src\vk_loader</Filter>
     </ClCompile>
-    <ClCompile Include="stb_libs.cpp">
-      <Filter>base\stb</Filter>
+    <ClCompile Include="base_cfg.cpp">
+      <Filter>base\cfg</Filter>
     </ClCompile>
-    <ClCompile Include="win32_loader_gl_wgl.cpp">
-      <Filter>base\en_common\win32_loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="win32_loader_vk.cpp">
-      <Filter>base\en_common\win32_loaders</Filter>
-    </ClCompile>
-    <ClCompile Include="con_basic.cpp">
-      <Filter>main\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="win_basic_wnd2.cpp">
-      <Filter>main\basic</Filter>
-    </ClCompile>
-    <ClCompile Include="win_main_fg.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="win_main_fw.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="ew_fg\fg_std.cpp">
-      <Filter>main\fg</Filter>
-    </ClCompile>
-    <ClCompile Include="e_irr\irr_shared.cpp">
-      <Filter>a_osen\irr</Filter>
-    </ClCompile>
-    <ClCompile Include="e_sb\sb_tools.cpp">
-      <Filter>a_osen\sb</Filter>
+    <ClCompile Include="base_def2.cpp">
+      <Filter>base\z_base</Filter>
     </ClCompile>
     <ClCompile Include="chk_math.cpp">
       <Filter>main\chk_math</Filter>
@@ -157,46 +166,46 @@
       <Filter>main\chk_math</Filter>
     </ClCompile>
     <ClCompile Include="con_main_ds.cpp">
-      <Filter>main</Filter>
+      <Filter>main\more</Filter>
     </ClCompile>
-    <ClCompile Include="rnd_t2_prev\t2_rs_gl4.cpp">
-      <Filter>base\rnd_t2_prev</Filter>
+    <ClCompile Include="stb_libs.cpp">
+      <Filter>base\stb</Filter>
     </ClCompile>
-    <ClCompile Include="rnd_t2_prev\t2_win_main.cpp">
-      <Filter>base\rnd_t2_prev</Filter>
+    <ClCompile Include="tut_wm_rnd.cpp">
+      <Filter>main\tut</Filter>
     </ClCompile>
-    <ClCompile Include="win_main_irr.cpp">
-      <Filter>main</Filter>
+    <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.cpp">
+      <Filter>a_lib_src\d3dxlib</Filter>
     </ClCompile>
-    <ClCompile Include="win_main_sb.cpp">
-      <Filter>main</Filter>
+    <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.cpp">
+      <Filter>a_lib_src\d3dxlib</Filter>
     </ClCompile>
-    <ClCompile Include="ew_fw\fw_lib.cpp">
-      <Filter>main\fw</Filter>
+    <ClCompile Include="..\lib_src\volk\volk.c">
+      <Filter>a_lib_src\volk</Filter>
     </ClCompile>
-    <ClCompile Include="base_console.cpp">
-      <Filter>base\z_base</Filter>
+    <ClCompile Include="..\lib_src\glad\glad_compat\src\gl.c">
+      <Filter>a_lib_src\glad</Filter>
     </ClCompile>
-    <ClCompile Include="base_def.cpp">
-      <Filter>base\z_base</Filter>
-    </ClCompile>
-    <ClCompile Include="base_def2.cpp">
-      <Filter>base\z_base</Filter>
-    </ClCompile>
-    <ClCompile Include="base_qshared.cpp">
-      <Filter>base\z_base</Filter>
-    </ClCompile>
-    <ClCompile Include="base_win_util.cpp">
-      <Filter>base\z_base</Filter>
-    </ClCompile>
-    <ClCompile Include="base_cfg.cpp">
-      <Filter>base\z_base</Filter>
-    </ClCompile>
-    <ClCompile Include="win_basic_wnd3.cpp">
-      <Filter>main\basic</Filter>
+    <ClCompile Include="rs_gl_util.cpp">
+      <Filter>base\rs_shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="base_types.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_def.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_console.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_print.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_io.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
     <ClInclude Include="..\common\ext_base_def.h">
       <Filter>common_ex</Filter>
     </ClInclude>
@@ -215,11 +224,47 @@
     <ClInclude Include="..\common\ext_old_ref_lib.h">
       <Filter>common_ex</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib_src\d3dxlib\DDSTextureLoader\DDSTextureLoader11.h">
-      <Filter>a_lib_src\d3dxlib</Filter>
+    <ClInclude Include="game_timer_qpc.h">
+      <Filter>base\en_shared</Filter>
     </ClInclude>
-    <ClInclude Include="..\lib_src\d3dxlib\WICTextureLoader\WICTextureLoader11.h">
-      <Filter>a_lib_src\d3dxlib</Filter>
+    <ClInclude Include="base_qshared.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_gmath.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="base_gmath_util.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="base_math.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_gmath_colors.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="base_gmath_ex.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="base_gmath_ex2.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="win_app.h">
+      <Filter>base\en_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="base_win_util.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_ds_st.h">
+      <Filter>base\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="base_ds2_unord_map.h">
+      <Filter>base\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="win32_loader_gl_wgl.h">
+      <Filter>base\en_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="win32_loader_vk.h">
+      <Filter>base\en_shared</Filter>
     </ClInclude>
     <ClInclude Include="..\lib_src\gl_loader\gl_loader_compat.h">
       <Filter>a_lib_src\gl_loader</Filter>
@@ -233,95 +278,11 @@
     <ClInclude Include="..\lib_src\vk_loader\vk_loader_win32.h">
       <Filter>a_lib_src\vk_loader</Filter>
     </ClInclude>
-    <ClInclude Include="win32_loader_gl_wgl.h">
-      <Filter>base\en_common\win32_loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="win32_loader_vk.h">
-      <Filter>base\en_common\win32_loaders</Filter>
-    </ClInclude>
-    <ClInclude Include="t3_rs_irenderer.h">
-      <Filter>base\rnd_t3</Filter>
-    </ClInclude>
-    <ClInclude Include="t3_rs_d3d9b.h">
-      <Filter>base\rnd_t3</Filter>
-    </ClInclude>
-    <ClInclude Include="t3_rs_d3d9c.h">
-      <Filter>base\rnd_t3</Filter>
-    </ClInclude>
-    <ClInclude Include="t3_rs_gl2.h">
-      <Filter>base\rnd_t3</Filter>
-    </ClInclude>
-    <ClInclude Include="t3_rs_gl4.h">
-      <Filter>base\rnd_t3</Filter>
-    </ClInclude>
-    <ClInclude Include="t3_rs_d3d11.h">
-      <Filter>base\rnd_t3</Filter>
-    </ClInclude>
-    <ClInclude Include="win_app.h">
-      <Filter>base\en_common</Filter>
-    </ClInclude>
-    <ClInclude Include="game_timer_qpc.h">
-      <Filter>base\en_common</Filter>
-    </ClInclude>
-    <ClInclude Include="t2_rs_vertex_formats.h">
-      <Filter>base\rnd_t2</Filter>
-    </ClInclude>
-    <ClInclude Include="base_gmath.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
-    <ClInclude Include="base_gmath_colors.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
-    <ClInclude Include="base_gmath_ex.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
-    <ClInclude Include="base_gmath_ex2.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
-    <ClInclude Include="base_gmath_util.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ds_st.h">
-      <Filter>base\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="t2_rs_d3d9_hdr.h">
-      <Filter>base\rnd_t2</Filter>
-    </ClInclude>
-    <ClInclude Include="t2_rs_shared.h">
-      <Filter>base\rnd_t2</Filter>
-    </ClInclude>
-    <ClInclude Include="ew_fg\fg_std.h">
-      <Filter>main\fg</Filter>
-    </ClInclude>
-    <ClInclude Include="ew_fg\fg_internal.h">
-      <Filter>main\fg</Filter>
-    </ClInclude>
     <ClInclude Include="base_glm.h">
-      <Filter>base\glm</Filter>
+      <Filter>base\gmath</Filter>
     </ClInclude>
     <ClInclude Include="base_opengl_math.h">
-      <Filter>base\glm</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_gmath.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_math.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_shared.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_string.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_vector.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="e_sb\sb_tools.h">
-      <Filter>a_osen\sb</Filter>
-    </ClInclude>
-    <ClInclude Include="chk_math.h">
-      <Filter>main\chk_math</Filter>
+      <Filter>base\gmath</Filter>
     </ClInclude>
     <ClInclude Include="base_ds_algorithm.h">
       <Filter>base\ds</Filter>
@@ -329,128 +290,107 @@
     <ClInclude Include="base_ds_vector.h">
       <Filter>base\ds</Filter>
     </ClInclude>
-    <ClInclude Include="base_ds2_unord_map.h">
+    <ClInclude Include="base_ds_iterators.h">
       <Filter>base\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="rs_camera_la.h">
-      <Filter>base\en_common</Filter>
-    </ClInclude>
-    <ClInclude Include="exp_allocator.h">
-      <Filter>base\exp</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d9b.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d9b_2.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d9b_util.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d10.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d11.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d12.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_gl4.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_vk.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_rs_d3d9bc_hdr.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_rs_d3d9c.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_rs_d3d11.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_rs_gl4.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd_t2_prev\t2_rs_irenderer.h">
-      <Filter>base\rnd_t2_prev</Filter>
-    </ClInclude>
-    <ClInclude Include="t2_rs_load_geometry.h">
-      <Filter>base\rnd_t2</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_d3d9_driver.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="e_irr\irr_gl3_driver.h">
-      <Filter>a_osen\irr</Filter>
-    </ClInclude>
-    <ClInclude Include="ew_fw\fw_internal.h">
-      <Filter>main\fw</Filter>
-    </ClInclude>
-    <ClInclude Include="ew_fw\fw_lib.h">
-      <Filter>main\fw</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ds_ord_map.h">
-      <Filter>base\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ds_rh_hash_map.h">
-      <Filter>base\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ds_list.h">
-      <Filter>base\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ds_deque.h">
-      <Filter>base\ds</Filter>
-    </ClInclude>
-    <ClInclude Include="base_console.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_def.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_def2.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ini2.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_io.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_math.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_ostrz.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_print.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_qshared.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_std_cont.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_types.h">
-      <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="base_win_util.h">
-      <Filter>base\z_base</Filter>
     </ClInclude>
     <ClInclude Include="base_ds_string.h">
       <Filter>base\ds</Filter>
     </ClInclude>
-    <ClInclude Include="base_ds_iterators.h">
+    <ClInclude Include="base_ds_ord_map.h">
       <Filter>base\ds</Filter>
     </ClInclude>
-    <ClInclude Include="base_ds_unord_map.h">
+    <ClInclude Include="base_cfg.h">
+      <Filter>base\cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="base_def2.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="base_ds_std_cont.h">
       <Filter>base\ds</Filter>
     </ClInclude>
-    <ClInclude Include="e_irr\irr_driver.h">
-      <Filter>a_osen\irr</Filter>
+    <ClInclude Include="chk_math.h">
+      <Filter>main\chk_math</Filter>
+    </ClInclude>
+    <ClInclude Include="base_ostrz.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="tut_d3d9b.h">
+      <Filter>main\tut</Filter>
+    </ClInclude>
+    <ClInclude Include="tut_renderer.h">
+      <Filter>main\tut</Filter>
+    </ClInclude>
+    <ClInclude Include="base_ds_string_sso.h">
+      <Filter>base\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="exp_ini.h">
+      <Filter>base\exp</Filter>
+    </ClInclude>
+    <ClInclude Include="exp_allocator.h">
+      <Filter>base\exp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.h">
+      <Filter>a_lib_src\d3dxlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.h">
+      <Filter>a_lib_src\d3dxlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\volk\volk.h">
+      <Filter>a_lib_src\volk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\glad\glad_compat\include\glad\gl.h">
+      <Filter>a_lib_src\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_d3d9b.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_d3d9c.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_d3d10.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_d3d11.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_d3d12.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_gl2.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_gl4.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_irenderer.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd_t2\t2_rs_vk.h">
+      <Filter>base\rnd_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_camera_la.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_shared.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_vertex_formats.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_gl_util.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_d3d9.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_gl.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d9_util.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_d3d11.h">
+      <Filter>base\rs_shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

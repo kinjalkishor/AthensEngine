@@ -23,23 +23,22 @@ namespace sdf2
 {
 template <class T, ptrdiff_t N> inline constexpr ptrdiff_t strz_cap(const T (&)[N]) noexcept { return N-1; }
 
-template<class T> inline isz strfz_len(const T* src);
-template<> inline isz strfz_len(const char* src) { return strlen(src); }
-template<> inline isz strfz_len(const wchar_t* src) { return wcslen(src); }
+inline isz strfz_len(const char* src) { return strlen(src); }
+inline isz strfz_len(const wchar_t* src) { return wcslen(src); }
 
-inline isz strf_wcs_from_mbs(wchar_t* dest, isz dest_capacity, const char* src, isz src_len) {
-	isz copy_len = src_len;
+inline isz strf_assign_mbs(wchar_t* dest, isz dest_capacity, const char* src, isz src_len) {
+    isz copy_len = src_len;
     if (copy_len > dest_capacity) { copy_len = dest_capacity; }
 	const int dest_size_with_null_char = dest_capacity+1;
-	int result = MultiByteToWideChar(CP_UTF8, 0, src, copy_len, dest, dest_size_with_null_char);	
+	int result = MultiByteToWideChar(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char);
 	dest[copy_len] = L'\0';
 	return copy_len;
 }
-inline isz strf_mbs_from_wcs(char* dest, isz dest_capacity, const wchar_t* src, isz src_len) {
+inline isz strf_assign_wcs(char* dest, isz dest_capacity, const wchar_t* src, isz src_len) {
     isz copy_len = src_len;
-    if (copy_len > dest_capacity) { copy_len = dest_capacity; }	
+    if (copy_len > dest_capacity) { copy_len = dest_capacity; }
 	const int dest_size_with_null_char = dest_capacity+1;
-	int result = WideCharToMultiByte(CP_UTF8, 0, src, copy_len, dest, dest_size_with_null_char, nullptr, nullptr);	
+	int result = WideCharToMultiByte(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char, nullptr, nullptr);	
 	dest[copy_len] = '\0';
 	return copy_len;
 }
@@ -74,7 +73,7 @@ public:
 		MoveWindow(console_window, xpos, ypos, width, height, TRUE);
 
 		wchar_t wconsole_title[256] = {};
-		sdf2::strf_wcs_from_mbs(wconsole_title, sdf2::strz_cap(wconsole_title), window_title, sdf2::strfz_len(window_title));
+		sdf2::strf_assign_mbs(wconsole_title, sdf2::strz_cap(wconsole_title), window_title, sdf2::strfz_len(window_title));
 		SetWindowTextW(console_window, wconsole_title);	
 
 		// The freopen_s function closes the file currently associated with stream and reassigns stream to the file specified by path.
@@ -176,7 +175,7 @@ bool winapp_create_window(HWND& m_hwnd, const char* wnd_title, int xpos, int ypo
 	h = window_rect.bottom - window_rect.top;	
 
 	wchar_t wstr_wnd_title[256] = {};
-	sdf2::strf_wcs_from_mbs(wstr_wnd_title, sdf2::strz_cap(wstr_wnd_title), wnd_title, sdf2::strfz_len(wnd_title));
+	sdf2::strf_assign_mbs(wstr_wnd_title, sdf2::strz_cap(wstr_wnd_title), wnd_title, sdf2::strfz_len(wnd_title));
 
 	HWND handle_wnd = CreateWindowExW(dwExStyle,					
 						m_app_class_name,			        

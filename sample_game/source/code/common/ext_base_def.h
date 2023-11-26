@@ -4,6 +4,60 @@
 // BASE_DEF
 //-----------------------------------------------------------------------------------------------------
 
+//=====================================================================
+//#include <limits>
+//#include <float.h>
+
+//using wchar = wchar_t;
+//using char8 = char8_t;
+//using char16 = char16_t;
+//using char32 = char32_t;
+
+// Windows Types
+//typedef unsigned long       DWORD;
+//typedef int                 BOOL;
+//typedef unsigned char       BYTE;
+//typedef unsigned short      WORD;
+//typedef float               FLOAT;
+//typedef int                 INT;
+//typedef unsigned int        UINT;
+//typedef short				SHORT;
+//typedef long				LONG;
+//typedef char				CHAR;
+//typedef unsigned short		USHORT;
+//typedef unsigned long		ULONG;
+//typedef unsigned char		UCHAR;
+//typedef __int64				LONGLONG;
+////typedef signed __int64 LONGLONG;
+//typedef unsigned __int64	ULONGLONG;
+//typedef wchar_t				WCHAR;    // wc,   16-bit UNICODE character
+//typedef void*				HANDLE;
+//typedef signed char         INT8;
+//typedef signed short        INT16;
+//typedef signed int          INT32;
+//typedef signed __int64      INT64;
+//typedef unsigned char       UINT8;
+//typedef unsigned short      UINT16;
+//typedef unsigned int        UINT32;
+//typedef unsigned __int64    UINT64;
+//typedef signed int			LONG32;
+//typedef unsigned int		ULONG32;
+//typedef unsigned int		DWORD32;
+//typedef __int64				LONG64;
+//// typedef signed __int64 LONG64;
+//typedef unsigned __int64	ULONG64;
+//typedef unsigned __int64	DWORD64;
+//typedef unsigned __int64	QWORD;
+//typedef BYTE				BOOLEAN;
+//// A BSTR is a pointer to a null-terminated character string in which the string length is stored with the string.
+//typedef WCHAR*				BSTR;
+//typedef double				DOUBLE;
+//typedef ULONGLONG			DWORDLONG;
+//typedef LONG				HRESULT;
+////typedef unsigned __int3264 ULONG_PTR;
+//typedef ULONG_PTR			SIZE_T;
+//typedef void				VOID;
+//=====================================================================
 
 #include <cstring>
 
@@ -237,6 +291,21 @@ using byte = unsigned char;
 
 
 
+//=========================
+// CONSOLE color printing
+//=========================
+HANDLE hConsole;
+hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+// You can loop k higher to see more color choices
+for (int k = 1; k < 255; k++) {
+	SetConsoleTextAttribute(hConsole, k);
+	printf("%3d  %s\n", k, "I want to be nice today!");
+}
+int k = scast<uint16>(12);
+SetConsoleTextAttribute(hConsole, k);
+printf("%3d  %s\n", k, "I want to be nice today!");
+
+
 
 //=========================
 // Utility Functions
@@ -270,6 +339,17 @@ using byte = unsigned char;
 
 // BITSET
 #define BIT(num)	(1ULL << (num))
+
+
+// C++03
+//template<class T>
+//inline void swap(T& a, T& b) {
+//    T temp = a;
+//    a = b;
+//    b = temp;
+//}
+
+
 
 //-----------------------
 // BITSET
@@ -341,6 +421,77 @@ inline size_t bytes_from_gb(size_t x) { return (x * k_GB); }
 inline size_t bytes_from_tb(size_t x) { return (x * k_TB); }
 
 
+//---------------------------------
+// STRING
+//---------------------------------
+
+template<class T> inline isz strfz_len(const T* src);
+template<> inline isz strfz_len(const char* src) { return strlen(src); }
+template<> inline isz strfz_len(const wchar_t* src) { return wcslen(src); }
+
+
+template<class T>
+inline isz strfz_assign(T* dest, isz dest_capacity, const T* src) {
+    isz src_len = sdf::strfz_len(src);
+    return strf_assign(dest, dest_capacity, src, src_len);
+}
+template<class T>
+inline isz strfz_assign_n(T* dest, isz dest_capacity, const T* src, isz n) {
+    isz src_len = sdf::strfz_len(src); //not needed for strf_assign_n.
+    if (n > src_len) { n = src_len; }
+    return strf_assign(dest, dest_capacity, src, n);
+}
+template<class T>
+inline isz strfz_append(T* dest, isz dest_capacity, const T* src) {
+    isz src_len = sdf::strfz_len(src);
+    isz dest_len = sdf::strfz_len(dest);
+    return strf_append(dest, dest_len, dest_capacity, src, src_len);    
+}
+template<class T>
+inline isz strfz_append_n(T* dest, isz dest_capacity, const T* src, isz n) {
+    isz src_len = sdf::strfz_len(src); 
+    if (n > src_len) { n = src_len; }
+    isz dest_len = sdf::strfz_len(dest);
+    return strf_append(dest, dest_len, dest_capacity, src, n);    
+}
+
+
+#if 0
+
+int mb_wcs_from_mbs(wchar_t* dest, int dest_num_chars, const char* src, int src_len);
+int mb_mbs_from_wcs(char* dest, int dest_num_chars, const wchar_t* src, int src_len);
+
+inline isz strf_assign_mbs(wchar_t* dest, isz dest_capacity, const char* src, isz src_len) {
+    isz copy_len = src_len;
+    if (copy_len > dest_capacity) { copy_len = dest_capacity; }
+	sdf::mb_wcs_from_mbs(dest, dest_capacity, src, copy_len);
+	dest[copy_len] = k_null_char<wchar_t>();
+	return copy_len;
+}
+inline isz strf_assign_wcs(char* dest, isz dest_capacity, const wchar_t* src, isz src_len) {
+    isz copy_len = src_len;
+    if (copy_len > dest_capacity) { copy_len = dest_capacity; }
+	sdf::mb_mbs_from_wcs(dest, dest_capacity, src, copy_len);
+	dest[copy_len] = k_null_char<char>();
+	return copy_len;
+}
+
+inline isz strfz_wcs_from_mbs(wchar_t* dest, isz dest_capacity, const char* src) {
+    isz src_len = sdf::strfz_len(src); 
+    return strf_assign_mbs(dest, dest_capacity, src, src_len);
+}
+inline isz strfz_mbs_from_wcs(char* dest, isz dest_capacity, const wchar_t* src) {
+    isz src_len = sdf::strfz_len(src); 
+    return strf_assign_wcs(dest, dest_capacity, src, src_len);
+}
+#endif
+
+
+// C++ multi byte functions depend on locale
+//mbstowcs(dest, src, copy_len);
+//wcstombs(dest, src, copy_len);
+
+
 #if 0
 // Returns a wide string version of the specified UTF-8 string
 wchar_t* _glfwCreateWideStringFromUTF8Win32(const char* source) {
@@ -387,8 +538,88 @@ char* _glfwCreateUTF8FromWideStringWin32(const wchar_t* source) {
 #endif
 
 //------------------------
+// OPTIONAL
+//------------------------
+template<class T>
+class optional_2 {
+public:
+	// If do not want to run constructor of T in error case.
+    struct empty_byte_s {};
+    union {
+        empty_byte_s empty_byte;
+        T val;
+    };
+	// Error case	
+    optional(const tag_nullopt) : has_value(false) {}
+};
+
+
+//------------------------
 // ALLOCATORS
 //------------------------
+// Default allocation functions
+//inline void* sys_allocate(size_t size_bytes) { return malloc(size_bytes); }
+//inline void sys_deallocate(void* ptr) { free(ptr); }
+
+
+//------------------------------
+// DATA STRUCTURE ALGORITHMS
+//------------------------------
+//==============================================================================
+#if 1
+#include <limits>
+
+// MSVC size claculation
+isz vec_calculate_growth(isz requested_size, isz old_capacity) {
+    // given old_capacity and requested_size, calculate geometric growth
+    //const isz old_capacity = capacity();
+    const auto max_limit = std::numeric_limits<isz>::max();
+
+    if (old_capacity > max_limit - old_capacity / 2) {
+        return max_limit; // geometric growth would overflow
+    }
+
+    const isz _Geometric = old_capacity + old_capacity / 2;
+
+    if (_Geometric < requested_size) {
+        return requested_size; // geometric growth would be insufficient
+    }
+
+    return _Geometric; // geometric growth is sufficient
+}
+
+
+// roundup mask for allocated buffers, [0, 15]:
+template<class value_type>
+static constexpr isz SDF_ALLOC_MASK = sizeof(value_type) <= 1 ? 15
+                                       : sizeof(value_type) <= 2 ? 7
+                                       : sizeof(value_type) <= 4 ? 3
+                                       : sizeof(value_type) <= 8 ? 1
+                                                                 : 0;
+
+template<class value_type>
+isz str_calculate_growth(isz requested_size, isz old_capacity) {
+	const auto max_limit = std::numeric_limits<isz>::max();
+	const isz masked_size = requested_size | SDF_ALLOC_MASK;
+	// the mask overflows, settle for max_size()
+	if (masked_size > max_limit) { 
+		return max_limit;
+	}
+
+	// similarly, geometric overflows
+	if (old_capacity > max_limit - old_capacity / 2) { 
+		return max_limit;
+	}
+
+	return (sdf::tmax)(masked_size, old_capacity + old_capacity / 2);
+}
+#endif
+
+isz next_capacity(isz requested_size) {    
+	//return sdf::vec_calculate_growth(requested_size, capacity());
+	//return sdf::str_calculate_growth<T>(requested_size, capacity());
+	//return requested_size;
+}
 
 
 
@@ -933,29 +1164,54 @@ extern std::ostream custom_out_error;
 #endif
 
 //-----------------------------------------------------------------------------------------------------
-// WINAPP WINDOWS FUNCTIONS
+// WINDOWS FUNCTIONS
 //-----------------------------------------------------------------------------------------------------
+inline void sys_win_title_append(HWND hwnd, const char* text) {
+	isz text_len = sdf::strfz_len(text);
 
-	void z_switch_fullscreen(HWND hwnd) {
-		WINDOWPLACEMENT g_wpPrev = { sizeof(g_wpPrev) };		
-		//void OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
-		DWORD dwStyle = GetWindowLong(hwnd, GWL_STYLE);
-		if (dwStyle & WS_OVERLAPPEDWINDOW) {
-			MONITORINFO mi = { sizeof(mi) };
-			if (GetWindowPlacement(hwnd, &g_wpPrev) && GetMonitorInfo(MonitorFromWindow(hwnd, MONITOR_DEFAULTTOPRIMARY), &mi)) {
-				SetWindowLong(hwnd, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
-				SetWindowPos(hwnd, HWND_TOP,
-							mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top,
-							(SWP_NOOWNERZORDER | SWP_FRAMECHANGED));
-			}
-		} else {
-			SetWindowLong(hwnd, GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW);
-			SetWindowPlacement(hwnd, &g_wpPrev);
-			SetWindowPos(hwnd, NULL, 0, 0, 0, 0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED));
+	wchar_t wnd_text[256] = {};
+	//nMaxCount: maximum number of characters to copy to the buffer, including the null character.
+	int wnd_text_len = GetWindowTextW(hwnd, wnd_text, sdf::arr_cap(wnd_text));
+	//wprintfln(L"%s: %d", prev_wnd_text, wnd_text_len);
+
+	//wchar_t wtitle[256] = {};
+	//isz wtitle_len = sdf::strf_assign(wtitle, sdf::strz_cap(wtitle), wnd_text, wnd_text_len);
+	//wchar_t wtext_to_add[256] = {};
+	//isz wtext_to_add_len = 0;
+	//wtext_to_add_len = sdf::strf_assign_mbs(wtext_to_add, sdf::strz_cap(wtext_to_add), text, text_len);
+	//wtitle_len = sdf::strf_append(wtitle, wtitle_len, sdf::strz_cap(wtitle), wtext_to_add, wtext_to_add_len);
+	//SetWindowTextW(hwnd, wtitle);
+
+	sdf::wstring_st<255> wtitle;
+	wtitle.assign_data(wnd_text, wnd_text_len);
+	sdf::wstring_st<255> wtext_to_add;
+	sdf::string_st_wcs_from_mbs(wtext_to_add, text, sdf::strfz_len(text));
+	////wprintfln(L"%s: %d", wtext_to_add.c_str(), wtext_to_add.size());
+	wtitle.append_data(wtext_to_add.data(), wtext_to_add.size());
+	////wprintfln(L"%s: %d", wtitle.c_str(), wtitle.size());
+	SetWindowTextW(hwnd, wtitle.c_str());
+}
+
+//-------------
+// WINAPP
+void z_switch_fullscreen(HWND hwnd) {
+	WINDOWPLACEMENT g_wpPrev = { sizeof(g_wpPrev) };		
+	//void OnLButtonUp(HWND hwnd, int x, int y, UINT keyFlags)
+	DWORD dwStyle = GetWindowLong(hwnd, GWL_STYLE);
+	if (dwStyle & WS_OVERLAPPEDWINDOW) {
+		MONITORINFO mi = { sizeof(mi) };
+		if (GetWindowPlacement(hwnd, &g_wpPrev) && GetMonitorInfo(MonitorFromWindow(hwnd, MONITOR_DEFAULTTOPRIMARY), &mi)) {
+			SetWindowLong(hwnd, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
+			SetWindowPos(hwnd, HWND_TOP,
+						mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top,
+						(SWP_NOOWNERZORDER | SWP_FRAMECHANGED));
 		}
+	} else {
+		SetWindowLong(hwnd, GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW);
+		SetWindowPlacement(hwnd, &g_wpPrev);
+		SetWindowPos(hwnd, NULL, 0, 0, 0, 0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED));
 	}
-
-
+}
 
 //-----------------------------------------------------------------------------
 

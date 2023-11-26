@@ -1,7 +1,7 @@
 
 #include "win32_loader_gl_wgl.h"
 
-#include "base_types.h"
+#include "base_def.h"
 #include "base_print.h"
 
 wglfn_lib wglfn;

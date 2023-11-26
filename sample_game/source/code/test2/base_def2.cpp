@@ -50,7 +50,7 @@ bool read_file(sdr::vector<char>& out_byte_buffer, const char* file_name, bool i
 
     //return out_byte_buffer;
     return true;
-};
+}
 
 
 

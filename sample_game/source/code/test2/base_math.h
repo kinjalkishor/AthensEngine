@@ -178,7 +178,7 @@ inline bool equals_zero(T a) {
 //---------------------------
 // Convert horizontal field of view to vertical field of view.
 // xfov, yfov are in radians. Convert in degrees if required
-//mf::rad_to_deg(mf::xfov_to_yfov(mf::deg_to_rad(rs_xfov->data.floatval), sdf::get_aspect_ratio(16, 9)))
+//mf::rad_to_deg(mf::yfov_from_xfov(mf::deg_to_rad(rs_xfov->data.floatval), sdf::get_aspect_ratio(16, 9)))
 inline float yfov_from_xfov(float xfov, float aspect) {
     return (scast<float>(2) * atan(tan(xfov * float(0.5)) / aspect));
 }

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="base">
+      <UniqueIdentifier>{f2425e99-2766-4392-8f43-a4e87afc6cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common_ex">
+      <UniqueIdentifier>{9f82fe68-c9d0-495b-8a6c-8f158ddabcec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{27eb8105-f817-4105-87e0-2e24ebce7ebd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_rnd">
+      <UniqueIdentifier>{c54dd163-e6f0-468b-8efe-d609664353e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext_lib">
+      <UniqueIdentifier>{2b413966-bb7d-4161-9814-6678af2198c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext_lib\d3dxlib">
+      <UniqueIdentifier>{2ea354c5-c4dd-40df-a1a4-79146f941af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext_lib\glad">
+      <UniqueIdentifier>{c484ecc0-c723-40fe-93be-a50fa3e98211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext_lib\vk_loader">
+      <UniqueIdentifier>{7d18c85b-7214-47b6-8981-e9a4af49db9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext_lib\gl_loader">
+      <UniqueIdentifier>{0f85ddcb-6485-4ec1-8776-c73258accbc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ext_lib\volk">
+      <UniqueIdentifier>{4c268351-4b38-4e9b-ad86-4739c0492733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="glfw_samples">
+      <UniqueIdentifier>{0f1eb7b2-b69b-4f3b-8a70-6e961ef047ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="con_basic.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_basic_wnd3.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_zgfx.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.cpp">
+      <Filter>ext_lib\d3dxlib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.cpp">
+      <Filter>ext_lib\d3dxlib</Filter>
+    </ClCompile>
+    <ClCompile Include="rs_gl_util.cpp">
+      <Filter>a_rnd</Filter>
+    </ClCompile>
+    <ClCompile Include="win32_loader_gl_wgl.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="stb.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\glad\glad_compat\src\gl.c">
+      <Filter>ext_lib\glad</Filter>
+    </ClCompile>
+    <ClCompile Include="win32_loader_vk.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\gl_loader\gl_loader_compat.cpp">
+      <Filter>ext_lib\gl_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\gl_loader\gl_loader_core.cpp">
+      <Filter>ext_lib\gl_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\vk_loader\vk_loader_core.cpp">
+      <Filter>ext_lib\vk_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\vk_loader\vk_loader_win32.cpp">
+      <Filter>ext_lib\vk_loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib_src\volk\volk.c">
+      <Filter>ext_lib\volk</Filter>
+    </ClCompile>
+    <ClCompile Include="win_common_libs.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_s.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="glfw_samples\glfw_gl4_01_tri.cpp">
+      <Filter>glfw_samples</Filter>
+    </ClCompile>
+    <ClCompile Include="glfw_samples\glfw_vk_01_ubo.cpp">
+      <Filter>glfw_samples</Filter>
+    </ClCompile>
+    <ClCompile Include="glfw_samples\glfw_vk_02_tex.cpp">
+      <Filter>glfw_samples</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base_shared.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d9c.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d9b.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d10.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d11.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d12.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_vk1.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_gl1.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_gl2.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_gl4.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_irenderer.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_d3d9.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.h">
+      <Filter>ext_lib\d3dxlib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.h">
+      <Filter>ext_lib\d3dxlib</Filter>
+    </ClInclude>
+    <ClInclude Include="win32_loader_gl_wgl.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_gl_util.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="base_shared2.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_d3d12_2.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_vk1_2.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+    <ClInclude Include="win32_loader_vk.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\gl_loader\gl_loader_compat.h">
+      <Filter>ext_lib\gl_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\gl_loader\gl_loader_core.h">
+      <Filter>ext_lib\gl_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\vk_loader\vk_loader_core.h">
+      <Filter>ext_lib\vk_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\vk_loader\vk_loader_win32.h">
+      <Filter>ext_lib\vk_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib_src\volk\volk.h">
+      <Filter>ext_lib\volk</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_gl.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

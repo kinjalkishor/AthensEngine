@@ -9,44 +9,69 @@
 
 #include <stdio.h>
 
-#include "base_types.h"
 #include "base_def.h"
-#include "base_console.h"
-#include "base_print.h"
 #include "base_io.h"
-#include "base_win_util.h"
-
+#include "base_console.h"
 #include "game_timer_qpc.h"
 
-#include "base_ds_st.h"
+#include "base_win_util.h"
 
-#include "e_irr/irr_d3d9_driver.h"
 
-class win_app_irr {
+//-------------------------
+
+namespace wm_irr
+{
+
+class wm_irenderer {
 public:
-	sdf::wstring_st<63> m_app_class_name;
+	wm_irenderer() {}
+	virtual ~wm_irenderer() {}	
 
-	uint m_win_bg_color = RGB(25, 25, 112);
+	virtual bool init_r(HINSTANCE hInstance, HWND hwnd, int width, int height, bool fullscreen) { return false; }
+	virtual void deinit_r() {}
 
-	HINSTANCE m_hInstance = nullptr;
+	virtual void setup() {}
+	virtual void cleanup() {}
+	virtual void render(float dt) {}
+	virtual void swap_buffers() {}
+};
+
+class wm_rd3d11 : public wm_irenderer {
+public:
+	bool init_r(HINSTANCE hInstance, HWND hwnd, int width, int height, bool fullscreen) { return true; }
+	void deinit_r() {}
+
+	void setup() {}
+	void cleanup() {}
+	void render(float dt) {}
+	void swap_buffers() {}
+};
+
+class app_vars {
+public:
+	bool app_quit = false;
+	bool app_active = true;
+	bool app_minimized = false;
+};
+app_vars g_av;
+
+class winapp {
+public:
+	wchar_t m_app_class_name[64] = {L'S', L'A', L'\0'};
 	WNDPROC m_wnd_proc = nullptr;
+	HINSTANCE m_hInstance = nullptr;
+	HWND m_hwnd = nullptr;
 	MSG m_msg = {};
 
-	HWND m_hwnd = nullptr;	
-
-
 	bool init(WNDPROC wnd_proc, HINSTANCE hInstance, const char* app_class_name) {
-		sdf::string_st_wcs_from_mbs(m_app_class_name, app_class_name, sdf::strfz_len(app_class_name));
-		
-		//m_hInstance = GetModuleHandleW(nullptr);
-		m_hInstance = hInstance;
+		sdf::strf_assign_mbs(m_app_class_name, sdf::strz_cap(m_app_class_name), app_class_name, sdf::strfz_len(app_class_name));
 		m_wnd_proc = wnd_proc;
+		m_hInstance = hInstance;
 
 		// register window class
 		WNDCLASSEX wcex = {};
 		wcex.cbSize = sizeof(wcex);
-		wcex.style = CS_OWNDC; //must for opengl
-		//wcex.style = CS_HREDRAW | CS_VREDRAW;
+		wcex.style = CS_OWNDC; //CS_HREDRAW | CS_VREDRAW;
 		wcex.lpfnWndProc = m_wnd_proc;
 		wcex.cbClsExtra = 0;
 		wcex.cbWndExtra = 0;
@@ -54,9 +79,9 @@ public:
 		wcex.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
 		wcex.hCursor = LoadCursorW(nullptr, IDC_ARROW);
 		//wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-		wcex.hbrBackground = CreateSolidBrush(m_win_bg_color);
+		wcex.hbrBackground = CreateSolidBrush(RGB(25, 25, 112));
 		wcex.lpszMenuName = nullptr;
-		wcex.lpszClassName = m_app_class_name.c_str();
+		wcex.lpszClassName = m_app_class_name;
 		wcex.hIconSm = LoadIconW(nullptr, IDI_APPLICATION);
 
 		if (!RegisterClassExW(&wcex)) {
@@ -66,84 +91,11 @@ public:
 		return true;
 	}
 
-	
-	//-----
-	bool m_ex_fullscreen = false;
-
-	// Remove ex_fullscreen, not needed in Windows10
-	void set_ex_fullscreen_mode(bool ex_fullscreen) {
-		m_ex_fullscreen = ex_fullscreen;
-	}
-
-	void enter_ex_fullscreen_mode(uint& dwStyle, uint& dwExStyle, int& xpos, int& ypos, int width, int height) {
-		//---
-		// Check exclusive fullscreen mode.
-		int color_bits = 32;
-		if (m_ex_fullscreen) {
-			DEVMODE dmScreenSettings = {};
-			dmScreenSettings.dmSize = sizeof(dmScreenSettings);
-			dmScreenSettings.dmPelsWidth = width;
-			dmScreenSettings.dmPelsHeight = height;
-			dmScreenSettings.dmBitsPerPel = color_bits;
-			dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
-
-			if (ChangeDisplaySettingsW(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) {
-				printf("Cannot switch to exclusive fullscreen mode.\n");
-				m_ex_fullscreen = false;
-			} else {
-				// switch to exclusive fullscreen mode successful
-				xpos = 0;
-				ypos = 0;
-				dwStyle = WS_POPUP;
-				//dwExStyle = WS_EX_APPWINDOW | WS_EX_TOPMOST; //fullscreen, WS_EX_TOPMOST disables Alt+Esc
-				dwExStyle = WS_EX_APPWINDOW;
-				//ShowCursor(FALSE);
-			}
-		} 
-	}
-
-	void exit_ex_fullscreen_mode() {
-		if (m_ex_fullscreen) {
-			//fm_msg_box_ok("exit_ex_fullscreen_mode");
-			// If fullscreen mode, switch back to windowed
-			ChangeDisplaySettingsW(nullptr, 0);
-			//ShowCursor(true);
-		}
-	}
-	//-----
-
 	bool create_window(const char* wnd_title, int xpos, int ypos, int width, int height, bool fullscreen, bool borderless) {
 		uint dwStyle = 0;
 		uint dwExStyle = 0;
 		dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPSIBLINGS|WS_CLIPCHILDREN;
 		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
-
-		if (m_ex_fullscreen) {
-			enter_ex_fullscreen_mode(dwStyle, dwExStyle, xpos, ypos, width, height);
-		} else {
-
-			// Not true fullscreen, only borderless.
-			// Borderless mode is windowed mode at desktop resolution.
-			if (fullscreen) {
-				xpos = 0;
-				ypos = 0;
-				width = GetSystemMetrics(SM_CXSCREEN);
-				height = GetSystemMetrics(SM_CYSCREEN);	
-				// GetSystemMetrics gives only info about the primary (first) monitor.	
-				// fullscreen is always borderless
-				//borderless = true;	
-				dwStyle = WS_POPUP;
-				//dwExStyle = WS_EX_APPWINDOW | WS_EX_TOPMOST; //fullscreen, WS_EX_TOPMOST disables Alt+Esc
-				dwExStyle = WS_EX_APPWINDOW;
-			}
-
-			if (borderless) {
-				// GetSystemMetrics gives only info about the primary (first) monitor.				
-				//dwStyle = WS_POPUP;
-				dwStyle = WS_POPUP | WS_VISIBLE| WS_CLIPSIBLINGS|WS_CLIPCHILDREN; //borderless
-				dwExStyle = WS_EX_APPWINDOW;
-			}
-		}
 
 		int x, y, w, h;
 		RECT window_rect = {0, 0, width, height};
@@ -153,12 +105,12 @@ public:
 		w = window_rect.right - window_rect.left;
 		h = window_rect.bottom - window_rect.top;	
 
-		sdf::wstring_st<255> wstr_wnd_title;
-		sdf::string_st_wcs_from_mbs(wstr_wnd_title, wnd_title, sdf::strfz_len(wnd_title));
+		wchar_t wstr_wnd_title[256] = {};
+		sdf::strf_assign_mbs(wstr_wnd_title, sdf::strz_cap(wstr_wnd_title), wnd_title, sdf::strfz_len(wnd_title));
 
 		HWND handle_wnd = CreateWindowExW(dwExStyle,					
-							m_app_class_name.c_str(),			        
-							wstr_wnd_title.c_str(),	 		
+							m_app_class_name,			        
+							wstr_wnd_title,	 		
 							dwStyle,
 							x, y, w, h,
 							nullptr, nullptr, m_hInstance, nullptr);									
@@ -168,6 +120,7 @@ public:
 			return false;
 		}  
 		
+		//ShowWindow(handle_wnd, iCmdShow);
 		ShowWindow(handle_wnd, SW_SHOW);   	
 		UpdateWindow(handle_wnd); 
 		SetForegroundWindow(handle_wnd);						
@@ -197,100 +150,18 @@ public:
 	}
 
 	void deinit() {
-		exit_ex_fullscreen_mode();
-
-		if (m_hwnd) {
-			DestroyWindow(m_hwnd);
-			m_hwnd = nullptr;
-		}
-		UnregisterClassW(m_app_class_name.c_str(), m_hInstance);	
-		m_hInstance = nullptr;
-	}
-
-
-	//--------------------
-	bool is_msg_present() {
-		return scast<bool>(PeekMessageW(&m_msg, nullptr, 0, 0, PM_REMOVE));
-	}
-
-	void process_msgs() {
-		TranslateMessage(&m_msg);
-		DispatchMessageW(&m_msg);
+		DestroyWindow(m_hwnd);
+		UnregisterClassW(m_app_class_name, m_hInstance);
 	}
 };
-
-
-namespace wm_irr
-{
-
-class app_vars {
-public:
-	bool app_quit = false;
-	bool app_active = true;
-	bool app_minimized = false;
-};
-app_vars g_av;
 
 }
 
+
 using namespace wm_irr;
-//------------------------------
-
-#include <string>
-#include <vector>
-//#include <unordered_map>
-#include <list>
-//#include "base_ds_vector.h"
-#include "base_ds_unord_map.h"
-#include "base_ds_list.h"
-#include "base_ini2.h"
-
-#include "base_ds_ord_map.h"
-//---------------------------------------------
-
-// Minimum node size needs to be more than 8 bytes to contain pointer data
-struct pool_node_16 {
-	union {
-		char m_data; //byte
-		pool_node_16* next;
-	};
-};
-
-class pool_16 {
-	char* free_head;
-	pool_node_16* chunk_head;
-	isz chunk_size = 4;
-
-	void add_first_node() {
-		pool_node_16* node = scast<pool_node_16*>(malloc(sizeof(pool_node_16)*chunk_size));
-		node->next = nullptr;
-		chunk_head = node;
-	}
-
-	// Always add to front, since we only want latest freed element, and do not need to traverse the list or care about order of elements.
-	// No need to maintain tail pointer
-	void add_node() {
-		pool_node_16* node = scast<pool_node_16*>(malloc(sizeof(pool_node_16)*chunk_size));
-		node->next = chunk_head;
-		chunk_head = node;
-	}
-
-	void deinit() {
-		pool_node_16* pos = chunk_head;
-		while (pos != nullptr) {	
-			pool_node_16* temp = pos->next;
-			free(pos);
-			pos = temp;
-		}
-	}
-};
-
-//===================================
-
 
 //---------------------------------------------
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 
 //======================================
 // WinMain
@@ -301,76 +172,25 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	gconstd.create_window("Std Console", 864, 0, 640, 640);
 	printf("SysConsole Initialized.\n");
 	println("Sample program irr");	    
-	//-------------------------
-
-	hash_table_sc_oh<int> ha;
-
-	//--------------
-	sdf::list<int> at;
-	//at.add_first_node(2);
-	//at.add_node(3);
-	//at.add_node(5);
-	//sdf::data_node<int>* pos = at.head;
-	//while (pos != nullptr) {
-	//	println("{}", pos->m_data);
-	//	pos = pos->next;
-	//}
-
-
-	println("\n---");
-	//--------------------
-	cfg_insert("width", "800", "int");
-	cfg_set_val("width", "1024");
-	println("{}", cfg_get<int>("width", 320));
-	cfg_insert("height", "600", "int");
-	cfg_print("height");
-	for (auto const& val : g_cfg.cfg_list) { val.print(); } println("\n---");
-	
-#if 0
-	sdf::ord_map<sdr::string, float> am;
-	am.reserve(10);
-	am.insert({"one", 1.1});
-	am.insert({"two", 2.1});
-	am.insert({"three", 3.1});
-	am.insert({"four", 4.1});
-	am.insert_at("two", {"new", 15.1});
-	//am.erase("two");
-
-	println("{}", am.find("two").value_or(0));
-	am.set("four", 44.1);
-	println("{}", am.get("four", 0));
-
-	for_range(i, 0, am.data_vec.size()) {
-		print("[{}], ", am.data_vec[i]);
-	}
-	println("\n---");
-	for(const auto& elem : am.key_index_map) {
-		print("-[{}, {}, {}]-, ", elem.first, elem.second, am.find(elem.first).value_or(0));
-	}
-	println("\n---");
-#endif
 
     //-------------------------
     int xpos = 10;
 	int ypos = 50;
 	int width = 800;
 	int height = 450;
-	const char* wnd_title = "Sample window irr";	
 	bool fullscreen = false;
-	bool borderless = false;
+	const char* wnd_title = "Sample window irr";									
 
 	const char* APP_CLASS_NAME = "SAMPLE_APP_CLASS";
-    HWND m_hwnd = nullptr;	
+    HWND m_hwnd = nullptr;
 
-	win_app_irr nw_app;
+	winapp nw_app;
     nw_app.init(MainWndProc, hInstance, APP_CLASS_NAME);
-	nw_app.create_window(wnd_title, xpos, ypos, width, height, fullscreen, borderless);
-	//nw_app.set_ex_fullscreen_mode(true);
-	//nw_app.create_window(wnd_title, xpos, ypos, 1280, 720, 1, 0);
+	nw_app.create_window(wnd_title, xpos, ypos, width, height, false, false);
 	m_hwnd = nw_app.get_main_hwnd();
 
-	std::unique_ptr<irr_idriver> rs;		
-	rs = std::make_unique<irr_rd3d9_driver>();	
+	std::unique_ptr<wm_irenderer> rs;		
+	rs = std::make_unique<wm_rd3d11>();	
 	rs->init_r(hInstance, m_hwnd, width, height, fullscreen);
 	rs->setup();
 	//---
@@ -379,36 +199,33 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
     
 	// program main loop
     while (!g_av.app_quit) {
+		//nw_app.poll_events();
 		nw_app.poll_events();		
-		//if (nw_app.is_msg_present()) { 
-			//nw_app.process_msgs(); 
 
-			if (nw_app.is_quit_msg()) { g_av.app_quit = true; }	
-		//} else {
+		//if (nw_app.is_quit_msg()) { g_av.sys_quit(); }	
+		if (nw_app.is_quit_msg()) { g_av.app_quit = true; }	
 
-			if (g_av.app_active && !g_av.app_minimized) {
-				int64 curr_time_qpc = nw_timer.get_time();
-				float delta_time_qpc = (curr_time_qpc - prev_time_qpc)*nw_timer.period();					
+		if (g_av.app_active && !g_av.app_minimized) {
+			int64 curr_time_qpc = nw_timer.get_time();
+			float delta_time_qpc = (curr_time_qpc - prev_time_qpc)*nw_timer.period();					
 
-				//process_input();
-				//calculate_frame_stats();
-				rs->render(delta_time_qpc);
-				rs->swap_buffers();
+			//process_input();
+			//calculate_frame_stats();
+			rs->render(delta_time_qpc);
+			rs->swap_buffers();
     
-				prev_time_qpc = curr_time_qpc;	
+			prev_time_qpc = curr_time_qpc;	
 
-			} else {
-    			sys_sleep(1);
-				continue;
-			} 
-		//}
+		} else {
+    		sys_sleep(1);
+			continue;
+		} 
         
     } // while: not app_quit
 
 	rs->cleanup();
 	rs->deinit_r();
 
-	//nw_app.exit_ex_fullscreen_mode(1);
 	nw_app.deinit();
     
     return nw_app.msg_return();

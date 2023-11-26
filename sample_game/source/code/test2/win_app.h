@@ -7,12 +7,12 @@
 
 #include "base_types.h"
 #include "base_def.h"
-#include "base_ds_st.h"
+//#include "base_ds_st.h"
 
 class win_app {
 public:
-	//wchar_t m_app_class_name[64] = {L'S', L'A', L'\0'};
-	sdf::wstring_st<63> m_app_class_name;
+	wchar_t m_app_class_name[64] = {L'S', L'A', L'\0'};
+	//sdf::wstring_st<63> m_app_class_name;
 
 	uint m_win_bg_color = RGB(25, 25, 112);
 
@@ -24,9 +24,9 @@ public:
 
 
 	bool init(WNDPROC wnd_proc, HINSTANCE hInstance, const char* app_class_name) {
-		//wcsncpy(m_app_class_name, app_class_name, 64-1);
-		//sdf::strf_wcs_from_mbs(m_app_class_name, sdf::strz_cap(m_app_class_name), app_class_name, sdf::strfz_len(app_class_name));	
-		sdf::string_st_wcs_from_mbs(m_app_class_name, app_class_name, sdf::strfz_len(app_class_name));
+		//sdf::strf_assign(m_app_class_name, sdf::strz_cap(m_app_class_name), app_class_name, sdf::strfz_len(app_class_name));
+		sdf::strf_assign_mbs(m_app_class_name, sdf::strz_cap(m_app_class_name), app_class_name, sdf::strfz_len(app_class_name));	
+		//sdf::string_st_wcs_from_mbs(m_app_class_name, app_class_name, sdf::strfz_len(app_class_name));
 
 		// GetModuleHandle(nullptr) returns a handle to the file used to create the calling 
 		// process (.exe file), if nullptr is passed for lpModuleName parameter.
@@ -48,7 +48,7 @@ public:
 		//wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 		wcex.hbrBackground = CreateSolidBrush(m_win_bg_color);
 		wcex.lpszMenuName = nullptr;
-		wcex.lpszClassName = m_app_class_name.c_str();
+		wcex.lpszClassName = m_app_class_name;
 		wcex.hIconSm = LoadIconW(nullptr, IDI_APPLICATION);
 
 		if (!RegisterClassExW(&wcex)) {
@@ -145,14 +145,14 @@ public:
 		w = window_rect.right - window_rect.left;
 		h = window_rect.bottom - window_rect.top;	
 
-		//wchar_t wstr_wnd_title[256] = {};
-		//sdf::strf_wcs_from_mbs(wstr_wnd_title, sdf::strz_cap(wstr_wnd_title), wnd_title, sdf::strfz_len(wnd_title));
-		sdf::wstring_st<255> wstr_wnd_title;
-		sdf::string_st_wcs_from_mbs(wstr_wnd_title, wnd_title, sdf::strfz_len(wnd_title));
+		wchar_t wstr_wnd_title[256] = {};
+		sdf::strf_assign_mbs(wstr_wnd_title, sdf::strz_cap(wstr_wnd_title), wnd_title, sdf::strfz_len(wnd_title));
+		//sdf::wstring_st<255> wstr_wnd_title;
+		//sdf::string_st_wcs_from_mbs(wstr_wnd_title, wnd_title, sdf::strfz_len(wnd_title));
 
 		HWND handle_wnd = CreateWindowExW(dwExStyle,					
-							m_app_class_name.c_str(),			        
-							wstr_wnd_title.c_str(),	 		
+							m_app_class_name,			        
+							wstr_wnd_title,	 		
 							dwStyle,
 							x, y, w, h,
 							nullptr, nullptr, m_hInstance, nullptr);									
@@ -197,7 +197,7 @@ public:
 			DestroyWindow(m_hwnd);
 			m_hwnd = nullptr;
 		}
-		UnregisterClassW(m_app_class_name.c_str(), m_hInstance);	
+		UnregisterClassW(m_app_class_name, m_hInstance);	
 		m_hInstance = nullptr;
 	}
 

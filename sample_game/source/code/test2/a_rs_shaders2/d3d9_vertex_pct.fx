@@ -1,5 +1,5 @@
 
-uniform extern float4x4 g_mat_wvp;
+uniform extern float4x4 g_wvp;
 
 uniform extern texture g_tex;
 
@@ -33,7 +33,7 @@ VS_OUTPUT VS(VS_INPUT vs_in) {
 	VS_OUTPUT vs_out = (VS_OUTPUT)0;
 	
 	// Transform to homogeneous clip space.
-	vs_out.pos_h = mul(vs_in.pos_l, g_mat_wvp);
+	vs_out.pos_h = mul(vs_in.pos_l, g_wvp);
 	
 	// Pass the vertex color into the pixel shader.
 	vs_out.vcolor = vs_in.vcolor;

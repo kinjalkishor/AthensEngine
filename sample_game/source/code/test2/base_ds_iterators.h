@@ -1,134 +1,208 @@
+#pragma once
 
 namespace sdf
 {
 
-template <class Tcont>
+// ITERATOR TAGS
+struct input_iterator_tag {};
+struct output_iterator_tag {};
+struct forward_iterator_tag : input_iterator_tag {};
+struct bidirectional_iterator_tag : forward_iterator_tag {};
+struct random_access_iterator_tag : bidirectional_iterator_tag {};
+//======================================================================
+
+
+//================================================
+// VECTOR ITERATOR
+//================================================
+template <class Tvec>
 class vector_const_iterator {
 public:
-    using value_type        = typename Tcont::value_type;
-    using difference_type   = isz;
-    using pointer           = const value_type*;
+
+    using iterator_category = random_access_iterator_tag;
+    using value_type        = typename Tvec::value_type;
+    using difference_type   = typename Tvec::difference_type;
+    using pointer           = typename Tvec::const_pointer;
     using reference         = const value_type&;
 
-    value_type* m_ptr = nullptr; // pointer to element in vector
+    using Tptr = typename Tvec::pointer;
 
-    vector_const_iterator() {}
-    vector_const_iterator(value_type* ptr) : m_ptr(ptr) {}
-    virtual ~vector_const_iterator() {}
+    constexpr vector_const_iterator() noexcept : m_ptr() {}
 
-    reference operator*() const noexcept { return *m_ptr; }
-    pointer operator->() const noexcept { return m_ptr; }
+    constexpr vector_const_iterator(Tptr parg) noexcept : m_ptr(parg) {}
 
-    vector_const_iterator& operator++() noexcept { ++m_ptr; return *this; }
+    constexpr reference operator*() const noexcept {
+        return *m_ptr;
+    }
 
-    vector_const_iterator operator++(int) noexcept {
+    constexpr pointer operator->() const noexcept {
+        return m_ptr;
+    }
+
+    constexpr vector_const_iterator& operator++() noexcept {
+        ++m_ptr;
+        return *this;
+    }
+
+    constexpr vector_const_iterator operator++(int) noexcept {
         vector_const_iterator temp = *this;
         ++*this;
         return temp;
     }
 
-    vector_const_iterator& operator--() noexcept { --m_ptr; return *this; }
+    constexpr vector_const_iterator& operator--() noexcept {
+        --m_ptr;
+        return *this;
+    }
 
-    vector_const_iterator operator--(int) noexcept {
+    constexpr vector_const_iterator operator--(int) noexcept {
         vector_const_iterator temp = *this;
         --*this;
         return temp;
     }
 
 
-    vector_const_iterator& operator+=(const difference_type offset) noexcept { m_ptr += offset; return *this; }
+    constexpr vector_const_iterator& operator+=(const difference_type offset) noexcept {
+        m_ptr += offset;
+        return *this;
+    }
 
-    vector_const_iterator operator+(const difference_type offset) const noexcept {
+    constexpr vector_const_iterator operator+(const difference_type offset) const noexcept {
         vector_const_iterator temp = *this;
         temp += offset;
         return temp;
     }
 
-    friend vector_const_iterator operator+(const difference_type offset, vector_const_iterator next) noexcept {
+    friend constexpr vector_const_iterator operator+(
+        const difference_type offset, vector_const_iterator next) noexcept {
         next += offset;
         return next;
     }
 
-    vector_const_iterator& operator-=(const difference_type offset) noexcept { return *this += -offset; }
+    constexpr vector_const_iterator& operator-=(const difference_type offset) noexcept {
+        return *this += -offset;
+    }
 
-    vector_const_iterator operator-(const difference_type offset) const noexcept {
+    constexpr vector_const_iterator operator-(const difference_type offset) const noexcept {
         vector_const_iterator temp = *this;
         temp -= offset;
         return temp;
     }
 
-    difference_type operator-(const vector_const_iterator& right) const noexcept { return m_ptr - right.m_ptr; }
+    constexpr difference_type operator-(const vector_const_iterator& right) const noexcept {
+        return m_ptr - right.m_ptr;
+    }
 
-    reference operator[](const difference_type offset) const noexcept { return *(*this + offset); }
+    constexpr reference operator[](const difference_type offset) const noexcept {
+        return *(*this + offset);
+    }
 
-    bool operator==(const vector_const_iterator& right) const noexcept { return m_ptr == right.m_ptr; }
-    bool operator!=(const vector_const_iterator& right) const noexcept { return !(*this == right); }
+    constexpr bool operator==(const vector_const_iterator& right) const noexcept {
+        return m_ptr == right.m_ptr;
+    }
 
-    bool operator<(const vector_const_iterator& right) const noexcept { return m_ptr < right.m_ptr; }
-    bool operator>(const vector_const_iterator& right) const noexcept { return right < *this; }
-    bool operator<=(const vector_const_iterator& right) const noexcept { return !(right < *this); }
-    bool operator>=(const vector_const_iterator& right) const noexcept { return !(*this < right); }
+
+    bool operator!=(const vector_const_iterator& right) const noexcept {
+        return !(*this == right);
+    }
+
+    bool operator<(const vector_const_iterator& right) const noexcept {
+        return m_ptr < right.m_ptr;
+    }
+
+    bool operator>(const vector_const_iterator& right) const noexcept {
+        return right < *this;
+    }
+
+    bool operator<=(const vector_const_iterator& right) const noexcept {
+        return !(right < *this);
+    }
+
+    bool operator>=(const vector_const_iterator& right) const noexcept {
+        return !(*this < right);
+    }
+
+    Tptr m_ptr; // pointer to element in vector
 };
 
-template <class Tcont>
-class vector_iterator : public vector_const_iterator<Tcont> {
-public:
-    using my_base = vector_const_iterator<Tcont>;
 
-    using value_type        = typename Tcont::value_type;
-    using difference_type   = isz;
-    using pointer           = value_type*;
+template <class Tvec>
+class vector_iterator : public vector_const_iterator<Tvec> {
+public:
+    using my_base = vector_const_iterator<Tvec>;
+
+    using iterator_category = random_access_iterator_tag;
+    using value_type        = typename Tvec::value_type;
+    using difference_type   = typename Tvec::difference_type;
+    using pointer           = typename Tvec::pointer;
     using reference         = value_type&;
 
-    vector_iterator() {}
-    vector_iterator(value_type* ptr) : my_base(ptr) {}
-    virtual ~vector_iterator() {}
+    using my_base::my_base;
 
-    reference operator*() const noexcept { return const_cast<reference>(my_base::operator*()); }
-    pointer operator->() const noexcept { return const_cast<pointer>(my_base::operator->()); }
+    constexpr reference operator*() const noexcept {
+        return const_cast<reference>(my_base::operator*());
+    }
 
-    vector_iterator& operator++() noexcept { my_base::operator++(); return *this; }
+    constexpr pointer operator->() const noexcept {
+        return this->m_ptr;
+    }
 
-    vector_iterator operator++(int) noexcept {
+    constexpr vector_iterator& operator++() noexcept {
+        my_base::operator++();
+        return *this;
+    }
+
+    constexpr vector_iterator operator++(int) noexcept {
         vector_iterator temp = *this;
         my_base::operator++();
         return temp;
     }
 
-    vector_iterator& operator--() noexcept { my_base::operator--(); return *this; }
+    constexpr vector_iterator& operator--() noexcept {
+        my_base::operator--();
+        return *this;
+    }
 
-    vector_iterator operator--(int) noexcept {
+    constexpr vector_iterator operator--(int) noexcept {
         vector_iterator temp = *this;
         my_base::operator--();
         return temp;
     }
 
-    vector_iterator& operator+=(const difference_type offset) noexcept { my_base::operator+=(offset); return *this; }
+    constexpr vector_iterator& operator+=(const difference_type offset) noexcept {
+        my_base::operator+=(offset);
+        return *this;
+    }
 
-    vector_iterator operator+(const difference_type offset) const noexcept {
+    constexpr vector_iterator operator+(const difference_type offset) const noexcept {
         vector_iterator temp = *this;
         temp += offset;
         return temp;
     }
 
-    friend vector_iterator operator+(const difference_type offset, vector_iterator next) noexcept {
+    friend constexpr vector_iterator operator+(
+        const difference_type offset, vector_iterator next) noexcept {
         next += offset;
         return next;
     }
 
-    vector_iterator& operator-=(const difference_type offset) noexcept { my_base::operator-=(offset); return *this; }
+    constexpr vector_iterator& operator-=(const difference_type offset) noexcept {
+        my_base::operator-=(offset);
+        return *this;
+    }
 
     using my_base::operator-;
 
-    vector_iterator operator-(const difference_type offset) const noexcept {
+    constexpr vector_iterator operator-(const difference_type offset) const noexcept {
         vector_iterator temp = *this;
         temp -= offset;
         return temp;
     }
 
-    reference operator[](const difference_type offset) const noexcept { return const_cast<reference>(my_base::operator[](offset)); }
+    constexpr reference operator[](const difference_type offset) const noexcept {
+        return const_cast<reference>(my_base::operator[](offset));
+    }
 };
-
 
 }
 

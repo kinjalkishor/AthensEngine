@@ -11,46 +11,45 @@
 namespace sdf
 {
 
-template <class Tcont>
-class generic_const_iterator {
+template <class Tvec>
+class genvec_const_iterator {
 public:
-    using value_type        = typename Tcont::value_type;
-    using difference_type   = isz;
-    using pointer           = const value_type*;
+    using value_type        = typename Tvec::value_type;
+    using difference_type   = typename Tvec::difference_type;
+    using pointer           = typename Tvec::const_pointer;
     using reference         = const value_type&;
 
-    value_type* m_ptr = nullptr; // pointer to element in vector
+    using Tptr = typename Tvec::pointer;
 
-    generic_const_iterator() {}
-    generic_const_iterator(value_type* ptr) : m_ptr(ptr) {}
-    virtual ~generic_const_iterator() {}
+    constexpr genvec_const_iterator() noexcept : m_ptr() {}
+    constexpr genvec_const_iterator(Tptr parg) noexcept : m_ptr(parg) {}
 
-    reference operator*() const noexcept { return *m_ptr; }
-    pointer operator->() const noexcept { return m_ptr; }
+    constexpr reference operator*() const noexcept { return *m_ptr; }
+    constexpr pointer operator->() const noexcept { return m_ptr; }
 
-	generic_const_iterator& operator++() noexcept { ++m_ptr; return *this; }
+	constexpr genvec_const_iterator& operator++() noexcept { ++m_ptr; return *this; }
 
-	bool operator==(const generic_const_iterator& right) const noexcept { return m_ptr == right.m_ptr; }
-    bool operator!=(const generic_const_iterator& right) const noexcept { return !(*this == right); }
+	constexpr bool operator==(const genvec_const_iterator& right) const noexcept { return m_ptr == right.m_ptr; }
+    bool operator!=(const genvec_const_iterator& right) const noexcept { return !(*this == right); }
+
+	Tptr m_ptr; // pointer to element in vector
 };
-template <class Tcont>
-class generic_iterator : public generic_const_iterator<Tcont> {
+template <class Tvec>
+class genvec_iterator : public genvec_const_iterator<Tvec> {
 public:
-    using my_base = generic_const_iterator<Tcont>;
+    using my_base = genvec_const_iterator<Tvec>;
 
-    using value_type        = typename Tcont::value_type;
-    using difference_type   = isz;
-    using pointer           = value_type*;
+    using value_type        = typename Tvec::value_type;
+    using difference_type   = typename Tvec::difference_type;
+    using pointer           = typename Tvec::pointer;
     using reference         = value_type&;
 
-    generic_iterator() {}
-    generic_iterator(value_type* ptr) : my_base(ptr) {}
-    virtual ~generic_iterator() {}
+    using my_base::my_base;
 
-	generic_iterator& operator++() noexcept { my_base::operator++(); return *this; }
+	constexpr reference operator*() const noexcept { return const_cast<reference>(my_base::operator*()); }
+    constexpr pointer operator->() const noexcept { return this->m_ptr; }
 
-    reference operator*() const noexcept { return const_cast<reference>(my_base::operator*()); }
-    pointer operator->() const noexcept { return const_cast<pointer>(my_base::operator->()); }
+    constexpr genvec_iterator& operator++() noexcept { my_base::operator++(); return *this; }
 };
 
 template <class K, class T, 
@@ -62,10 +61,16 @@ public:
 	map_cont key_index_map;
 	data_cont data_vec;
 
+	using value_type      = T;
+	using pointer         = T*;
+	using const_pointer   = const T*;
+	using reference       = T&;
+	using const_reference = const T&;
+	using size_type       = isz;
+	using difference_type = isz;
 
-	using value_type = T;
-    using const_iterator = generic_const_iterator<ord_map<K, T>>;
-    using iterator = generic_iterator<ord_map<K, T>>;
+    using const_iterator = genvec_const_iterator<ord_map<K, T>>;
+    using iterator = genvec_iterator<ord_map<K, T>>;
 
 	const_iterator begin() const noexcept { return const_iterator(&(*data_vec.begin())); }
     const_iterator end() const noexcept { return const_iterator(&(*data_vec.end())); }

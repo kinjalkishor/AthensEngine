@@ -130,7 +130,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>../../dep/Vulkan-Headers/include;../../dep/OpenGL-Headers;D:/osl;../../dep/glm;../../dep/wren/src/include;../lib_src;../../dep/DirectX-Headers/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../dep/Vulkan-Headers/include;../../dep/OpenGL-Headers;D:/osl;../../dep/glm;../../dep/wren/src/include;../lib_src;../../dep/DirectX-Headers/include;../lib_src/glad/glad_compat/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,16 +142,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\lib_src\d3dxlib\DDSTextureLoader\DDSTextureLoader11.cpp" />
-    <ClCompile Include="..\lib_src\d3dxlib\WICTextureLoader\WICTextureLoader11.cpp" />
+    <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.cpp" />
+    <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.cpp" />
+    <ClCompile Include="..\lib_src\glad\glad_compat\src\gl.c" />
     <ClCompile Include="..\lib_src\gl_loader\gl_loader_compat.cpp" />
     <ClCompile Include="..\lib_src\gl_loader\gl_loader_core.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\lib_src\vk_loader\vk_loader_core.cpp" />
     <ClCompile Include="..\lib_src\vk_loader\vk_loader_win32.cpp" />
+    <ClCompile Include="..\lib_src\volk\volk.c" />
     <ClCompile Include="base_cfg.cpp" />
-    <ClCompile Include="base_console.cpp" />
     <ClCompile Include="base_def.cpp" />
     <ClCompile Include="base_def2.cpp" />
     <ClCompile Include="base_qshared.cpp" />
@@ -166,15 +167,11 @@
     <ClCompile Include="con_main_ds.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ew_fg\fg_std.cpp" />
-    <ClCompile Include="ew_fw\fw_lib.cpp" />
-    <ClCompile Include="e_irr\irr_shared.cpp" />
-    <ClCompile Include="e_sb\sb_tools.cpp" />
-    <ClCompile Include="rnd_t2_prev\t2_rs_gl4.cpp" />
-    <ClCompile Include="rnd_t2_prev\t2_win_main.cpp">
+    <ClCompile Include="rs_gl_util.cpp" />
+    <ClCompile Include="stb_libs.cpp" />
+    <ClCompile Include="tut_wm_rnd.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="stb_libs.cpp" />
     <ClCompile Include="win32_loader_gl_wgl.cpp" />
     <ClCompile Include="win32_loader_vk.cpp" />
     <ClCompile Include="win_basic_wnd2.cpp">
@@ -183,22 +180,19 @@
     <ClCompile Include="win_basic_wnd3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="win_main_fg.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="win_main_fw.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="win_main_irr.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="win_main_s.cpp" />
     <ClCompile Include="win_main_sb.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="win_main_t2.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="win_main_t3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="win_main_s.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\ext_base_def.h">
@@ -219,84 +213,66 @@
     <ClInclude Include="..\common\ext_old_ref_lib.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\lib_src\d3dxlib\DDSTextureLoader\DDSTextureLoader11.h" />
-    <ClInclude Include="..\lib_src\d3dxlib\WICTextureLoader\WICTextureLoader11.h" />
+    <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.h" />
+    <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.h" />
+    <ClInclude Include="..\lib_src\glad\glad_compat\include\glad\gl.h" />
     <ClInclude Include="..\lib_src\gl_loader\gl_loader_compat.h" />
     <ClInclude Include="..\lib_src\gl_loader\gl_loader_core.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\lib_src\vk_loader\vk_loader_core.h" />
     <ClInclude Include="..\lib_src\vk_loader\vk_loader_win32.h" />
+    <ClInclude Include="..\lib_src\volk\volk.h" />
+    <ClInclude Include="base_cfg.h" />
     <ClInclude Include="base_console.h" />
     <ClInclude Include="base_def.h" />
     <ClInclude Include="base_def2.h" />
     <ClInclude Include="base_ds2_unord_map.h" />
     <ClInclude Include="base_ds_algorithm.h" />
-    <ClInclude Include="base_ds_deque.h" />
-    <ClInclude Include="base_ds_iterators.h" />
-    <ClInclude Include="base_ds_list.h" />
-    <ClInclude Include="base_ds_rh_hash_map.h" />
     <ClInclude Include="base_ds_ord_map.h" />
     <ClInclude Include="base_ds_st.h" />
     <ClInclude Include="base_ds_string.h" />
-    <ClInclude Include="base_ds_unord_map.h" />
+    <ClInclude Include="base_ds_string_sso.h" />
     <ClInclude Include="base_ds_vector.h" />
+    <ClInclude Include="base_ds_iterators.h" />
     <ClInclude Include="base_glm.h" />
     <ClInclude Include="base_gmath.h" />
     <ClInclude Include="base_gmath_colors.h" />
     <ClInclude Include="base_gmath_ex.h" />
     <ClInclude Include="base_gmath_ex2.h" />
     <ClInclude Include="base_gmath_util.h" />
-    <ClInclude Include="base_ini2.h" />
     <ClInclude Include="base_io.h" />
     <ClInclude Include="base_math.h" />
     <ClInclude Include="base_opengl_math.h" />
     <ClInclude Include="base_ostrz.h" />
     <ClInclude Include="base_print.h" />
     <ClInclude Include="base_qshared.h" />
-    <ClInclude Include="base_std_cont.h" />
+    <ClInclude Include="base_ds_std_cont.h" />
     <ClInclude Include="base_types.h" />
     <ClInclude Include="base_win_util.h" />
     <ClInclude Include="chk_math.h" />
-    <ClInclude Include="ew_fg\fg_internal.h" />
-    <ClInclude Include="ew_fg\fg_std.h" />
-    <ClInclude Include="ew_fw\fw_internal.h" />
-    <ClInclude Include="ew_fw\fw_lib.h" />
     <ClInclude Include="exp_allocator.h" />
-    <ClInclude Include="e_irr\irr_d3d9_driver.h" />
-    <ClInclude Include="e_irr\irr_driver.h" />
-    <ClInclude Include="e_irr\irr_gl3_driver.h" />
-    <ClInclude Include="e_irr\irr_gmath.h" />
-    <ClInclude Include="e_irr\irr_math.h" />
-    <ClInclude Include="e_irr\irr_shared.h" />
-    <ClInclude Include="e_irr\irr_string.h" />
-    <ClInclude Include="e_irr\irr_vector.h" />
-    <ClInclude Include="e_sb\sb_tools.h" />
+    <ClInclude Include="exp_ini.h" />
     <ClInclude Include="game_timer_qpc.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d10.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d11.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d12.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d9b.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d9b_2.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_d3d9b_util.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_gl4.h" />
-    <ClInclude Include="rnd_t2_prev\t2_ex_rs_vk.h" />
-    <ClInclude Include="rnd_t2_prev\t2_rs_d3d11.h" />
-    <ClInclude Include="rnd_t2_prev\t2_rs_d3d9bc_hdr.h" />
-    <ClInclude Include="rnd_t2_prev\t2_rs_d3d9c.h" />
-    <ClInclude Include="rnd_t2_prev\t2_rs_gl4.h" />
-    <ClInclude Include="rnd_t2_prev\t2_rs_irenderer.h" />
+    <ClInclude Include="rnd_t2\t2_rs_d3d10.h" />
+    <ClInclude Include="rnd_t2\t2_rs_d3d11.h" />
+    <ClInclude Include="rnd_t2\t2_rs_d3d12.h" />
+    <ClInclude Include="rnd_t2\t2_rs_d3d9b.h" />
+    <ClInclude Include="rnd_t2\t2_rs_d3d9c.h" />
+    <ClInclude Include="rnd_t2\t2_rs_gl2.h" />
+    <ClInclude Include="rnd_t2\t2_rs_gl4.h" />
+    <ClInclude Include="rnd_t2\t2_rs_irenderer.h" />
+    <ClInclude Include="rnd_t2\t2_rs_vk.h" />
     <ClInclude Include="rs_camera_la.h" />
-    <ClInclude Include="t2_rs_d3d9_hdr.h" />
-    <ClInclude Include="t2_rs_load_geometry.h" />
-    <ClInclude Include="t2_rs_shared.h" />
-    <ClInclude Include="t2_rs_vertex_formats.h" />
-    <ClInclude Include="t3_rs_irenderer.h" />
-    <ClInclude Include="t3_rs_d3d11.h" />
-    <ClInclude Include="t3_rs_d3d9b.h" />
-    <ClInclude Include="t3_rs_d3d9c.h" />
-    <ClInclude Include="t3_rs_gl2.h" />
-    <ClInclude Include="t3_rs_gl4.h" />
+    <ClInclude Include="rs_d3d9_util.h" />
+    <ClInclude Include="rs_gl_util.h" />
+    <ClInclude Include="rs_hdr_d3d11.h" />
+    <ClInclude Include="rs_hdr_d3d9.h" />
+    <ClInclude Include="rs_hdr_gl.h" />
+    <ClInclude Include="rs_shared.h" />
+    <ClInclude Include="rs_vertex_formats.h" />
+    <ClInclude Include="tut_d3d9b.h" />
+    <ClInclude Include="tut_renderer.h" />
     <ClInclude Include="win32_loader_gl_wgl.h" />
     <ClInclude Include="win32_loader_vk.h" />
     <ClInclude Include="win_app.h" />

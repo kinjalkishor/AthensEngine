@@ -8,9 +8,20 @@
 // If want to use LunarG VulkanSDK static loading.
 //#define VK_STATIC
 
+// Use volk loader
+#define USE_VOLK_LIB 1
+
 #if !defined VK_STATIC
-    #include "vk_loader/vk_loader_core.h"
+    #if !USE_VOLK_LIB
+        #include "vk_loader/vk_loader_core.h"
+    #endif
+
     #include "vk_loader/vk_loader_win32.h"
+
+    #if USE_VOLK_LIB
+        #define VK_USE_PLATFORM_WIN32_KHR
+        #include "volk/volk.h"
+    #endif
 #else
     #include <vulkan/vulkan_core.h>
     #define WIN32_LEAN_AND_MEAN
@@ -204,7 +215,7 @@ public:
                 is_vk_KHR_win32_surface = true;
             }
         }
-        sdf::ty_free(vk_ext_prop);
+        free(vk_ext_prop);
 
 
         // Fill extensions array.

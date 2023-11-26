@@ -22,23 +22,22 @@ namespace sdf2
 {
 template <class T, ptrdiff_t N> inline constexpr ptrdiff_t strz_cap(const T (&)[N]) noexcept { return N-1; }
 
-template<class T> inline isz strfz_len(const T* src);
-template<> inline isz strfz_len(const char* src) { return strlen(src); }
-template<> inline isz strfz_len(const wchar_t* src) { return wcslen(src); }
+inline isz strfz_len(const char* src) { return strlen(src); }
+inline isz strfz_len(const wchar_t* src) { return wcslen(src); }
 
-inline isz strf_wcs_from_mbs(wchar_t* dest, isz dest_capacity, const char* src, isz src_len) {
-	isz copy_len = src_len;
+inline isz strf_assign_mbs(wchar_t* dest, isz dest_capacity, const char* src, isz src_len) {
+    isz copy_len = src_len;
     if (copy_len > dest_capacity) { copy_len = dest_capacity; }
 	const int dest_size_with_null_char = dest_capacity+1;
-	int result = MultiByteToWideChar(CP_UTF8, 0, src, copy_len, dest, dest_size_with_null_char);	
+	int result = MultiByteToWideChar(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char);
 	dest[copy_len] = L'\0';
 	return copy_len;
 }
-inline isz strf_mbs_from_wcs(char* dest, isz dest_capacity, const wchar_t* src, isz src_len) {
+inline isz strf_assign_wcs(char* dest, isz dest_capacity, const wchar_t* src, isz src_len) {
     isz copy_len = src_len;
-    if (copy_len > dest_capacity) { copy_len = dest_capacity; }	
+    if (copy_len > dest_capacity) { copy_len = dest_capacity; }
 	const int dest_size_with_null_char = dest_capacity+1;
-	int result = WideCharToMultiByte(CP_UTF8, 0, src, copy_len, dest, dest_size_with_null_char, nullptr, nullptr);	
+	int result = WideCharToMultiByte(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char, nullptr, nullptr);	
 	dest[copy_len] = '\0';
 	return copy_len;
 }
@@ -73,7 +72,7 @@ public:
 		MoveWindow(console_window, xpos, ypos, width, height, TRUE);
 
 		wchar_t wconsole_title[256] = {};
-		sdf2::strf_wcs_from_mbs(wconsole_title, sdf2::strz_cap(wconsole_title), window_title, sdf2::strfz_len(window_title));
+		sdf2::strf_assign_mbs(wconsole_title, sdf2::strz_cap(wconsole_title), window_title, sdf2::strfz_len(window_title));
 		SetWindowTextW(console_window, wconsole_title);	
 
 		// The freopen_s function closes the file currently associated with stream and reassigns stream to the file specified by path.
@@ -124,6 +123,31 @@ using namespace sdf2;
 namespace wm_wnd2
 {
 
+class wm_irenderer {
+public:
+	wm_irenderer() {}
+	virtual ~wm_irenderer() {}	
+
+	virtual bool init_r(HINSTANCE hInstance, HWND hwnd, int width, int height, bool fullscreen) { return false; }
+	virtual void deinit_r() {}
+
+	virtual void setup() {}
+	virtual void cleanup() {}
+	virtual void render(float dt) {}
+	virtual void swap_buffers() {}
+};
+
+class wm_rd3d11 : public wm_irenderer {
+public:
+	bool init_r(HINSTANCE hInstance, HWND hwnd, int width, int height, bool fullscreen) { return true; }
+	void deinit_r() {}
+
+	void setup() {}
+	void cleanup() {}
+	void render(float dt) {}
+	void swap_buffers() {}
+};
+
 class app_vars {
 public:
 	bool app_quit = false;
@@ -140,8 +164,8 @@ public:
 	HWND m_hwnd = nullptr;
 	MSG m_msg = {};
 
-	bool init(WNDPROC wnd_proc, HINSTANCE hInstance, const wchar_t* app_class_name) {
-		wcsncpy(m_app_class_name, app_class_name, 64-1);
+	bool init(WNDPROC wnd_proc, HINSTANCE hInstance, const char* app_class_name) {
+		sdf2::strf_assign_mbs(m_app_class_name, sdf2::strz_cap(m_app_class_name), app_class_name, sdf2::strfz_len(app_class_name));
 		m_wnd_proc = wnd_proc;
 		m_hInstance = hInstance;
 
@@ -183,7 +207,7 @@ public:
 		h = window_rect.bottom - window_rect.top;	
 
 		wchar_t wstr_wnd_title[256] = {};
-		sdf2::strf_wcs_from_mbs(wstr_wnd_title, sdf2::strz_cap(wstr_wnd_title), wnd_title, sdf2::strfz_len(wnd_title));
+		sdf2::strf_assign_mbs(wstr_wnd_title, sdf2::strz_cap(wstr_wnd_title), wnd_title, sdf2::strfz_len(wnd_title));
 
 		HWND handle_wnd = CreateWindowExW(dwExStyle,					
 							m_app_class_name,			        
@@ -222,6 +246,10 @@ public:
 		return (m_msg.message == WM_QUIT);
 	}
 
+	int msg_return() {
+		return scast<int>(m_msg.wParam);
+	}
+
 	void deinit() {
 		DestroyWindow(m_hwnd);
 		UnregisterClassW(m_app_class_name, m_hInstance);
@@ -251,19 +279,21 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	int ypos = 50;
 	int width = 800;
 	int height = 450;
+	bool fullscreen = false;
 	const char* wnd_title = "Sample window";									
 
-	const wchar_t* APP_CLASS_NAME = L"SAMPLE_APP_CLASS";
+	const char* APP_CLASS_NAME = "SAMPLE_APP_CLASS";
     HWND m_hwnd = nullptr;
-    MSG m_msg = {};
 
 	winapp nw_app;
     nw_app.init(MainWndProc, hInstance, APP_CLASS_NAME);
 	nw_app.create_window(wnd_title, xpos, ypos, width, height, false, false);
 	m_hwnd = nw_app.get_main_hwnd();
 
-	//rs->init_r(hInstance, wnd1.hwnd, wnd1.width, wnd1.height, wnd1.fullscreen);
-	//rs->setup();
+	std::unique_ptr<wm_irenderer> rs;		
+	rs = std::make_unique<wm_rd3d11>();	
+	rs->init_r(hInstance, m_hwnd, width, height, fullscreen);
+	rs->setup();
 	//---
 	game_timer_qpc nw_timer;
 	int64 prev_time_qpc = nw_timer.get_time();
@@ -282,8 +312,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 
 			//process_input();
 			//calculate_frame_stats();
-			//rs->render(delta_time_qpc);
-			//rs->swap_buffers();
+			rs->render(delta_time_qpc);
+			rs->swap_buffers();
     
 			prev_time_qpc = curr_time_qpc;	
 
@@ -294,12 +324,12 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
         
     } // while: not app_quit
 
-	//rs->cleanup();
-	//rs->deinit_r();
+	rs->cleanup();
+	rs->deinit_r();
 
 	nw_app.deinit();
     
-    return scast<int>(m_msg.wParam);
+    return nw_app.msg_return();
 }
 
 

@@ -20,6 +20,7 @@ public:
 
 	vec2() = default;
 	vec2(float x, float y) : x(x), y(y) {}
+    explicit vec2(float f) : x(f), y(f) {}
 
 	constexpr static int size() { return 2; }	
 
@@ -37,10 +38,10 @@ public:
 	vec2& operator *=(float s) { for_range(i, 0, size()) { e[i] *= s; } return *this; }
 	vec2& operator /=(float s) { for_range(i, 0, size()) { e[i] /= s; } return *this; }
 
-	const static vec2 k_zero() { return {0, 0}; }
-	const static vec2 k_identity() { return {1, 1}; }	
-    const static vec2 k_origin() { return {0, 0}; }
-    const static vec2 k_unit() { return {1, 1}; }
+	const static vec2 k_zero() { return vec2(0); }
+	const static vec2 k_identity() { return vec2(1); }
+    const static vec2 k_origin() { return vec2(0); }
+    const static vec2 k_unit() { return vec2(1); }
 };
 
 class vec3 {
@@ -52,6 +53,7 @@ public:
 
 	vec3() = default;
 	vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+    explicit vec3(float f) : x(f), y(f), z(f) {}
 
 	constexpr static int size() { return 3; }	
 
@@ -69,11 +71,10 @@ public:
 	vec3& operator *=(float s) { for_range(i, 0, size()) { e[i] *= s; } return *this; }
 	vec3& operator /=(float s) { for_range(i, 0, size()) { e[i] /= s; } return *this; }
 
-
-	const static vec3 k_zero() { return {0, 0, 0}; }
-    const static vec3 k_identity() { return {1, 1, 1}; }
-    const static vec3 k_origin() { return {0, 0, 0}; }
-    const static vec3 k_unit() { return {1, 1, 1}; }			
+	const static vec3 k_zero() { return vec3(0); }
+	const static vec3 k_identity() { return vec3(1); }
+    const static vec3 k_origin() { return vec3(0); }
+    const static vec3 k_unit() { return vec3(1); }	
 };
 
 class vec4 {
@@ -85,6 +86,7 @@ public:
 
 	vec4() = default;
 	vec4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+    explicit vec4(float f) : x(f), y(f), z(f), w(f) {}
 
 	constexpr static int size() { return 4; }	
 
@@ -102,10 +104,10 @@ public:
 	vec4& operator *=(float s) { for_range(i, 0, size()) { e[i] *= s; } return *this; }
 	vec4& operator /=(float s) { for_range(i, 0, size()) { e[i] /= s; } return *this; }
 
-	const static vec4 k_zero() { return {0, 0, 0, 0}; }
-	const static vec4 k_identity() { return {1, 1, 1, 1}; }	
-    const static vec4 k_origin() { return {0, 0, 0, 0}; }
-    const static vec4 k_unit() { return {1, 1, 1, 1}; }
+	const static vec4 k_zero() { return vec4(0); }
+	const static vec4 k_identity() { return vec4(1); }
+    const static vec4 k_origin() { return vec4(0); }
+    const static vec4 k_unit() { return vec4(1); }
 };
 
 class color4 {
@@ -118,8 +120,9 @@ public:
 
 	color4() = default;
 	color4(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
+    explicit color4(float f) : r(f), g(f), b(f), a(f) {}
 	//color4(float r, float g, float b) : r(r), g(g), b(b), a(1.0) {}
-	color4(vec4 a) : v(a) {}
+	explicit color4(vec4 a) : v(a) {}
 
 	constexpr static int size() { return 4; }	
 
@@ -128,7 +131,7 @@ public:
 	const float& operator [](int i) const	{ return e[i]; }
     float& operator [](int i)				{ return e[i]; }
 
-	const static color4 k_zero() { return {0, 0, 0, 0}; }	
+	const static color4 k_zero() { return color4(0); }	
 };
 
 
@@ -145,8 +148,9 @@ public:
 
 	quat() = default;
 	quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
-	quat(vec3 axis, float rotation) : axis(axis), rotation(rotation) {}
-	quat(vec4 a) : v(a) {}
+    explicit quat(float f) : x(f), y(f), z(f), w(f) {}
+	explicit quat(vec3 axis, float rotation) : axis(axis), rotation(rotation) {}
+	explicit quat(vec4 a) : v(a) {}
 
 	constexpr static int size() { return 4; }	
 
@@ -155,8 +159,8 @@ public:
 	const float& operator [](int i) const	{ return e[i]; }
     float& operator [](int i)				{ return e[i]; }
 
-	const static quat k_zero() { return {0, 0, 0, 0}; }
-	const static quat k_identity() { return {0, 0, 0, 1}; }	
+	const static quat k_zero() { return quat(0); }
+	const static quat k_identity() { return quat(0, 0, 0, 1); }	
 };
 
 
@@ -173,8 +177,9 @@ public:
 
     plane() = default;
 	plane(float a, float b, float c, float d) : a(a), b(b), c(c), d(d) {}
-	plane(const vec3& normal, float dist) : normal(normal), dist(dist) {}
-	plane(vec4 a) : v(a) {}
+    explicit plane(float f) : a(f), b(f), c(f), d(f) {}
+	explicit plane(const vec3& normal, float dist) : normal(normal), dist(dist) {}
+	explicit plane(vec4 a) : v(a) {}
 
 	constexpr static int size() { return 4; }	
 
@@ -183,7 +188,7 @@ public:
 	const float& operator [](int i) const	{ return e[i]; }
     float& operator [](int i)				{ return e[i]; }
 
-	const static plane k_zero() { return {0, 0, 0, 0}; }
+	const static plane k_zero() { return plane(0); }
 };
 
 
@@ -191,11 +196,6 @@ public:
 class mat3 {
 public:
 	union {
-		struct {
-            float	m11, m12, m13,
-					m21, m22, m23,
-					m31, m32, m33;
-        };
 		float e[9];
 		float r[3][3];
 	};
@@ -204,11 +204,16 @@ public:
 	
 	mat3(float m11, float m12, float m13,
 		 float m21, float m22, float m23,
-		 float m31, float m32, float m33) {
-		e[0]  = m11; e[1]  = m12; e[2] = m13;
-		e[3]  = m21; e[4]  = m22; e[5] = m23;
-		e[6]  = m31; e[7]  = m32; e[8] = m33;
-	}
+		 float m31, float m32, float m33) 
+    : e{ m11, m12, m13,
+		 m21, m22, m23,
+         m31, m32, m33 } {}
+
+    explicit mat3(float f) 
+    : e{ f, 0, 0,	
+		 0, f, 0,	
+		 0, 0, f } {} 
+   
 
 	constexpr static int size() { return 9; }	
 	constexpr int dim() const	{ return 3; }	
@@ -221,21 +226,8 @@ public:
 	//const float& operator ()(int row, int col) const	{ return r[row][col]; }
     //float& operator ()(int row, int col)				{ return r[row][col]; }
 
-	const static mat3 k_zero() { 
-		return mat3(
-			0, 0, 0,
-			0, 0, 0,
-			0, 0, 0
-		);	
-	}
-
-	const static mat3 k_identity() { 
-		return mat3(
-			1, 0, 0,	
-			0, 1, 0,	
-			0, 0, 1
-		);
-	}	
+	const static mat3 k_zero() { return mat3(0); }
+	const static mat3 k_identity() { return mat3(1); }	
 };
 
 
@@ -260,12 +252,17 @@ public:
 	mat4(float m11, float m12, float m13, float m14,
 		 float m21, float m22, float m23, float m24,
 		 float m31, float m32, float m33, float m34,
-		 float m41, float m42, float m43, float m44) {
-		e[0]  = m11; e[1]  = m12; e[2]  = m13; e[3]  = m14;
-		e[4]  = m21; e[5]  = m22; e[6]  = m23; e[7]  = m24;
-		e[8]  = m31; e[9]  = m32; e[10] = m33; e[11] = m34;
-		e[12] = m41; e[13] = m42; e[14] = m43; e[15] = m44;
-	}
+		 float m41, float m42, float m43, float m44)
+    : e{ m11, m12, m13, m14,
+		 m21, m22, m23, m24,
+		 m31, m32, m33, m34,
+		 m41, m42, m43, m44 } {}
+
+    explicit mat4(float f)
+    : e{ f, 0, 0, 0,		
+		 0, f, 0, 0,		
+		 0, 0, f, 0,		
+		 0, 0, 0, f } {}
 
 	constexpr static int size() { return 16; }	
 	constexpr int dim() const	{ return 4; }	
@@ -280,48 +277,28 @@ public:
 	//const float& operator ()(int row, int col) const	{ return e[(row * 4) + col]; }
 	//float& operator ()(int row, int col)				{ return e[(row * 4) + col]; }
 
-
-	const static mat4 k_zero() { 
-		return mat4(
-			0, 0, 0, 0,		
-			0, 0, 0, 0,		
-			0, 0, 0, 0,		
-			0, 0, 0, 0
-		); 
-	}
-
-	const static mat4 k_identity() { 
-		return mat4(
-			1, 0, 0, 0,		
-			0, 1, 0, 0,		
-			0, 0, 1, 0,		
-			0, 0, 0, 1
-		); 
-	}	
+	const static mat4 k_zero() { return mat4(0); }
+	const static mat4 k_identity() { return mat4(1); }	
 };
-
-
 
 
 //================================================================================================
 
-
 //========================================================================================================================
 // Template functions for N size
 //========================================================================================================================
-
-template<class T> inline T vecnt_negate(const T& a) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = -a[i]; } return out; }
-template<class T> inline T vecnt_add(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] + b[i]; } return out; }
-template<class T> inline T vecnt_sub(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] - b[i]; } return out; }
-template<class T> inline T vecnt_mul(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] * b[i]; } return out; }
-template<class T> inline T vecnt_div(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] / b[i]; } return out; }
-template<class T> inline T vecnt_add_s(const T& a, float s) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] + s; } return out; }
-template<class T> inline T vecnt_sub_s(const T& a, float s) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] - s; } return out; }
-template<class T> inline T vecnt_mul_s(const T& a, float s) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] * s; } return out; }
+template<class T> inline T vecnt_negate(const T& a) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = -a[i]; } return out; }
+template<class T> inline T vecnt_add(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] + b[i]; } return out; }
+template<class T> inline T vecnt_sub(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] - b[i]; } return out; }
+template<class T> inline T vecnt_mul(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] * b[i]; } return out; }
+template<class T> inline T vecnt_div(const T& a, const T& b) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] / b[i]; } return out; }
+template<class T> inline T vecnt_add_s(const T& a, float s) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] + s; } return out; }
+template<class T> inline T vecnt_sub_s(const T& a, float s) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] - s; } return out; }
+template<class T> inline T vecnt_mul_s(const T& a, float s) { T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] * s; } return out; }
 template<class T> inline T vecnt_div_s(const T& a, float s) { 
 	const float inv_s = scast<float>(1.0)/s; 
 	//return (a * inv_s); 
-	T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] * inv_s; } return out;
+	T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] * inv_s; } return out;
 }
 
 //(a.x==b.x && a.y==b.y)
@@ -332,40 +309,46 @@ template<class T> inline bool vecnt_is_equal_ep(const T& a, const T& b, float ep
 template<class T> inline bool vecnt_is_equal_ep2(const T& a, const T& b) { 
 	for_range (i, 0, a.size()) { if (!(mf::equals2(a[i], b[i]))) { return false; } }	return true; 
 }
-template<class T> inline bool vecnt_is_not_equal_ep(const T& a, const T& b, float epsilon) { 
-	return !(vecnt_is_equal_ep(a, b, epsilon)); 
-}
 
 template<class T> inline bool vecnt_is_equal(const T& a, const T& b) { 
 	//for_range (i, 0, a.size()) { if (!(a[i] == b[i])) { return false; } }	return true; 
 	return vecnt_is_equal_ep2(a, b);
 }
+
+template<class T> inline bool vecnt_is_not_equal_ep(const T& a, const T& b, float epsilon) { 
+	return !(vecnt_is_equal_ep(a, b, epsilon)); 
+}
 template<class T> inline bool vecnt_is_not_equal(const T& a, const T& b) { 
 	//return !(a == b); 
 	return !(vecnt_is_equal(a, b));
 }
-//(a.x<b.x && a.y<b.y)
 
+//(a.x<b.x && a.y<b.y)
 template<class T> inline bool vecnt_is_less(const T& a, const T& b) { 
 	//(<)
 	// If any elements is not less_than return false. If this test fails for all elements than 1st vector is less_than, return true.
 	for_range (i, 0, a.size()) { if (!(a[i] < b[i])) { return false; } }	return true; 
 }
+
 template<class T> inline bool vecnt_is_greater(const T& a, const T& b) { 
 	//(>)
 	//return (b < a); 
 	return vecnt_is_less(b, a);
+    //for_range (i, 0, a.size()) { if (!(a[i] > b[i])) { return false; } }	return true; 
 }
 template<class T> inline bool vecnt_is_less_equal(const T& a, const T&b) { 
 	//(<=)
 	//return !(b < a); 
 	return !(vecnt_is_less(b, a));
+    //for_range (i, 0, a.size()) { if (!(a[i] <= b[i])) { return false; } }	return true; 
 }
 template<class T> inline bool vecnt_is_greater_equal(const T& a, const T& b) { 
 	//(>=)
 	//return !(a < b); 
 	return !(vecnt_is_less(a, b));
+    //for_range (i, 0, a.size()) { if (!(a[i] >= b[i])) { return false; } }	return true; 
 }
+
 
 template<class T> inline float vecnt_dot(const T& a, const T& b) {
 	//a.x*b.x + a.y*b.y + a.z*b.z
@@ -379,32 +362,7 @@ template<class T> inline float vecnt_length_sq(const T& a) {
 	float out = scast<float>(0.0); for_range (i, 0, a.size()) { out += mf::square(a[i]); } return out;
 }
 // vector length, magnitude
-template<class T> inline float vecnt_length(const T& a) { return std::sqrt(vecnt_length_sq(a));  }
-
-template<class T> inline float vecnt_distance_sq(const T& a, const T& b) {
-	//(square(a.x - b.x) + square(a.y - b.y) + square(a.z - b.z));
-	//(a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z)	
-    float out = scast<float>(0.0); for_range (i, 0, a.size()) { out += mf::square(a[i] - b[i]); } return out;
-}
-template<class T> inline float vecnt_distance(const T& a, const T& b) { return std::sqrt(vecnt_distance_sq(a, b)); }
-
-// Linear interpolation. V1 + s(V2-V1)
-template<class T> inline T vecnt_lerp(const T& a, const T& b, float s) {
-    T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = mf::lerp(a[i], b[i], s); } return out;
-}
-
-// Minimize each component.  x = min(x1, x2), y = min(y1, y2)
-template<class T> inline T vecnt_min(const T& a, const T& b) {
-    T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = sdf::tmin(a[i], b[i]); } return out;
-}
-// Maximize each component.  x = max(x1, x2), y = max(y1, y2)
-template<class T> inline T vecnt_max(const T& a, const T& b) {
-    T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = sdf::tmax(a[i], b[i]); } return out;
-}
-
-template<class T> inline T vecnt_clamp(const T& a, const T& low, const T& high) {
-    T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = sdf::clamp(a[i], low[i], high[i]); } return out;
-}
+template<class T> inline float vecnt_length(const T& a) { return sqrt(vecnt_length_sq(a));  }
 
 // Passing zero vector will make length or norm 0, and divide by zero exception will occur
 // for a zero vector this will let the zero vector remain zero
@@ -418,7 +376,7 @@ template<class T> inline T vecnt_normalize(const T& a) {
 	if (length) {
 		float inv_length = scast<float>(1.0)/length;
 		//out = a * inv_length;	
-		for_range (i, 0, out.size()) { out[i] = a[i] * inv_length; }
+		for_range (i, 0, T::size()) { out[i] = a[i] * inv_length; }
 	} else {
 		// out is already zero. If out is used error will propogate
 		//out = T::k_zero();	
@@ -430,63 +388,43 @@ template<class T> inline T vecnt_normalize(const T& a) {
 }
 
 
-
-// v - end points
-// t - tangent directions at end points
-// s (alpha) - distance along spline
-// cubic interpolation
-// Hermite interpolation between position V1, tangent T1 (when s == 0) and position V2, tangent T2 (when s == 1).
-template<class T> inline T vecnt_hermite(const T& v1, const T& t1, const T& v2, const T& t2, float s) {
-    T out = T::k_zero(); 
-    float h1, h2, h3, h4;
-    //set_hermite_coeffcients(h1, h2, h3, h4, s);
-    float s3 = mf::cube(s);
-	float s2 = mf::square(s); 
-
-    //h1 = (2.0f * s*s*s) - (3.0f * s*s) + 1.0f;
-    //h2 = (s*s*s) - (2.0f * s*s) + s;
-    //h3 = -(2.0f * s*s*s) + (3.0f * s*s);
-    //h4 = (s*s*s) - (s*s);
-
-    h1 = (scast<float>(2.0) * s3) - (scast<float>(3.0) * s2) + scast<float>(1.0);
-    h2 = (s3) - (scast<float>(2.0) * s2) + s;
-    h3 = (-scast<float>(2.0) * s3) + (scast<float>(3.0) * s2);
-    h4 = (s3) - (s2);    
-
-    for_range (i, 0, out.size()) { out[i] = h1 * v1[i] + h2 * t1[i] + h3 * v2[i] + h4 * t2[i]; }
-
-    return out;
+template<class T> inline T vecnt_mul_angles(const T& a, const T& b, float s) { 
+    T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = a[i] + s*b[i]; } return out; 
 }
 
-// CatmullRom interpolation between V1 (when s == 0) and V2 (when s == 1)
-template<class T> inline T vecnt_catmull_rom(const T& v0, const T& v1, const T& v2, const T& v3, float s) {
-    T out = T::k_zero(); 
-    float s3 = mf::cube(s);
-	float s2 = mf::square(s); 
+template<class T> inline float vecnt_distance_sq(const T& a, const T& b) {
+	//(square(a.x - b.x) + square(a.y - b.y) + square(a.z - b.z));
+	//(a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z)	
+    float out = scast<float>(0.0); for_range (i, 0, a.size()) { out += mf::square(a[i] - b[i]); } return out;
+}
+template<class T> inline float vecnt_distance(const T& a, const T& b) { return std::sqrt(vecnt_distance_sq(a, b)); }
 
-    for_range (i, 0, out.size()) {
-        out[i] = scast<float>(0.5) * (scast<float>(2.0) * v1[i] + (v2[i] - v0[i]) * s + (scast<float>(2.0) * v0[i] - scast<float>(5.0) * v1[i] 
-            + scast<float>(4.0) * v2[i] - v3[i]) * s2 + (v3[i] -scast<float>(3.0) * v2[i] + scast<float>(3.0) * v1[i] - v0[i]) * s3);
-    }
-
-    return out;
+// Linear interpolation. V1 + s(V2-V1)
+template<class T> inline T vecnt_lerp(const T& a, const T& b, float s) {
+    T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = mf::lerp(a[i], b[i], s); } return out;
 }
 
-// Barycentric coordinates.  V1 + f(V2-V1) + g(V3-V1)
-template<class T> inline T vecnt_bary_centric(const T& v1, const T& v2, const T& v3, float f, float g) {
-    T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = (scast<float>(1.0)-f-g) * v1[i] + f * v2[i] + g * v3[i]; } return out;
+// Minimize each component.  x = min(x1, x2), y = min(y1, y2)
+template<class T> inline T vecnt_min(const T& a, const T& b) {
+    T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = sdf::tmin(a[i], b[i]); } return out;
+}
+// Maximize each component.  x = max(x1, x2), y = max(y1, y2)
+template<class T> inline T vecnt_max(const T& a, const T& b) {
+    T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = sdf::tmax(a[i], b[i]); } return out;
 }
 
-template<class T> inline T vecnt_mul_angles(const T& a, const T& b, float s) { T out = T::k_zero(); for_range (i, 0, out.size()) { out[i] = a[i] + s*b[i]; } return out; }
+template<class T> inline T vecnt_clamp(const T& a, const T& low, const T& high) {
+    T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = sdf::clamp(a[i], low[i], high[i]); } return out;
+}
 
 //================================================================================================
 
 //---------------------------------------------------
 // Constants
 //---------------------------------------------------
-inline const vec3 k_vec3_one() { return {1, 1, 1}; }
+inline const vec3 k_vec3_one() { return vec3(1.0); }
 // default (0, 1, 0, 0)
-//inline const plane k_plane_default() { return {0, 1, 0, 0}; }    
+//inline const plane k_plane_default() { return plane(0, 1, 0, 0); }
 
 
 //---------------------------------------------------
@@ -505,10 +443,10 @@ inline vec2 operator - (const vec2& a, float s) { return vecnt_sub_s(a, s); }
 inline vec2 operator * (const vec2& a, float s) { return vecnt_mul_s(a, s); }
 inline vec2 operator / (const vec2& a, float s) { return vecnt_div_s(a, s); }
 
-inline vec2 operator + (float s, const vec2& a) { return vecnt_add_s(a, s); }
-inline vec2 operator - (float s, const vec2& a) { return vecnt_sub_s(a, s); }
-inline vec2 operator * (float s, const vec2& a) { return vecnt_mul_s(a, s); }
-inline vec2 operator / (float s, const vec2& a) { return vecnt_div_s(a, s); }
+inline vec2 operator + (float s, const vec2& a) { return a + s; }
+inline vec2 operator - (float s, const vec2& a) { return a - s; }
+inline vec2 operator * (float s, const vec2& a) { return a * s; }
+inline vec2 operator / (float s, const vec2& a) { return a / s; }
 
 inline bool vec2_equals_ep(const vec2& a, const vec2& b, float epsilon) { return vecnt_is_equal_ep(a, b, epsilon); }
 inline bool vec2_equals_ep2(const vec2& a, const vec2& b) { return vecnt_is_equal_ep2(a, b); }
@@ -516,23 +454,23 @@ inline bool vec2_equals_ep2(const vec2& a, const vec2& b) { return vecnt_is_equa
 inline bool operator == (const vec2& a, const vec2& b) { return vecnt_is_equal(a, b); }
 inline bool operator != (const vec2& a, const vec2& b) { return vecnt_is_not_equal(a, b); }
 
-inline bool operator > (const vec2& a, const vec2& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator < (const vec2& a, const vec2& b)	{ return vecnt_is_less(a, b); }
-inline bool operator >= (const vec2& a, const vec2& b)	{ return vecnt_is_greater_equal(a, b); }
+inline bool operator > (const vec2& a, const vec2& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator <= (const vec2& a, const vec2& b)	{ return vecnt_is_less_equal(a, b); }
+inline bool operator >= (const vec2& a, const vec2& b)	{ return vecnt_is_greater_equal(a, b); }
 
 
 inline float vec2_dot(const vec2& a, const vec2& b) { return vecnt_dot(a, b); }
 inline float vec2_length_sq(const vec2& a) { return vecnt_length_sq(a); }	
 inline float vec2_length(const vec2& a) { return vecnt_length(a); }
-//,inline float vec2_distance_sq(const vec2& a, const vec2& b) { return vecnt_distance_sq(a, b); }
-//,inline float vec2_distance(const vec2& a, const vec2& b) { return vecnt_distance(a, b); }
+inline float vec2_distance_sq(const vec2& a, const vec2& b) { return vecnt_distance_sq(a, b); }
+inline float vec2_distance(const vec2& a, const vec2& b) { return vecnt_distance(a, b); }
 
 inline vec2 vec2_scale(const vec2& a, float s) { return (a * s); }
 inline vec2 vec2_lerp(const vec2& a, const vec2& b, float s) { return vecnt_lerp(a, b, s); }
 inline vec2 vec2_min(const vec2& a, const vec2& b) { return vecnt_min(a, b); }
 inline vec2 vec2_max(const vec2& a, const vec2& b) { return vecnt_max(a, b); }
-//,inline vec2 vec2_clamp(const vec2& a, const vec2& min, const vec2& max) { return vecnt_clamp(a, min, max); }
+inline vec2 vec2_clamp(const vec2& a, const vec2& min, const vec2& max) { return vecnt_clamp(a, min, max); }
 
 inline vec2 vec2_normalize(const vec2& a) { return vecnt_normalize(a); }
 
@@ -555,10 +493,10 @@ inline vec3 operator - (const vec3& a, float s) { return vecnt_sub_s(a, s); }
 inline vec3 operator * (const vec3& a, float s) { return vecnt_mul_s(a, s); }
 inline vec3 operator / (const vec3& a, float s) { return vecnt_div_s(a, s); }
 
-inline vec3 operator + (float s, const vec3& a) { return vecnt_add_s(a, s); }
-inline vec3 operator - (float s, const vec3& a) { return vecnt_sub_s(a, s); }
-inline vec3 operator * (float s, const vec3& a) { return vecnt_mul_s(a, s); }
-inline vec3 operator / (float s, const vec3& a) { return vecnt_div_s(a, s); }
+inline vec3 operator + (float s, const vec3& a) { return a + s; }
+inline vec3 operator - (float s, const vec3& a) { return a - s; }
+inline vec3 operator * (float s, const vec3& a) { return a * s; }
+inline vec3 operator / (float s, const vec3& a) { return a / s; }
 
 inline bool vec3_equals_ep(const vec3& a, const vec3& b, float epsilon) { return vecnt_is_equal_ep(a, b, epsilon); }
 inline bool vec3_equals_ep2(const vec3& a, const vec3& b) { return vecnt_is_equal_ep2(a, b); }
@@ -566,27 +504,27 @@ inline bool vec3_equals_ep2(const vec3& a, const vec3& b) { return vecnt_is_equa
 inline bool operator == (const vec3& a, const vec3& b) { return vecnt_is_equal(a, b); }
 inline bool operator != (const vec3& a, const vec3& b) { return vecnt_is_not_equal(a, b); }
 
-inline bool operator > (const vec3& a, const vec3& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator < (const vec3& a, const vec3& b)	{ return vecnt_is_less(a, b); }
-inline bool operator >= (const vec3& a, const vec3& b)	{ return vecnt_is_greater_equal(a, b); }
+inline bool operator > (const vec3& a, const vec3& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator <= (const vec3& a, const vec3& b)	{ return vecnt_is_less_equal(a, b); }
+inline bool operator >= (const vec3& a, const vec3& b)	{ return vecnt_is_greater_equal(a, b); }
 
 
 inline float vec3_dot(const vec3& a, const vec3& b) { return vecnt_dot(a, b); }
 inline float vec3_length_sq(const vec3& a) { return vecnt_length_sq(a); }	
 inline float vec3_length(const vec3& a) { return vecnt_length(a); }
-//,inline float vec3_distance_sq(const vec3& a, const vec3& b) { return vecnt_distance_sq(a, b); }
-//,inline float vec3_distance(const vec3& a, const vec3& b) { return vecnt_distance(a, b); }
+inline float vec3_distance_sq(const vec3& a, const vec3& b) { return vecnt_distance_sq(a, b); }
+inline float vec3_distance(const vec3& a, const vec3& b) { return vecnt_distance(a, b); }
 
 inline vec3 vec3_scale(const vec3& a, float s) { return (a * s); }
 inline vec3 vec3_lerp(const vec3& a, const vec3& b, float s) { return vecnt_lerp(a, b, s); }
 inline vec3 vec3_min(const vec3& a, const vec3& b) { return vecnt_min(a, b); }
 inline vec3 vec3_max(const vec3& a, const vec3& b) { return vecnt_max(a, b); }
-//,inline vec3 vec3_clamp(const vec3& a, const vec3& min, const vec3& max) { return vecnt_clamp(a, min, max); }
+inline vec3 vec3_clamp(const vec3& a, const vec3& min, const vec3& max) { return vecnt_clamp(a, min, max); }
 
 inline vec3 vec3_normalize(const vec3& a) { return vecnt_normalize(a); }
 
-//,inline vec3 vec3_reflect(const vec3& a, const vec3& normal) { return (a - (scast<float>(2.0) * vecnt_dot(a, normal) * normal)); }
+inline vec3 vec3_reflect(const vec3& a, const vec3& normal) { return (a - (scast<float>(2.0) * vecnt_dot(a, normal) * normal)); }
 
 inline vec3 vec3_cross(const vec3& a, const vec3& b) {
 	vec3 out = vec3::k_zero();
@@ -612,34 +550,34 @@ inline vec4 operator - (const vec4& a, float s) { return vecnt_sub_s(a, s); }
 inline vec4 operator * (const vec4& a, float s) { return vecnt_mul_s(a, s); }
 inline vec4 operator / (const vec4& a, float s) { return vecnt_div_s(a, s); }
 
-inline vec4 operator + (float s, const vec4& a) { return vecnt_add_s(a, s); }
-inline vec4 operator - (float s, const vec4& a) { return vecnt_sub_s(a, s); }
-inline vec4 operator * (float s, const vec4& a) { return vecnt_mul_s(a, s); }
-inline vec4 operator / (float s, const vec4& a) { return vecnt_div_s(a, s); }
+inline vec4 operator + (float s, const vec4& a) { return a + s; }
+inline vec4 operator - (float s, const vec4& a) { return a - s; }
+inline vec4 operator * (float s, const vec4& a) { return a * s; }
+inline vec4 operator / (float s, const vec4& a) { return a / s; }
 
 inline bool vec4_equals_ep(const vec4& a, const vec4& b, float epsilon) { return vecnt_is_equal_ep(a, b, epsilon); }
 inline bool vec4_equals_ep2(const vec4& a, const vec4& b) { return vecnt_is_equal_ep2(a, b); }
 
 inline bool operator == (const vec4& a, const vec4& b) { return vecnt_is_equal(a, b); }
-inline bool operator != (const vec4& a, const vec4& b) { return vecnt_is_not_equal(a, b); }
+inline bool operator != (const vec4& a, const vec4& b) { vecnt_is_not_equal(a, b); }
 
-inline bool operator > (const vec4& a, const vec4& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator < (const vec4& a, const vec4& b)	{ return vecnt_is_less(a, b); }
-inline bool operator >= (const vec4& a, const vec4& b)	{ return vecnt_is_greater_equal(a, b); }
+inline bool operator > (const vec4& a, const vec4& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator <= (const vec4& a, const vec4& b)	{ return vecnt_is_less_equal(a, b); }
+inline bool operator >= (const vec4& a, const vec4& b)	{ return vecnt_is_greater_equal(a, b); }
 
 
 inline float vec4_dot(const vec4& a, const vec4& b) { return vecnt_dot(a, b); }
 inline float vec4_length_sq(const vec4& a) { return vecnt_length_sq(a); }	
 inline float vec4_length(const vec4& a) { return vecnt_length(a); }
-//,inline float vec4_distance_sq(const vec4& a, const vec4& b) { return vecnt_distance_sq(a, b); }
-//,inline float vec4_distance(const vec4& a, const vec4& b) { return vecnt_distance(a, b); }
+inline float vec4_distance_sq(const vec4& a, const vec4& b) { return vecnt_distance_sq(a, b); }
+inline float vec4_distance(const vec4& a, const vec4& b) { return vecnt_distance(a, b); }
 
 inline vec4 vec4_scale(const vec4& a, float s) { return (a * s); }
 inline vec4 vec4_lerp(const vec4& a, const vec4& b, float s) { return vecnt_lerp(a, b, s); }
 inline vec4 vec4_min(const vec4& a, const vec4& b) { return vecnt_min(a, b); }
 inline vec4 vec4_max(const vec4& a, const vec4& b) { return vecnt_max(a, b); }
-//,inline vec4 vec4_clamp(const vec4& a, const vec4& min, const vec4& max) { return vecnt_clamp(a, min, max); }
+inline vec4 vec4_clamp(const vec4& a, const vec4& min, const vec4& max) { return vecnt_clamp(a, min, max); }
 
 inline vec4 vec4_normalize(const vec4& a) { return vecnt_normalize(a); }
 
@@ -648,22 +586,22 @@ inline vec4 vec4_normalize(const vec4& a) { return vecnt_normalize(a); }
 // color4
 //---------------------------------------------------
 
-inline color4 operator - (const color4& a) { return (-a.v); }
+inline color4 operator - (const color4& a) { return color4(-a.v); }
 
-inline color4 operator + (const color4& a, const color4& b) { return (a.v + b.v); }
-inline color4 operator - (const color4& a, const color4& b) { return (a.v - b.v); }
-inline color4 operator * (const color4& a, const color4& b) { return (a.v * b.v); }
-//inline color4 operator / (const color4& a, const color4& b) { return (a.v / b.v); }
+inline color4 operator + (const color4& a, const color4& b) { return color4(a.v + b.v); }
+inline color4 operator - (const color4& a, const color4& b) { return color4(a.v - b.v); }
+inline color4 operator * (const color4& a, const color4& b) { return color4(a.v * b.v); }
+//inline color4 operator / (const color4& a, const color4& b) { return color4(a.v / b.v); }
 
-inline color4 operator + (const color4& a, float s) { return (a.v + s); }
-inline color4 operator - (const color4& a, float s) { return (a.v - s); }
-inline color4 operator * (const color4& a, float s) { return (a.v * s); }
-inline color4 operator / (const color4& a, float s) { return (a.v / s); }
+inline color4 operator + (const color4& a, float s) { return color4(a.v + s); }
+inline color4 operator - (const color4& a, float s) { return color4(a.v - s); }
+inline color4 operator * (const color4& a, float s) { return color4(a.v * s); }
+inline color4 operator / (const color4& a, float s) { return color4(a.v / s); }
 
-inline color4 operator + (float s, const color4& a) { return (a.v + s); }
-inline color4 operator - (float s, const color4& a) { return (a.v - s); }
-inline color4 operator * (float s, const color4& a) { return (a.v * s); }
-inline color4 operator / (float s, const color4& a) { return (a.v / s); }
+inline color4 operator + (float s, const color4& a) { return a + s; }
+inline color4 operator - (float s, const color4& a) { return a - s; }
+inline color4 operator * (float s, const color4& a) { return a * s; }
+inline color4 operator / (float s, const color4& a) { return a / s; }
 
 inline bool color4_equals_ep(const color4& a, const color4& b, float epsilon) { return vec4_equals_ep(a.v, b.v, epsilon); }
 inline bool color4_equals_ep2(const color4& a, const color4& b) { return vec4_equals_ep2(a.v, b.v); }
@@ -671,15 +609,13 @@ inline bool color4_equals_ep2(const color4& a, const color4& b) { return vec4_eq
 inline bool operator == (const color4& a, const color4& b) { return (a.v == b.v); }
 inline bool operator != (const color4& a, const color4& b) { return (a.v != b.v); }
 
-inline bool operator > (const color4& a, const color4& b)	{ return (a.v > b.v); }
-inline bool operator < (const color4& a, const color4& b)	{ return (a.v < b.v); }
-inline bool operator >= (const color4& a, const color4& b)	{ return (a.v >= b.v); }
-inline bool operator <= (const color4& a, const color4& b)	{ return (a.v <= b.v); }
-
+//inline bool operator < (const color4& a, const color4& b)	{ return (a.v < b.v); }
+//inline bool operator > (const color4& a, const color4& b)	{ return (a.v > b.v); }
+//inline bool operator <= (const color4& a, const color4& b)	{ return (a.v <= b.v); }
+//inline bool operator >= (const color4& a, const color4& b)	{ return (a.v >= b.v); }
 
 inline color4 color4_scale(const color4& a, float s) { return (a * s); }
 inline color4 color4_lerp(const color4& a, const color4& b, float s) { return vecnt_lerp(a, b, s); }
-
 
 
 //---
@@ -713,7 +649,7 @@ inline uint argb_from_color4(const color4& a) {
 	return packf_u32(a.a, a.r, a.g ,a.b);
 }
 
-// Only in d3dx9math D3DXCOLOR DWORD operator: D3DXCOLOR::operator DWORD () const {}
+// Only in d3dx9math D3DXCOLOR DWORD operator: D3DXCOLOR::operator DWORD() const {}
 inline uint argb_from_color4_d3dx9(const color4& a) {
 	////(uint) (x * 255.0f + 0.5f)) (d3dx9) instead of (uint) (x * 255.0f)) (packf_u32)
 	//uint ur = a.r >= 1.0f ? 0xff : a.r <= 0.0f ? 0x00 : (uint) (a.r * 255.0f + 0.5f);
@@ -795,22 +731,22 @@ inline color4 color4_adjust_contrast(const color4& a, float s) {
 // quat
 //---------------------------------------------------
 
-inline quat operator - (const quat& a) { return (-a.v); }
+inline quat operator - (const quat& a) { return quat(-a.v); }
 
-inline quat operator + (const quat& a, const quat& b) { return (a.v + b.v); }
-inline quat operator - (const quat& a, const quat& b) { return (a.v - b.v); }
-//inline quat operator * (const quat& a, const quat& b) { return (a.v * b.v); }
-//inline quat operator / (const quat& a, const quat& b) { return (a.v / b.v); }
+inline quat operator + (const quat& a, const quat& b) { return quat(a.v + b.v); }
+inline quat operator - (const quat& a, const quat& b) { return quat(a.v - b.v); }
+//inline quat operator * (const quat& a, const quat& b) { return quat(a.v * b.v); }
+//inline quat operator / (const quat& a, const quat& b) { return quat(a.v / b.v); }
 
-inline quat operator + (const quat& a, float s) { return (a.v + s); }
-inline quat operator - (const quat& a, float s) { return (a.v - s); }
-inline quat operator * (const quat& a, float s) { return (a.v * s); }
-inline quat operator / (const quat& a, float s) { return (a.v / s); }
+inline quat operator + (const quat& a, float s) { return quat(a.v + s); }
+inline quat operator - (const quat& a, float s) { return quat(a.v - s); }
+inline quat operator * (const quat& a, float s) { return quat(a.v * s); }
+inline quat operator / (const quat& a, float s) { return quat(a.v / s); }
 
-inline quat operator + (float s, const quat& a) { return (a.v + s); }
-inline quat operator - (float s, const quat& a) { return (a.v - s); }
-inline quat operator * (float s, const quat& a) { return (a.v * s); }
-inline quat operator / (float s, const quat& a) { return (a.v / s); }
+inline quat operator + (float s, const quat& a) { return a + s; }
+inline quat operator - (float s, const quat& a) { return a - s; }
+inline quat operator * (float s, const quat& a) { return a * s; }
+inline quat operator / (float s, const quat& a) { return a / s; }
 
 inline bool quat_equals_ep(const quat& a, const quat& b, float epsilon) { return vec4_equals_ep(a.v, b.v, epsilon); }
 inline bool quat_equals_ep2(const quat& a, const quat& b) { return vec4_equals_ep2(a.v, b.v); }
@@ -818,10 +754,10 @@ inline bool quat_equals_ep2(const quat& a, const quat& b) { return vec4_equals_e
 inline bool operator == (const quat& a, const quat& b) { return (a.v == b.v); }
 inline bool operator != (const quat& a, const quat& b) { return (a.v != b.v); }
 
-inline bool operator > (const quat& a, const quat& b)	{ return (a.v > b.v); }
 inline bool operator < (const quat& a, const quat& b)	{ return (a.v < b.v); }
-inline bool operator >= (const quat& a, const quat& b)	{ return (a.v >= b.v); }
+inline bool operator > (const quat& a, const quat& b)	{ return (a.v > b.v); }
 inline bool operator <= (const quat& a, const quat& b)	{ return (a.v <= b.v); }
+inline bool operator >= (const quat& a, const quat& b)	{ return (a.v >= b.v); }
 
 // Quaternion multiplication. The result represents the rotation b followed by the rotation a. (out = b * a)
 inline quat operator * (const quat& a, const quat& b) { 
@@ -833,22 +769,24 @@ inline quat operator * (const quat& a, const quat& b) {
 	return out; 
 }
 
+inline quat quat_mul_angles(const quat& a, const quat& b, float s) { return vecnt_mul_angles(a, b, s); }
+
 
 //---------------------------------------------------
 // plane
 //---------------------------------------------------
 
-inline plane operator - (const plane& a) { return (-a.v); }
+inline plane operator - (const plane& a) { return plane(-a.v); }
 
-inline plane operator + (const plane& a, float s) { return (a.v + s); }
-inline plane operator - (const plane& a, float s) { return (a.v - s); }
-inline plane operator * (const plane& a, float s) { return (a.v * s); }
-inline plane operator / (const plane& a, float s) { return (a.v / s); }
+inline plane operator + (const plane& a, float s) { return plane(a.v + s); }
+inline plane operator - (const plane& a, float s) { return plane(a.v - s); }
+inline plane operator * (const plane& a, float s) { return plane(a.v * s); }
+inline plane operator / (const plane& a, float s) { return plane(a.v / s); }
 
-inline plane operator + (float s, const plane& a) { return (a.v + s); }
-inline plane operator - (float s, const plane& a) { return (a.v - s); }
-inline plane operator * (float s, const plane& a) { return (a.v * s); }
-inline plane operator / (float s, const plane& a) { return (a.v / s); }
+inline plane operator + (float s, const plane& a) { return a + s; }
+inline plane operator - (float s, const plane& a) { return a - s; }
+inline plane operator * (float s, const plane& a) { return a * s; }
+inline plane operator / (float s, const plane& a) { return a / s; }
 
 inline bool plane_equals_ep(const plane& a, const plane& b, float epsilon) { return vec4_equals_ep(a.v, b.v, epsilon); }
 inline bool plane_equals_ep2(const plane& a, const plane& b) { return vec4_equals_ep2(a.v, b.v); }
@@ -856,10 +794,11 @@ inline bool plane_equals_ep2(const plane& a, const plane& b) { return vec4_equal
 inline bool operator == (const plane& a, const plane& b) { return (a.v == b.v); }
 inline bool operator != (const plane& a, const plane& b) { return (a.v != b.v); }
 
-inline bool operator > (const plane& a, const plane& b)		{ return (a.v > b.v); }
 inline bool operator < (const plane& a, const plane& b)		{ return (a.v < b.v); }
-inline bool operator >= (const plane& a, const plane& b)	{ return (a.v >= b.v); }
+inline bool operator > (const plane& a, const plane& b)		{ return (a.v > b.v); }
 inline bool operator <= (const plane& a, const plane& b)	{ return (a.v <= b.v); }
+inline bool operator >= (const plane& a, const plane& b)	{ return (a.v >= b.v); }
+
 
 
 //D3DXPlaneDot
@@ -888,7 +827,7 @@ inline plane plane_normalize(const plane& a) {
     float norm = vec3_length(a.normal);
     if (norm) {
         float inv_norm = scast<float>(1.0)/norm;
-        for_range (i, 0, out.size()) {
+        for_range (i, 0, plane::size()) {
 			out[i] = a[i] * inv_norm;
 		}
     } else {
@@ -925,10 +864,10 @@ inline mat4 operator - (const mat4& a, float s) { return vecnt_sub_s(a, s); }
 inline mat4 operator * (const mat4& a, float s) { return vecnt_mul_s(a, s); }
 inline mat4 operator / (const mat4& a, float s) { return vecnt_div_s(a, s); }
 
-inline mat4 operator + (float s, const mat4& a) { return vecnt_add_s(a, s); }
-inline mat4 operator - (float s, const mat4& a) { return vecnt_sub_s(a, s); }
-inline mat4 operator * (float s, const mat4& a) { return vecnt_mul_s(a, s); }
-inline mat4 operator / (float s, const mat4& a) { return vecnt_div_s(a, s); }
+inline mat4 operator + (float s, const mat4& a) { return a + s; }
+inline mat4 operator - (float s, const mat4& a) { return a - s; }
+inline mat4 operator * (float s, const mat4& a) { return a * s; }
+inline mat4 operator / (float s, const mat4& a) { return a / s; }
 
 inline bool mat4_equals_ep(const mat4& a, const mat4& b, float epsilon) { return vecnt_is_equal_ep(a, b, epsilon); }
 inline bool mat4_equals_ep2(const mat4& a, const mat4& b) { return vecnt_is_equal_ep2(a, b); }
@@ -936,10 +875,15 @@ inline bool mat4_equals_ep2(const mat4& a, const mat4& b) { return vecnt_is_equa
 inline bool operator == (const mat4& a, const mat4& b) { return vecnt_is_equal(a, b); }
 inline bool operator != (const mat4& a, const mat4& b) { return vecnt_is_not_equal(a, b); }
 
-inline bool operator > (const mat4& a, const mat4& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator < (const mat4& a, const mat4& b)	{ return vecnt_is_less(a, b); }
-inline bool operator >= (const mat4& a, const mat4& b)	{ return vecnt_is_greater_equal(a, b); }
+inline bool operator > (const mat4& a, const mat4& b)	{ return vecnt_is_greater(a, b); }
 inline bool operator <= (const mat4& a, const mat4& b)	{ return vecnt_is_less_equal(a, b); }
+inline bool operator >= (const mat4& a, const mat4& b)	{ return vecnt_is_greater_equal(a, b); }
+
+
+// Component wise multiplication and division. Hadamard product
+inline mat4 mat4_mul_cw(const mat4& ma, const mat4& mb) { return vecnt_mul(ma, mb); }
+inline mat4 mat4_div_cw(const mat4& ma, const mat4& mb) { return vecnt_div(ma, mb); }
 
 
 // Multiplying in forward order like d3d
@@ -1021,6 +965,7 @@ inline mat4 mat4_transpose(const mat4& ma) {
 	);
 }
 
+inline mat4 mat4_lerp(const mat4& ma, const mat4& mb, float s) { return vecnt_lerp(ma, mb, s); }
 
 //-----------------------
 inline float mat4_determinant(const mat4& ma) {

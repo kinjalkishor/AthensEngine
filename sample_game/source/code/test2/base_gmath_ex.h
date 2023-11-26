@@ -5,6 +5,54 @@
 namespace gm
 {
 
+//========================================================================================================================
+// Template functions for N size
+//========================================================================================================================
+// v - end points
+// t - tangent directions at end points
+// s (alpha) - distance along spline
+// cubic interpolation
+// Hermite interpolation between position V1, tangent T1 (when s == 0) and position V2, tangent T2 (when s == 1).
+template<class T> inline T vecnt_hermite(const T& v1, const T& t1, const T& v2, const T& t2, float s) {
+    T out = T::k_zero(); 
+    float h1, h2, h3, h4;
+    //set_hermite_coeffcients(h1, h2, h3, h4, s);
+    float s3 = mf::cube(s);
+	float s2 = mf::square(s); 
+
+    //h1 = (2.0f * s*s*s) - (3.0f * s*s) + 1.0f;
+    //h2 = (s*s*s) - (2.0f * s*s) + s;
+    //h3 = -(2.0f * s*s*s) + (3.0f * s*s);
+    //h4 = (s*s*s) - (s*s);
+
+    h1 = (scast<float>(2.0) * s3) - (scast<float>(3.0) * s2) + scast<float>(1.0);
+    h2 = (s3) - (scast<float>(2.0) * s2) + s;
+    h3 = (-scast<float>(2.0) * s3) + (scast<float>(3.0) * s2);
+    h4 = (s3) - (s2);    
+
+    for_range (i, 0, T::size()) { out[i] = h1 * v1[i] + h2 * t1[i] + h3 * v2[i] + h4 * t2[i]; }
+
+    return out;
+}
+
+// CatmullRom interpolation between V1 (when s == 0) and V2 (when s == 1)
+template<class T> inline T vecnt_catmull_rom(const T& v0, const T& v1, const T& v2, const T& v3, float s) {
+    T out = T::k_zero(); 
+    float s3 = mf::cube(s);
+	float s2 = mf::square(s); 
+
+    for_range (i, 0, T::size()) {
+        out[i] = scast<float>(0.5) * (scast<float>(2.0) * v1[i] + (v2[i] - v0[i]) * s + (scast<float>(2.0) * v0[i] - scast<float>(5.0) * v1[i] 
+            + scast<float>(4.0) * v2[i] - v3[i]) * s2 + (v3[i] -scast<float>(3.0) * v2[i] + scast<float>(3.0) * v1[i] - v0[i]) * s3);
+    }
+
+    return out;
+}
+
+// Barycentric coordinates.  V1 + f(V2-V1) + g(V3-V1)
+template<class T> inline T vecnt_bary_centric(const T& v1, const T& v2, const T& v3, float f, float g) {
+    T out = T::k_zero(); for_range (i, 0, T::size()) { out[i] = (scast<float>(1.0)-f-g) * v1[i] + f * v2[i] + g * v3[i]; } return out;
+}
 
 //------------------------------------------------------------------
 inline vec2 vec2_hermite(const vec2& v1, const vec2& t1, const vec2& v2, const vec2& t2, float s) {
@@ -32,7 +80,7 @@ inline vec3 vec3_bary_centric(const vec3& v1, const vec3& v2, const vec3& v3, fl
 //----------------------
 // Cross-product in 4 dimensions.
 inline vec4 vec4_cross(const vec4& a, const vec4& b, const vec4& c) {
-    vec4 out = out.k_zero();
+    vec4 out = vec4::k_zero();
     out.x = a.y * (b.z * c.w - c.z * b.w) - a.z * (b.y * c.w - c.y * b.w) + a.w * (b.y * c.z - b.z *c.y);
     out.y = -(a.x * (b.z * c.w - c.z * b.w) - a.z * (b.x * c.w - c.x * b.w) + a.w * (b.x * c.z - c.x * b.z));
     out.z = a.x * (b.y * c.w - c.y * b.w) - a.y * (b.x *c.w - c.x * b.w) + a.w * (b.x * c.y - c.x * b.y);
@@ -52,10 +100,6 @@ inline vec4 vec4_bary_centric(const vec4& v1, const vec4& v2, const vec4& v3, fl
 
 
 //----------------------
-// Component wise multiplication and division. Hadamard product
-inline mat4 mat4_mul_cw(const mat4& ma, const mat4& mb) { return vecnt_mul(ma, mb); }
-inline mat4 mat4_div_cw(const mat4& ma, const mat4& mb) { return vecnt_div(ma, mb); }
-
 // Convert Direct3D projection to OpenGL 
 // Convert Direct3D projection matrix to an OpenGL one by applying a Z scale of 2 and a translation of -1. 
 // This will make [0,+1] to [-1,+1].
@@ -277,7 +321,7 @@ inline vec3 plane_intersect_line(const plane& p, const vec3& pt1, const vec3& pt
 
     temp = (p.d + vec3_dot(normal, pt1)) / dot;
 
-    for_range (i, 0, out.size()) {
+    for_range (i, 0, vec3::size()) {
         out[i] = pt1[i] - temp * direction[i];
     }
 
@@ -345,14 +389,13 @@ inline quat quat_inverse(const quat& a) {
     return out;
 }
 
-//, inline quat operator / (const quat& a, const quat& b) { return a * quat_inverse(b); }
+//, inline quat operator/(const quat& a, const quat& b) { return a * quat_inverse(b); }
 
 inline float quat_dot(const quat& a, const quat& b) { return vec4_dot(a.v, b.v); }
 inline bool quat_is_identity(const quat& a) { return (a == quat::k_identity()); }
-inline quat quat_normalize(const quat& a) {	return vec4_normalize(a.v); }
+inline quat quat_normalize(const quat& a) {	return quat(vec4_normalize(a.v)); }
 //, inline quat quat_concatenate(const quat& a, const quat& b) { return b * a; }
 
-inline quat quat_mul_angles(const quat& a, const quat& b, float s) { return vecnt_mul_angles(a, b, s); }
 
 //----------------------------------------
 // Build a matrix from a quaternion
@@ -487,7 +530,7 @@ inline quat quat_slerp(const quat& unit_quat_a, const quat& unit_quat_b, float s
     }
 
     quat out = quat::k_zero();
-    for_range (i, 0, out.size()) {
+    for_range (i, 0, quat::size()) {
         out[i] = s1 * a[i] + s2 * b[i];
     }
     return out;

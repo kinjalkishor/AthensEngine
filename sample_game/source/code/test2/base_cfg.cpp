@@ -1,4 +1,4 @@
-#include "base_ini2.h"
+#include "base_cfg.h"
 
 cfg_sys g_cfg;
 

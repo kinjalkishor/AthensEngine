@@ -21,9 +21,10 @@
 
 //#include "win_main_t3.cpp"
 //#include "win_main_q2.cpp"
-#include "win_main_irr.cpp"
-//#include "tut_wm_d3d9b.cpp"
+//#include "win_main_irr.cpp"
+//#include "tut_wm_rnd.cpp"
 
+#include "win_main_t2.cpp"
 
 //#include "win_main_sb.cpp"
 //#include "win_main_q2_ex.cpp"

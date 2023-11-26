@@ -1,14 +1,23 @@
 #pragma once
 
-#include "base_types.h"
+#if 1
+
+#include "base_ds_string_sso.h"
+
+#else
+
 #include "base_def.h"
 #include "base_print.h"
-
 #include "base_ds_algorithm.h"
+
+#include "base_ds_iterators.h"
+
+#include <initializer_list>
 
 
 namespace sdf
 {
+
 
 template<class T>
 class basic_string {
@@ -18,11 +27,10 @@ private:
 	isz m_capacity = 0;      
     T* m_data = nullptr; 
 
-    T* allocate(size_t cnt) {
+	T* allocate(size_t cnt) {
         if (m_allocator) {
             return static_cast<T*>(m_allocator->allocate(sizeof(T)*cnt));
         } else {
-            //println("DEFAULT ALLOC CALLED");
             return static_cast<T*>(malloc(sizeof(T)*cnt));
         }
     }
@@ -35,139 +43,237 @@ private:
     }
 
     isz next_capacity(isz requested_size) { 
-        // if requested_size is pow_of_2 return (next_pow_of_2 - 1), to make space for null_char.
+		// if requested_size is pow_of_2 return (next_pow_of_2 - 1), to make space for null_char.
         isz result = sdf::next_power2_ceil(requested_size);
         if (result == requested_size) {
             result = sdf::next_power2_ceil(requested_size+1);
         }
         // allocate count+1, making allocation pow_of_2 with space for null_char. 
         return result-1;
-
-        //return sdf::vec_calculate_growth(requested_size, capacity());
-		//return sdf::str_calculate_growth<T>(requested_size, capacity());
-		//return requested_size;
 	}
 
     bool is_reserve_needed(isz required_size) { return (required_size > capacity()); }
 
 public:
 
-    basic_string() {}
-
+	basic_string() {}
+    virtual ~basic_string() { clear_memory(); }
 
     void clear_memory() {
-        if (m_data) {
+        if (m_data) {            
             deallocate(m_data);            
             m_data = nullptr;
         }
-        m_size = 0;
-        m_capacity = 0;
+		m_capacity = 0;
+        m_size = 0;        
     }
-
-    virtual ~basic_string() { clear_memory(); }
+    
+	void clear() {
+		m_capacity = 0;
+        m_size = 0;        
+    }
 
     basic_string(isz count) {
         resize(count);
     }
 
+
+    void create_new_object(T*& dest_ptr, const T* src_ptr, isz count, isz copy_size) {
+		// Allocate new memory block
+        // Different from vector, allocating one char extra for terminating null char.
+        dest_ptr = allocate(count + 1);        
+        sdf::mem_copy(&dest_ptr[0], &src_ptr[0], copy_size);
+        dest_ptr[copy_size] = sdf::k_null_char<T>();
+	}
+	void destroy_old_memory_block(isz old_size) {
+		// Dellocate old memory block
+		if (m_data) {
+            deallocate(m_data);   
+        }
+	}
+	void set_to_new_memory_block(T*& dest_ptr, T*& src_ptr) {
+		// Point data to new memory block
+        dest_ptr = src_ptr;
+        src_ptr = nullptr;
+	}
+
+	void copy_from_other(const T* src, isz src_len, isz src_capacity) {
+		T* new_data = nullptr;
+		create_new_object(new_data, src, src_capacity, src_len);
+		destroy_old_memory_block(m_size);      
+		set_to_new_memory_block(m_data, new_data);
+
+		m_capacity = src_capacity;
+        m_size = src_len;        
+    }
+    
+
+
+    // Copy constructor
+    basic_string(const basic_string& other) {
+        copy_from_other(other.data(), other.size(), other.capacity());
+    }
+
+    basic_string(const T* src, isz src_len) {
+        copy_from_other(src, src_len, src_len);
+    }
+    basic_string& assign_data(const T* src, isz src_len) {
+        copy_from_other(src, src_len, src_len); 
+        return *this;
+    }
+
+    void swap(basic_string& other) noexcept {
+        sdf::swap(m_data, other.m_data);
+		sdf::swap(m_capacity, other.m_capacity);
+        sdf::swap(m_size, other.m_size);        
+    }
+
+    // Assignement operator
+    // Copy Swap idiom
+    basic_string& operator =(const basic_string& other) {
+        // check for self assignment.
+        if (this != &other) {
+            basic_string temp(other); // Copy-constructor -- RAII
+            temp.swap(*this); // Non-throwing swap
+            // or
+            //basic_string(other).swap(*this); //Copy-constructor and non-throwing swap
+        }      
+        // Old resources are released with the destruction of the temporary above
+        return *this;
+    }
+
+    void copy_on_move(basic_string& other) noexcept {
+        m_data = other.m_data;
+		m_capacity = other.m_capacity;
+        m_size = other.m_size;        
+    }
+
+    void reset_on_move() noexcept {
+        m_data = nullptr;
+		m_capacity = 0;
+        m_size = 0;        
+    }
+
+    // Move constructor.
+    basic_string(basic_string&& other) noexcept {
+        //printf("Move constructor called.\n");
+        // Free original data.
+        clear_memory();
+        // Copy the source object data pointer & fields into this object.
+        copy_on_move(other);
+        // Release the data pointer from the source object so that
+        // the destructor does not free the memory multiple times.
+        other.reset_on_move();        
+    }
+
+    // Move assignment.
+    basic_string& operator =(basic_string&& other) noexcept {
+        //printf("Move assignment called.\n");
+        // Do not move the object into itself.
+        if (this != &other) {
+            clear_memory(); 
+            copy_on_move(other);
+            other.reset_on_move();
+        }
+        return *this;
+    }    
+
+    constexpr basic_string(::std::initializer_list<T> ilist) {
+        //_Construct_n(_Convert_size<size_type>(_Ilist.size()), _Ilist.begin(), _Ilist.end());
+        const isz list_size = ilist.end() - ilist.begin();
+        resize(list_size);
+        for (isz i=0; i<list_size; ++i) { m_data[i] = *(ilist.begin()+i); }
+		m_data[list_size] = sdf::k_null_char<T>();
+    }
+
     isz size() const { return m_size; }
 	isz capacity() const { return m_capacity; }	
-    bool empty() { return (size() == 0); }
+    bool empty() const { return (size() == 0); }
+	isz max_size() const { return ISZ_MAX; }
 
     const T* data() const { return m_data; }
 	T* data() { return m_data; }
 
-    const T& operator[] (isz i) const { return m_data[i]; }
-	T& operator[] (isz i) { return m_data[i]; }
+    const T& operator [](isz i) const { return m_data[i]; }
+	T& operator [](isz i) { return m_data[i]; } 
 
-    const T* c_str() const { return m_data; }
+    /*const T& at(isz i) const { 
+		if (i >= 0 && i < size()) {
+			return m_data[i]; 
+		} else {
+		}
+	}
+	T& at(isz i) { 
+		if (i >= 0 && i < size()) {
+			return m_data[i]; 
+		} else {
+		}
+	} */
 
-    void reserve_allocate(isz count, isz copy_size, isz old_size) {
-        // Allocate new memory block
-        // Different from vector, allocating one char extra for terminating null char.
-        T* new_data = allocate(count + 1);
-        //for_range (i, 0, copy_size) { sdf::element_construct(&new_data[i]); }
-        // Copy old elements
-        //for_range (i, 0, copy_size) { new_data[i] = m_data[i]; }
-        //for_range (i, 0, copy_size) { sdf::element_copy_construct(&new_data[i], m_data[i]); }
-        sdf::mem_copy(&new_data[0], &m_data[0], copy_size);
+	const T& front() const { return m_data[0]; }
+	T& front() { return m_data[0]; }
+	const T& back() const { return m_data[m_size-1]; }
+	T& back() { return m_data[m_size-1]; }
 
-        // Dellocate old memory block
-        //for_range (i, 0, old_size) { sdf::element_destruct(&m_data[i]); }
-        deallocate(m_data);            
 
-        // Point data to new memory block
-        m_data = new_data;
-        new_data = nullptr;
+    void reserve_exact(isz count) {
+        if (count == capacity()) { return; }
+        // Do not reallocate on shrink.
+        if (count <= size()) { return; }
+
+        T* new_data = nullptr;
+        create_new_object(new_data, m_data, count, m_size);
+        destroy_old_memory_block(m_size);    
+        set_to_new_memory_block(m_data, new_data);
 
         m_capacity = count;
     }
 
-    void reserve_exact(isz count) {
-        // Don't reserve when count is less than or equal to size.
-        // count is greater than size for reserve.
-        if (count <= size()) { return; }
-
-        isz old_size = size();
-
-        reserve_allocate(count, old_size, old_size);
-
-        // Don't change size.
-        //m_size = count;
-
-        m_data[m_size] = sdf::k_null_char<T>();
-    }
-
     void resize_exact(isz count, bool reserve_growth) {
-        // Don't resize when count is equal to size.
         if (count == size()) { return; }
-
-        isz old_size = size();
 
         // Expand.
         isz copy_size = size();
         // Shrink.
-        if (count < size()) {
-            copy_size = count;
-        }
+        if (count < size()) { copy_size = count; }
 
-        isz reserve_count = count;
-        if (reserve_growth) {
-            isz next_count = next_capacity(count);
-            reserve_count = next_count;
-        }
+        isz final_count = count;
+        if (reserve_growth) { final_count = next_capacity(count); }
 
-        reserve_allocate(reserve_count, copy_size, old_size);
+        T* new_data = nullptr;
+        create_new_object(new_data, m_data, final_count, copy_size);        
+        destroy_old_memory_block(m_size);    
+        set_to_new_memory_block(m_data, new_data);
 
+        // Expand.
+        // No elemnt construction required for string.
+
+        m_capacity = count;
         m_size = count;
-
-        m_data[m_size] = sdf::k_null_char<T>();
     }
 
-
     //---------------------
-    // Different from vector, resize & reserve to next_power2_ceil
     void resize(isz count) { 
         if (count > size()) {
             if (count > capacity()) {
                 // Expand.
-                resize_exact(count, true);
+                // Memory not available, reallocate.
+                resize_exact(count, false);				
             } else {
                 // Construct extra elements.
-                //for_range (i, size(), count) { sdf::element_construct(&m_data[i]); }
-                m_size = count;
-                m_data[m_size] = sdf::k_null_char<T>();
+                // Memory available.
+                m_size = count;                
             }
         } else {
             // Shrink.
             // Destruct extra elements.
-            //for_range (i, count, size()) { sdf::element_destruct(&m_data[i]); }
-            m_size = count;
-            m_data[m_size] = sdf::k_null_char<T>();
+            // Memory not deallocated.            
+            m_size = count;            
         }        
+		m_data[m_size] = sdf::k_null_char<T>();
     }
 
-    void reserve(isz count) {
+    void reserve_growth(isz count) {
         // Expand only.
         if (count > capacity()) {
             //reserve_exact(count);
@@ -177,28 +283,98 @@ public:
         // Do nothing on Shrink.
     }
 
+    void reserve(isz count) {
+        // Expand only.
+        if (count > capacity()) {
+            reserve_exact(count);       
+        }
+        // Do nothing on Shrink.
+    }
 
     void shrink_to_fit() { 
         resize_exact(size()); 
-    }   
+    }
 
-    void assign_data(const T* src, isz src_len) {
-        resize(src_len);
-        sdf::mem_copy(&m_data[0], &src[0], size());
+
+    //---------------------
+    void push_back(const T& element) {
+        const isz required_size = size()+1;
+        if (is_reserve_needed(required_size)) {
+            reserve_growth(required_size);
+        }
+        m_data[m_size] = element;
+        m_size += 1;         
         m_data[m_size] = sdf::k_null_char<T>();
     }
 
-    //---------------------
+    void pop_back() {
+        if (!empty()) {            
+            m_size -= 1;
+            m_data[m_size] = sdf::k_null_char<T>();
+        }
+    }    
 
-    void assign(const T* src) { assign_data(src, sdf::strfz_len(src)); }
-	void assign(const basic_string& src) { assign_data(src.data(), src.size()); }
 
-    basic_string(const T* src) { assign(src); }
-    basic_string(const basic_string& src) { assign(src); }
+    void insert_pos(isz pos_index, const T& element) {
+        // Extra space = size()+N
+        const isz required_size = size()+1;         
+        if (pos_index <= size()) {
+            if (is_reserve_needed(required_size)) {
+                reserve_growth(required_size);
+            }
+            // one less than required_size.
+            const isz last_pos_index = required_size-1;
+            // Construct extra elements at end.            
+            for (isz i=last_pos_index; i>pos_index; --i) { m_data[i] = m_data[i-1]; }
+            // Insert element after shifting.
+            m_data[pos_index] = element;
+            m_size += 1;
+            m_data[m_size] = sdf::k_null_char<T>();
+        }        
+    }
 
-	basic_string& operator=(const T* src) { return basic_string(src); }
-	basic_string& operator=(const basic_string& src) { return basic_string(src); }
+    void remove_pos(isz pos_index) {
+        const isz last_pos_index = size()-1;
+        if (pos_index <= size()) {
+            for (isz i=pos_index; i<size(); ++i) { m_data[i] = m_data[i+1]; }            
+            m_size -= 1;
+            m_data[m_size] = sdf::k_null_char<T>();
+        }
+    }
+    
+	sdf::optional<isz> find_index(const T& element) {
+        return sdf::vec_find_index(data(), size(), element);
+    }    
+	
+    //=========================================================
+    using value_type      = T;
+    using pointer         = T*;
+    using const_pointer   = const T*;
+    using reference       = T&;
+    using const_reference = const T&;
+    using size_type       = isz;
+    using difference_type = isz;
 
+    using const_iterator = vector_const_iterator<basic_string<T>>;
+    using iterator = vector_iterator<basic_string<T>>;
+    
+
+    const_iterator begin() const noexcept { return const_iterator(m_data); }
+    const_iterator end() const noexcept { return const_iterator(m_data + m_size); }
+
+    iterator begin() noexcept { return iterator(m_data); }
+    iterator end() noexcept { return iterator(m_data + m_size); }    
+
+
+    //=========================================================
+    const T* c_str() const { return m_data; }
+
+    basic_string& assign(const T* src) { return assign_data(src, sdf::strfz_len(src)); }
+	basic_string& assign(const basic_string& src) { return assign_data(src.data(), src.size()); }
+
+    basic_string(const T* src) { assign_data(src, sdf::strfz_len(src)); }
+
+	basic_string& operator =(const T* src) { return assign_data(src, sdf::strfz_len(src)); }
 
     basic_string& append_data(const T* src, isz src_len) {
         isz old_size = size();
@@ -209,9 +385,13 @@ public:
         return *this;        
     }	
 
-    basic_string& append(const T* src) { return append_data(src, strz_len(src)); }
+    basic_string& append(const T* src) { return append_data(src, sdf::strfz_len(src)); }
     basic_string& append(const basic_string& src) { return append_data(src.data(), src.size()); }
+
+    bool operator ==(const T* src) { return sdf::strfz_equals(m_data, src); }
+    bool operator ==(const basic_string& src) { return sdf::strfz_equals(m_data, src.c_str()); }
 };
+
 
 using string = basic_string<char>;
 using wstring = basic_string<wchar_t>;
@@ -232,12 +412,10 @@ inline void str_mbs_from_wcs(string& dest, const wchar_t* src, isz src_len) {
 }
 
 inline void strz_wcs_from_mbs(wstring& dest, const char* src) {
-    isz src_len = sdf::strfz_len(src);
-    str_wcs_from_mbs(dest, src, src_len);
+    str_wcs_from_mbs(dest, src, sdf::strfz_len(src));
 }
 inline void strz_mbs_from_wcs(string& dest, const wchar_t* src) {
-    isz src_len = sdf::strfz_len(src);
-    str_mbs_from_wcs(dest, src, src_len);
+    str_mbs_from_wcs(dest, src, sdf::strfz_len(src));
 }
 
 inline void str_wcs_from_mbs(wstring& dest, const string& src) {
@@ -248,3 +426,24 @@ inline void str_mbs_from_wcs(string& dest, const wstring& src) {
 }
 
 }
+
+#endif
+
+#if 0
+	//sdf::vector<float> ab{1.0, 2.0, 3.0};
+	sdf::string ab{"012345678901234567890123456789_1"};
+	//sdf::string ab{'h','e','l','l','o','\0'};
+	//for (auto v : ab) { println("{}, ", v); }
+	//for_range (i, 0, ab.size()) { println("{}, ", ab[i]); }
+	//println("{}", ab.data());
+
+	ab.push_back('2');
+	ab.pop_back();
+	ab.pop_back();
+	ab.pop_back();
+	ab.push_back('1');
+
+	println("{}", ab.c_str());
+
+	println("{}", sizeof(sdf::string));
+#endif

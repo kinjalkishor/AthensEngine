@@ -16,11 +16,12 @@
 //#include <string.h>
 //#include <stdlib.h>
 //#include <type_traits>
-//#include <initializer_list>
+#include <initializer_list>
 
 
 // std::vector resize & reserve to exact size, push_back increases by algorithm
 // std::string resize & reserve, push_back to next_power2_ceil
+// base string size without sso buffer is 40 chars
 
 //=====================================
 
@@ -31,7 +32,6 @@ namespace sdf
 template<class T>
 class vector {
 private:
-
     sys_allocator* m_allocator = nullptr; 
     isz m_size = 0;
 	isz m_capacity = 0;      
@@ -71,11 +71,18 @@ public:
             for_range (i, 0, size()) { sdf::element_destruct(&m_data[i]); }
             deallocate(m_data);            
             m_data = nullptr;
-        }
-        m_size = 0;
+        }        
         m_capacity = 0;
+        m_size = 0;
     }
     
+	void clear() {
+        if (m_data) {
+            for_range (i, 0, size()) { sdf::element_destruct(&m_data[i]); }            
+        }
+        m_capacity = 0;
+        m_size = 0;        
+    }
 
     vector(isz count) {
         resize(count);
@@ -106,8 +113,8 @@ public:
 		destroy_old_memory_block(m_size);      
 		set_to_new_memory_block(m_data, new_data);
 
-        m_size = src_len;
         m_capacity = src_capacity;
+        m_size = src_len;        
     }
     
 
@@ -120,19 +127,20 @@ public:
     vector(const T* src, isz src_len) {
         copy_from_other(src, src_len, src_len);
     }
-    void assign_data(const T* src, isz src_len) {
+    vector& assign_data(const T* src, isz src_len) {
         copy_from_other(src, src_len, src_len);
+        return *this;
     }
 
     void swap(vector& other) noexcept {
         sdf::swap(m_data, other.m_data);
-        sdf::swap(m_size, other.m_size);
         sdf::swap(m_capacity, other.m_capacity);
+        sdf::swap(m_size, other.m_size);        
     }
 
     // Assignement operator
     // Copy Swap idiom
-    vector& operator=(const vector& other) {
+    vector& operator =(const vector& other) {
         // check for self assignment.
         if (this != &other) {
             vector temp(other); // Copy-constructor -- RAII
@@ -146,14 +154,14 @@ public:
 
     void copy_on_move(vector& other) noexcept {
         m_data = other.m_data;
-        m_size = other.m_size;
         m_capacity = other.m_capacity;
+        m_size = other.m_size;        
     }
 
     void reset_on_move() noexcept {
         m_data = nullptr;
-        m_size = 0;
         m_capacity = 0;
+        m_size = 0;        
     }
 
     // Move constructor.
@@ -169,7 +177,7 @@ public:
     }
 
     // Move assignment.
-    vector& operator=(vector&& other) noexcept {
+    vector& operator =(vector&& other) noexcept {
         //printf("Move assignment called.\n");
         // Do not move the object into itself.
         if (this != &other) {
@@ -180,12 +188,12 @@ public:
         return *this;
     }    
 
-    //constexpr vector(std::initializer_list<T> ilist) {
-    //    //_Construct_n(_Convert_size<size_type>(_Ilist.size()), _Ilist.begin(), _Ilist.end());
-    //    const isz list_size = ilist.end() - ilist.begin();
-    //    resize(list_size);
-    //    for (isz i=0; i<list_size; ++i) { m_data[i] = *(ilist.begin()+i); }
-    //}
+    constexpr vector(::std::initializer_list<T> ilist) {
+        //_Construct_n(_Convert_size<size_type>(_Ilist.size()), _Ilist.begin(), _Ilist.end());
+        const isz list_size = ilist.end() - ilist.begin();
+        resize(list_size);
+        for (isz i=0; i<list_size; ++i) { m_data[i] = *(ilist.begin()+i); }
+    }
 
     isz size() const { return m_size; }
 	isz capacity() const { return m_capacity; }	
@@ -195,8 +203,8 @@ public:
     const T* data() const { return m_data; }
 	T* data() { return m_data; }
 
-    const T& operator[] (isz i) const { return m_data[i]; }
-	T& operator[] (isz i) { return m_data[i]; } 
+    const T& operator [](isz i) const { return m_data[i]; }
+	T& operator [](isz i) { return m_data[i]; } 
 
     /*const T& at(isz i) const { 
 		if (i >= 0 && i < size()) {
@@ -297,16 +305,7 @@ public:
 
     void shrink_to_fit() { 
         resize_exact(size()); 
-    }       
-    
-    void clear() {
-        if (m_data) {
-            for_range (i, 0, size()) { sdf::element_destruct(&m_data[i]); }            
-        }
-        m_size = 0;
-        m_capacity = 0;
     }
-
 
     //---------------------
     void push_back(const T& element) {
@@ -315,18 +314,14 @@ public:
             reserve_growth(required_size);
         }
         sdf::element_copy_construct(&m_data[m_size], element);
-        ++m_size;             
+        m_size += 1;             
     }
 
     void pop_back() {
         if (!empty()) {
             sdf::element_destruct(&m_data[m_size-1]);
-            --m_size;
+            m_size -= 1;
         }
-    }
-
-    sdf::optional<isz> find_index(const T& element) {
-        return sdf::vec_find_index(data(), size(), element);
     }    
 
 
@@ -357,12 +352,22 @@ public:
         }
     }
     
-
+	sdf::optional<isz> find_index(const T& element) {
+        return sdf::vec_find_index(data(), size(), element);
+    }    
+	
     //=========================================================
-    using value_type = T;
+    using value_type      = T;
+    using pointer         = T*;
+    using const_pointer   = const T*;
+    using reference       = T&;
+    using const_reference = const T&;
+    using size_type       = isz;
+    using difference_type = isz;
+
     using const_iterator = vector_const_iterator<vector<T>>;
     using iterator = vector_iterator<vector<T>>;
-    
+
 
     const_iterator begin() const noexcept { return const_iterator(m_data); }
     const_iterator end() const noexcept { return const_iterator(m_data + m_size); }
@@ -382,6 +387,12 @@ template<class T>
 inline isz vec_size_bytes(const sdf::vector<T>& v) {
 	return (sizeof(T) * v.size());
 }
+
+
+
+
+//============================================================
+
 
 
 }

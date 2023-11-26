@@ -311,7 +311,7 @@ public:
 			  m30, m31, m32, m33, } {}		
 
 
-	mat4(const float* arr)			{ q_assert(arr); forloopi(i, size()) { (*this)[i] = arr[i]; } }	
+	mat4(const float* arr)			{ q_assert(arr); for_range(i, size()) { (*this)[i] = arr[i]; } }	
 
 	
 	const float* data() const				{ return &e[0]; }
@@ -408,7 +408,7 @@ template<class T, class U> inline T vecnt_mul_matrix_nm(const T& a, const U& b) 
     const int c2 = b.dim_c();  
     //if (c1!=r2) { q_debug("Error: column of first matrix not equal to row of second.\n"); }
     
-    T out = out.k_zero();  
+    T out = T::k_zero();  
 	for_range(i, r1) {
         for_range(j, c2) {
             for_range(k, c1) {
@@ -420,7 +420,7 @@ template<class T, class U> inline T vecnt_mul_matrix_nm(const T& a, const U& b) 
 }
 
 template<class T> inline T vecnt_mul_matrix(const T& a, const T& b) { 
-    T out = out.k_zero();  
+    T out = T::k_zero();  
 	for_range(i, out.dim()) {
         for_range(j, out.dim()) {
             for_range(k, out.dim()) {
@@ -433,7 +433,7 @@ template<class T> inline T vecnt_mul_matrix(const T& a, const T& b) {
 
 template<class T> inline T vecnt_transpose_matrix(const T& a) 
 {
-    T out = out.k_zero();  
+    T out = T::k_zero();  
 	for_range(i, out.dim()) { 
 		for_range(j, out.dim()) { 
 			out.r[i][j] = a.r[j][i];
@@ -473,7 +473,7 @@ using tex2 = ttex2<float>;
 
 inline vec3 vec3_cross(const vec3& a, const vec3& b) 
 {
-	vec3 out = out.k_zero();
+	vec3 out = vec3::k_zero();
 
 	out[0] = a.y*b.z - a.z*b.y;
 	out[1] = a.z*b.x - a.x*b.z;
@@ -582,7 +582,7 @@ inline vec2 vec2_clamp(const vec2& a, const vec2& low, const vec2& high) {
 }
 
 inline vec2 vec2_normalize(const vec2& a) {
-	vec2 out = out.k_zero(); 
+	vec2 out = vec2::k_zero(); 
 	const float length = vec2_length(a);
 	if (length > 0.0) {
 		const float inv_length = 1.0/length;
@@ -628,9 +628,9 @@ inline mat4 mat4_mul_matrix(const mat4& a, const mat4& b)
 }
 inline mat4 mat4_mul_matrix(const mat4& a, const mat4& b)
 { 
-	mat4 out = out.k_zero();
-	//forloopi(j, out.dim()) { forloopi(i, out.dim()) { float sum = 0; forloopi(n, dim()) { sum += b.r[n][i] * a.r[j][n]; } out.r[j][i] = sum; } }
-	forloopi32(i, out.dim()) { forloopi32(j, out.dim()) { out.r[i][j] = a.r[i][0] * b.r[0][j] + a.r[i][1] * b.r[1][j] + a.r[i][2] * b.r[2][j] + a.r[i][3] * b.r[3][j]; } }
+	mat4 out = mat4::k_zero();
+	//for_range(j, out.dim()) { for_range(i, out.dim()) { float sum = 0; for_range(n, dim()) { sum += b.r[n][i] * a.r[j][n]; } out.r[j][i] = sum; } }
+	for_range(i, out.dim()) { for_range(j, out.dim()) { out.r[i][j] = a.r[i][0] * b.r[0][j] + a.r[i][1] * b.r[1][j] + a.r[i][2] * b.r[2][j] + a.r[i][3] * b.r[3][j]; } }
 	return out;
 }
 
@@ -644,7 +644,7 @@ inline mat4 mat4_transpose(const mat4& ma)
     //    ma.r[0][3], ma.r[1][3], ma.r[2][3], ma.r[3][3]
     //);
 
-	//forloopi(i, out.dim()) { forloopi(j, out.dim()) { out.r[i][j] = ma.r[j][i]; } }
+	//for_range(i, out.dim()) { for_range(j, out.dim()) { out.r[i][j] = ma.r[j][i]; } }
 
 	return vecnt_transpose_matrix(ma);
 }
@@ -752,8 +752,8 @@ inline mat4 mat4_transpose(const mat4& ma)
 	//inline friend base operator * ( const base& a, const base& b )	
 	//{ 
 	//	//base t;
-	//	//forloopi(j, t.dim()) { forloopi(i, t.dim()) { real sum = 0; forloopi(n, t.dim()) { sum += b[n][i] * a[j][n]; } t[j][i] = sum; } }
-	//  //forloopi(i, 4) { forloopi(j, 4) { result.m[i][j] = a.m[i][0] * b.m[0][j] + a.m[i][1] * b.m[1][j] + a.m[i][2] * b.m[2][j] + a.m[i][3] * b.m[3][j]; } }
+	//	//for_range(j, t.dim()) { for_range(i, t.dim()) { real sum = 0; for_range(n, t.dim()) { sum += b[n][i] * a[j][n]; } t[j][i] = sum; } }
+	//  //for_range(i, 4) { for_range(j, 4) { result.m[i][j] = a.m[i][0] * b.m[0][j] + a.m[i][1] * b.m[1][j] + a.m[i][2] * b.m[2][j] + a.m[i][3] * b.m[3][j]; } }
 	//	//return t;
 
 	//	return tmat4(
@@ -769,7 +769,7 @@ inline mat4 mat4_transpose(const mat4& ma)
 	//inline friend base operator * ( const base& a, const base& b )	
 	//{ 
 	//	//base t;
-	//	//forloopi(j, t.dim()) { forloopi(i, t.dim()) { real sum = 0; forloopi(n, t.dim()) { sum += a[n][i] * b[j][n]; } t[j][i] = sum; } }
+	//	//for_range(j, t.dim()) { for_range(i, t.dim()) { real sum = 0; for_range(n, t.dim()) { sum += a[n][i] * b[j][n]; } t[j][i] = sum; } }
 	//	//return t;
 	//	return tmat4(
 	//		b.m00*a.m00 + b.m01*a.m10 + b.m02*a.m20 + b.m03*a.m30,	b.m00*a.m01 + b.m01*a.m11 + b.m02*a.m21 + b.m03*a.m31,	b.m00*a.m02 + b.m01*a.m12 + b.m02*a.m22 + b.m03*a.m32,	b.m00*a.m03 + b.m01*a.m13 + b.m02*a.m23 + b.m03*a.m33, 
@@ -919,7 +919,7 @@ void flip_vertices_d3d_to_gl(gmodel& m)
 
 void clipz_vertex_c(sdr::vector<vertexc_t>& model)
 {
-	forloopi32(i, model.size())
+	for_range32(i, model.size())
 	{
 		//model[i].z = model[i].z * 2.0 - 1.0f;
 		model[i].z = mf::range_un_to_sn(model[i].z);			
