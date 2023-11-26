@@ -34,6 +34,9 @@
     <Filter Include="glfw_samples">
       <UniqueIdentifier>{0f1eb7b2-b69b-4f3b-8a70-6e961ef047ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="a_rnd_shared">
+      <UniqueIdentifier>{b4401b38-b204-4d7c-bd87-f35e143dae14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="con_basic.cpp">
@@ -50,9 +53,6 @@
     </ClCompile>
     <ClCompile Include="..\lib_src\d3dxlib\TextureLoader\WICTextureLoader11.cpp">
       <Filter>ext_lib\d3dxlib</Filter>
-    </ClCompile>
-    <ClCompile Include="rs_gl_util.cpp">
-      <Filter>a_rnd</Filter>
     </ClCompile>
     <ClCompile Include="win32_loader_gl_wgl.cpp">
       <Filter>base</Filter>
@@ -96,6 +96,9 @@
     <ClCompile Include="glfw_samples\glfw_vk_02_tex.cpp">
       <Filter>glfw_samples</Filter>
     </ClCompile>
+    <ClCompile Include="rs_gl_util.cpp">
+      <Filter>a_rnd_shared</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base_shared.h">
@@ -131,9 +134,6 @@
     <ClInclude Include="rs_irenderer.h">
       <Filter>a_rnd</Filter>
     </ClInclude>
-    <ClInclude Include="rs_hdr_d3d9.h">
-      <Filter>a_rnd</Filter>
-    </ClInclude>
     <ClInclude Include="..\lib_src\d3dxlib\TextureLoader\DDSTextureLoader11.h">
       <Filter>ext_lib\d3dxlib</Filter>
     </ClInclude>
@@ -142,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="win32_loader_gl_wgl.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="rs_gl_util.h">
-      <Filter>a_rnd</Filter>
     </ClInclude>
     <ClInclude Include="base_shared2.h">
       <Filter>base</Filter>
@@ -173,11 +170,20 @@
     <ClInclude Include="..\lib_src\volk\volk.h">
       <Filter>ext_lib\volk</Filter>
     </ClInclude>
-    <ClInclude Include="rs_hdr_gl.h">
-      <Filter>a_rnd</Filter>
+    <ClInclude Include="rs_gl_util.h">
+      <Filter>a_rnd_shared</Filter>
     </ClInclude>
     <ClInclude Include="rs_hdr_d3d11.h">
-      <Filter>a_rnd</Filter>
+      <Filter>a_rnd_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_gl.h">
+      <Filter>a_rnd_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d9.h">
+      <Filter>a_rnd_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d10.h">
+      <Filter>a_rnd_shared</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

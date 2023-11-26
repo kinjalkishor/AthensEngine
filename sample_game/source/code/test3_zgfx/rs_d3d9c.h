@@ -1,6 +1,6 @@
 #pragma once
 
-#include "rs_hdr_d3d9.h"
+#include "rs_hdr_sdk_d3d9.h"
 
 #include "rs_irenderer.h"
 

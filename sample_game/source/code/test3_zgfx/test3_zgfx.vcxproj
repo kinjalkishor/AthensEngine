@@ -130,7 +130,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>../../dep/glfw/include;../../dep/Vulkan-Headers/include;../../dep/OpenGL-Headers;D:/osl;../../dep/glm;../../dep/DirectX-Headers/include;../lib_src;../lib_src/glad/glad_compat/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../dep/glfw/include;../../dep/Vulkan-Headers/include;../../dep/OpenGL-Headers;../../dep/glm;../../dep/DirectX-Headers/include;../lib_src;../lib_src/glad/glad_compat/include;../../../../../gfx_sdk</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -138,7 +138,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies />
-      <AdditionalLibraryDirectories>D:/osl;../../dep/lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../../../../gfx_sdk;../../dep/lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -214,8 +214,9 @@
     <ClInclude Include="rs_gl2.h" />
     <ClInclude Include="rs_gl4.h" />
     <ClInclude Include="rs_hdr_d3d11.h" />
-    <ClInclude Include="rs_hdr_d3d9.h" />
     <ClInclude Include="rs_hdr_gl.h" />
+    <ClInclude Include="rs_hdr_sdk_d3d10.h" />
+    <ClInclude Include="rs_hdr_sdk_d3d9.h" />
     <ClInclude Include="rs_irenderer.h" />
     <ClInclude Include="rs_vk1.h" />
     <ClInclude Include="rs_vk1_2.h" />

@@ -380,7 +380,7 @@
     <ClInclude Include="rs_gl_util.h">
       <Filter>base\rs_shared</Filter>
     </ClInclude>
-    <ClInclude Include="rs_hdr_d3d9.h">
+    <ClInclude Include="rs_hdr_sdk_d3d9.h">
       <Filter>base\rs_shared</Filter>
     </ClInclude>
     <ClInclude Include="rs_hdr_gl.h">
@@ -390,6 +390,9 @@
       <Filter>base\rs_shared</Filter>
     </ClInclude>
     <ClInclude Include="rs_hdr_d3d11.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d10.h">
       <Filter>base\rs_shared</Filter>
     </ClInclude>
   </ItemGroup>
