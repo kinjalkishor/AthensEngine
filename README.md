@@ -1,11 +1,13 @@
 # AthensEngine
 AthensEngine Game Engine  
-Download Media Files from  
+Download Media Files from -  
 https://github.com/kinjalkishor/aw_media  
-and put both AthensEngine and aw_media folder inside same folder (at same directory level)  
+Download gfx_sdk (contains DXSDK_Jun10) from -  
+https://github.com/kinjalkishor/gfx_sdk  
+and put all AthensEngine, aw_media folder, gfx_sdk folders inside same folder (at same directory level)  
 Start compilation from "AthensEngine\sample_game\source\code" using Visual Studio Solution (.sln) files:  
 COMPILE in RELEASE (x64) mode only  
 Athens Engine - test2.sln  
 Graphics init tutorials - test_zfx.sln  
-Set in "C/C++->General->Additional Include Directories" & "Linker->General->Additional Library Directories" the path "D:/osl" to folder containing "DXSDK_Jun10" (needed for d3d9b, d3d9c, d3d10 renderers).  
+
 
