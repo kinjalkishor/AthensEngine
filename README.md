@@ -1,7 +1,7 @@
 # AthensEngine
 AthensEngine Game Engine  
 Start compilation from "AthensEngine\sample_game\source\code" using Visual Studio Solution (.sln) files:  
-COMPILE in RELEASE mode only  
+COMPILE in RELEASE (x64) mode only  
 Athens Engine - test2.sln  
 Graphics init tutorials - test_zfx.sln  
 Change RS_MODEL_PATH, RS_SHADER_PATH, RS_MEDIA_PATH, TUT_MEDIA_PATH to folders containing media and shaders (not uploaded on github for now).  
