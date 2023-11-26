@@ -176,5 +176,8 @@
     <ClInclude Include="rs_hdr_gl.h">
       <Filter>a_rnd</Filter>
     </ClInclude>
+    <ClInclude Include="rs_hdr_d3d11.h">
+      <Filter>a_rnd</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

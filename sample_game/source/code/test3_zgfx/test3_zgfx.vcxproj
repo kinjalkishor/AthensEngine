@@ -213,6 +213,7 @@
     <ClInclude Include="rs_gl1.h" />
     <ClInclude Include="rs_gl2.h" />
     <ClInclude Include="rs_gl4.h" />
+    <ClInclude Include="rs_hdr_d3d11.h" />
     <ClInclude Include="rs_hdr_d3d9.h" />
     <ClInclude Include="rs_hdr_gl.h" />
     <ClInclude Include="rs_irenderer.h" />
