@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="a_lib_src">
+      <UniqueIdentifier>{71decb3d-95f5-49b1-aa68-f7f04e5d99a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{86ab7d90-660e-4c72-a154-cc84818ebf9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\d3dxlib">
+      <UniqueIdentifier>{5352c0b8-96be-44a1-b9c9-e6b4b8b4ddd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\glad_compat">
+      <UniqueIdentifier>{74924f2b-8f7e-481c-83a3-8697800c0370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common_ex">
+      <UniqueIdentifier>{1427dc3e-46fc-43a8-a50d-cfb26c8727c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\gl_loader">
+      <UniqueIdentifier>{19320566-14ed-49d9-87f7-9fe23d344870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_lib_src\vk_loader">
+      <UniqueIdentifier>{ff30c512-b86c-4b7f-9a69-159c2b6a2cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen">
+      <UniqueIdentifier>{b507bb5c-6cd6-4434-8f8b-8513f6f92f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\irr">
+      <UniqueIdentifier>{28593a1b-7196-439b-aa51-236daa18e64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\jet">
+      <UniqueIdentifier>{042980a1-452c-4c5e-a498-40c9ad0c4210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\sb">
+      <UniqueIdentifier>{f46437f6-c8bc-4707-b85a-7827043cabd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_osen\humus">
+      <UniqueIdentifier>{0ddc9d02-eb71-472e-a643-f3586622d34e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_q2">
+      <UniqueIdentifier>{cbc40f8b-3dd4-476b-81ab-f95d430aab6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_ut">
+      <UniqueIdentifier>{0303b474-5dca-4e64-8421-bb286a02c96c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\cfg">
+      <UniqueIdentifier>{cabff998-29db-480a-a156-f77532326822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\ds">
+      <UniqueIdentifier>{2f5e79e9-d1fc-4f18-a935-6a9b11dd5a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\en_shared">
+      <UniqueIdentifier>{a323cff6-1318-42fb-a719-2bcff699ffe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\exp">
+      <UniqueIdentifier>{934bc20d-a7de-4769-89c5-3e6fec22f1f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rs_shared">
+      <UniqueIdentifier>{6f8b9fc9-90ae-49c6-9665-872a3f45e8c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\gmath">
+      <UniqueIdentifier>{14587a58-6892-461a-8559-1e047d0fd7f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\z_base">
+      <UniqueIdentifier>{35ac2a61-ba56-4c37-bcad-510acc560c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rnd_t2">
+      <UniqueIdentifier>{4f75269b-0742-416a-8371-03c10b3dca89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rnd_t3">
+      <UniqueIdentifier>{1d7c200f-0388-483d-808e-11e4c076cf6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\basic">
+      <UniqueIdentifier>{2c50aa73-3f1d-424e-90b9-cd18334a871e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\more">
+      <UniqueIdentifier>{80f0bc87-b0ec-4165-be0b-e1ac1ba1c30d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="win_main_s.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_basic_wnd3.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="con_basic.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_t2.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main.cpp">
+      <Filter>main\more</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_q3.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_d3d9.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\ext_not_include.h">
+      <Filter>common_ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ext_old_ref_lib.h">
+      <Filter>common_ex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ext_empty.h">
+      <Filter>common_ex</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_math_d3dx9.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_lib.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_types.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_gl.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d9.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d10.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d11.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hdr_sdk_d3d12.h">
+      <Filter>base\rs_shared</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_wnm.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="q3_shared.h">
+      <Filter>a_q2</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_math.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_templates.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_ex1.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_types.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_std_cont.h">
+      <Filter>base\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_ex.h">
+      <Filter>base\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="del_checked6.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_sh.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath2.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_wnm.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_class.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
