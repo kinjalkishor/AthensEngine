@@ -8,11 +8,8 @@
 #include "bs_gmath_types.h"
 #include "bs_lib.h"
 
-#include <cmath>
 
-#define d_assert
-
-// REMOVE MATH.H and check for sqrtf, cosf float functions or template them
+//#define d_assert
 
 
 namespace gm
@@ -128,9 +125,9 @@ inline bool operator >= (const vec2& a, const vec2& b)	{ for (int i=0; i < vec2:
 
 inline float vec2_dot(const vec2& a, const vec2& b) { return (a.x*b.x + a.y*b.y); }
 inline float vec2_length_sq(const vec2& a) { return (a.x*a.x + a.y*a.y); }
-inline float vec2_length(const vec2& a) { return sqrtf(a.x*a.x + a.y*a.y); }
+inline float vec2_length(const vec2& a) { return std::sqrt(a.x*a.x + a.y*a.y); }
 inline float vec2_distance_sq(const vec2& a, const vec2& b) { return ((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y)); }
-inline float vec2_distance(const vec2& a, const vec2& b) { return sqrtf((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y)); }
+inline float vec2_distance(const vec2& a, const vec2& b) { return std::sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y)); }
 
 inline vec2 vec2_scale(const vec2& a, float s) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = a[i] * s; } return out; }
 inline vec2 vec2_lerp(const vec2& a, const vec2& b, float s) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = mf::lerp(a[i], b[i], s); } return out; }
@@ -199,9 +196,9 @@ inline bool operator >= (const vec3& a, const vec3& b)	{ for (int i=0; i < vec3:
 
 inline float vec3_dot(const vec3& a, const vec3& b) { return (a.x*b.x + a.y*b.y + a.z*b.z); }
 inline float vec3_length_sq(const vec3& a) { return (a.x*a.x + a.y*a.y + a.z*a.z); }
-inline float vec3_length(const vec3& a) { return sqrtf(a.x*a.x + a.y*a.y + a.z*a.z); }
+inline float vec3_length(const vec3& a) { return std::sqrt(a.x*a.x + a.y*a.y + a.z*a.z); }
 inline float vec3_distance_sq(const vec3& a, const vec3& b) { return ((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z)); }
-inline float vec3_distance(const vec3& a, const vec3& b) { return sqrtf((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z)); }
+inline float vec3_distance(const vec3& a, const vec3& b) { return std::sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z)); }
 
 inline vec3 vec3_scale(const vec3& a, float s) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = a[i] * s; } return out; }
 inline vec3 vec3_lerp(const vec3& a, const vec3& b, float s) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = mf::lerp(a[i], b[i], s); } return out; }
@@ -228,7 +225,6 @@ inline vec3 vec3_normalize(const vec3& a) {
     return out;
 }
 
-inline vec3 vec3_reflect(const vec3& a, const vec3& normal) { return (a - (static_cast<float>(2.0) * vec3_dot(a, normal) * normal)); }
 
 inline vec3 vec3_cross(const vec3& a, const vec3& b) {
 	vec3 out = vec3::k_zero();
@@ -275,9 +271,9 @@ inline bool operator >= (const vec4& a, const vec4& b)	{ for (int i=0; i < vec4:
 
 inline float vec4_dot(const vec4& a, const vec4& b) { return (a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w); }
 inline float vec4_length_sq(const vec4& a) { return (a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w); }
-inline float vec4_length(const vec4& a) { return sqrtf(a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w); }
+inline float vec4_length(const vec4& a) { return std::sqrt(a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w); }
 inline float vec4_distance_sq(const vec4& a, const vec4& b) { return ((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z) + (a.w - b.w)*(a.w - b.w)); }
-inline float vec4_distance(const vec4& a, const vec4& b) { return sqrtf((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z) + (a.w - b.w)*(a.w - b.w)); }
+inline float vec4_distance(const vec4& a, const vec4& b) { return std::sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z) + (a.w - b.w)*(a.w - b.w)); }
 
 inline vec4 vec4_scale(const vec4& a, float s) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = a[i] * s; } return out; }
 inline vec4 vec4_lerp(const vec4& a, const vec4& b, float s) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = mf::lerp(a[i], b[i], s); } return out; }
@@ -1084,8 +1080,8 @@ inline mat4 mat4_inverse(const mat4& ma) {
 // Build a matrix which rotates around the X axis
 // Creates an x-axis rotation matrix, centered on the origin.
 inline mat4 mat4_rotation_x(float angle) {
-    const float sin_a = std::sinf(angle);
-    const float cos_a = std::cosf(angle);
+    const float sin_a = std::sin(angle);
+    const float cos_a = std::cos(angle);
 
     return mat4(
             static_cast<float>(1.0),    static_cast<float>(0.0),    static_cast<float>(0.0),    static_cast<float>(0.0),
@@ -1097,8 +1093,8 @@ inline mat4 mat4_rotation_x(float angle) {
 
 // Build a matrix which rotates around the Y axis
 inline mat4 mat4_rotation_y(float angle) {
-    const float sin_a = std::sinf(angle);
-    const float cos_a = std::cosf(angle);
+    const float sin_a = std::sin(angle);
+    const float cos_a = std::cos(angle);
 
     return mat4(
             cos_a,				        static_cast<float>(0.0),    -sin_a,				        static_cast<float>(0.0),
@@ -1110,8 +1106,8 @@ inline mat4 mat4_rotation_y(float angle) {
 
 // Build a matrix which rotates around the Z axis
 inline mat4 mat4_rotation_z(float angle) {
-    const float sin_a = std::sinf(angle);
-    const float cos_a = std::cosf(angle);
+    const float sin_a = std::sin(angle);
+    const float cos_a = std::cos(angle);
     
     return mat4(
             cos_a,				        sin_a,				        static_cast<float>(0.0),    static_cast<float>(0.0),
@@ -1127,8 +1123,8 @@ inline mat4 mat4_rotation_z(float angle) {
 //D3DXMatrixRotationAxis
 inline mat4 mat4_rotation_axis(const vec3& axis, float angle) {    
     vec3 nv = vec3_normalize(axis);
-    const float sa = std::sinf(angle);
-    const float ca = std::cosf(angle);
+    const float sa = std::sin(angle);
+    const float ca = std::cos(angle);
     const float cd = static_cast<float>(1.0) - ca;    
 
     return mat4(

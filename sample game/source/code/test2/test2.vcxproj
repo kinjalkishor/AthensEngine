@@ -164,6 +164,9 @@
     <ClInclude Include="..\common\ext_empty.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\common\ext_empty2.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\common\ext_not_include.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
@@ -176,15 +179,15 @@
     <ClInclude Include="bs_gmath2.h" />
     <ClInclude Include="bs_gmath_class.h" />
     <ClInclude Include="bs_gmath_ex1.h" />
-    <ClInclude Include="bs_gmath_sh.h" />
+    <ClInclude Include="bs_gmath_glm.h" />
+    <ClInclude Include="bs_gmath_irr.h" />
+    <ClInclude Include="bs_gmath_opengl.h" />
     <ClInclude Include="bs_gmath_templates.h" />
     <ClInclude Include="bs_gmath_types.h" />
     <ClInclude Include="bs_gmath_wnm.h" />
     <ClInclude Include="bs_lib.h" />
     <ClInclude Include="bs_math.h" />
-    <ClInclude Include="bs_math_d3dx9.h" />
     <ClInclude Include="bs_types.h" />
-    <ClInclude Include="bs_wnm.h" />
     <ClInclude Include="del_checked6.h" />
     <ClInclude Include="q3_shared.h" />
     <ClInclude Include="rs_hdr_gl.h" />

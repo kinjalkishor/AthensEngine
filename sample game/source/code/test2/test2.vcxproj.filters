@@ -80,6 +80,9 @@
     <Filter Include="main\more">
       <UniqueIdentifier>{80f0bc87-b0ec-4165-be0b-e1ac1ba1c30d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\gmath\others">
+      <UniqueIdentifier>{9cbcfe68-b3fd-42c1-bf52-bcb9acc12d90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win_main_s.cpp">
@@ -114,9 +117,6 @@
     <ClInclude Include="..\common\ext_empty.h">
       <Filter>common_ex</Filter>
     </ClInclude>
-    <ClInclude Include="bs_math_d3dx9.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
     <ClInclude Include="bs_lib.h">
       <Filter>base\z_base</Filter>
     </ClInclude>
@@ -138,9 +138,6 @@
     <ClInclude Include="rs_hdr_sdk_d3d12.h">
       <Filter>base\rs_shared</Filter>
     </ClInclude>
-    <ClInclude Include="bs_wnm.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
     <ClInclude Include="q3_shared.h">
       <Filter>a_q2</Filter>
     </ClInclude>
@@ -149,12 +146,6 @@
     </ClInclude>
     <ClInclude Include="bs_math.h">
       <Filter>base\z_base</Filter>
-    </ClInclude>
-    <ClInclude Include="bs_gmath_templates.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
-    <ClInclude Include="bs_gmath_ex1.h">
-      <Filter>base\gmath</Filter>
     </ClInclude>
     <ClInclude Include="bs_gmath_types.h">
       <Filter>base\gmath</Filter>
@@ -168,17 +159,32 @@
     <ClInclude Include="del_checked6.h">
       <Filter>base\z_base</Filter>
     </ClInclude>
-    <ClInclude Include="bs_gmath_sh.h">
-      <Filter>base\gmath</Filter>
-    </ClInclude>
     <ClInclude Include="bs_gmath2.h">
       <Filter>base\gmath</Filter>
     </ClInclude>
-    <ClInclude Include="bs_gmath_wnm.h">
+    <ClInclude Include="bs_gmath_opengl.h">
       <Filter>base\gmath</Filter>
     </ClInclude>
-    <ClInclude Include="bs_gmath_class.h">
+    <ClInclude Include="bs_gmath_glm.h">
       <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_irr.h">
+      <Filter>base\gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\ext_empty2.h">
+      <Filter>common_ex</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_class.h">
+      <Filter>base\gmath\others</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_ex1.h">
+      <Filter>base\gmath\others</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_templates.h">
+      <Filter>base\gmath\others</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_gmath_wnm.h">
+      <Filter>base\gmath\others</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

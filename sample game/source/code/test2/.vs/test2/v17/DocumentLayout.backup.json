@@ -3,27 +3,16 @@
   "WorkspaceRootPath": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath_wnm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:bs_gmath_wnm.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath2.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:bs_gmath2.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:bs_gmath.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_d3d9.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:win_main_d3d9.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath_types.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:bs_gmath_types.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\common\\ext_empty.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_d3d9.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:win_main_d3d9.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:bs_gmath.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,56 +22,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "bs_gmath_wnm.h",
-              "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath_wnm.h",
-              "RelativeDocumentMoniker": "bs_gmath_wnm.h",
-              "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath_wnm.h",
-              "RelativeToolTip": "bs_gmath_wnm.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-12T09:16:09.6Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ext_empty.h",
-              "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\common\\ext_empty.h",
-              "RelativeDocumentMoniker": "..\\common\\ext_empty.h",
-              "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\common\\ext_empty.h",
-              "RelativeToolTip": "..\\common\\ext_empty.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-11T13:01:12.936Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "bs_gmath_types.h",
               "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath_types.h",
               "RelativeDocumentMoniker": "bs_gmath_types.h",
               "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath_types.h",
               "RelativeToolTip": "bs_gmath_types.h",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAACoAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAALEAAAAAAAAAAAAAALkAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-11-03T16:23:48.427Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "bs_gmath2.h",
-              "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath2.h",
-              "RelativeDocumentMoniker": "bs_gmath2.h",
-              "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath2.h",
-              "RelativeToolTip": "bs_gmath2.h",
-              "ViewState": "AgIAAG8EAAAAAAAAAAAAAH0EAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-10-13T13:25:07.919Z",
+              "WhenOpened": "2024-11-03T16:23:48.427Z",
               "EditorCaption": ""
             },
             {
@@ -93,22 +45,23 @@
               "RelativeDocumentMoniker": "bs_gmath.h",
               "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_gmath.h",
               "RelativeToolTip": "bs_gmath.h",
-              "ViewState": "AgIAAO4AAAAAAAAAAAAAAPEDAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADACAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-08-26T13:10:35.286Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "win_main_d3d9.cpp",
               "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_d3d9.cpp",
               "RelativeDocumentMoniker": "win_main_d3d9.cpp",
               "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_d3d9.cpp",
               "RelativeToolTip": "win_main_d3d9.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-08-15T14:28:36.664Z"
+              "WhenOpened": "2024-08-15T14:28:36.664Z",
+              "EditorCaption": ""
             }
           ]
         }

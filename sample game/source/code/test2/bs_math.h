@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math.h>
+#include <cmath>
 	
 
 //----------------------------------------------------------------
@@ -125,7 +125,7 @@ inline constexpr T k_big_eps = static_cast<T>(0.05);
 
 //==============================================
 //template<class T> 
-//inline T fabs(T x) { return ::fabs(x); }
+//inline T fabs(T x) { return std::fabs(x); }
 
 
 
@@ -140,7 +140,7 @@ inline float rad_to_deg(float radian) { return (radian * (static_cast<float>(180
 // returns if a equals b, taking possible rounding errors into account
 template<class T>
 inline bool equals_ep(T a, T b, const T epsilon) { 
-	if ((fabs(a - b) > epsilon)) { return false; }	
+	if ((std::fabs(a - b) > epsilon)) { return false; }	
 	else { return true; } 
 	//return approximately_equal(a, b, epsilon);
 }
@@ -163,8 +163,8 @@ inline T lerp(T a, T b, T s) {
 	//return (a + s*(b - a)); //d3dx9
 	//return (a + (b - a)*s);
 	// handles unsigned values wraparound
-	//return (a*(static_cast<T>(1)-s) + s*b);
-	return (a*(static_cast<T>(1)-s) + b*s);
+	//return (a*(static_cast<T>(1.0)-s) + s*b);
+	return (a*(static_cast<T>(1.0)-s) + b*s);
 }
 
 

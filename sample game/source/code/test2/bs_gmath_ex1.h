@@ -43,9 +43,9 @@
     //vec4(const vec3& xyz, float w) : x(xyz.x), y(xyz.y), z(xyz.z), w(w) {}
     //inline float vec4_dot(const vec4& a, const vec4& b) { return (a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w); }
     //inline float vec4_length_sq(const vec4& a) { return (a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w); }
-    //inline float vec4_length(const vec4& a) { return sqrtf(a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w); }
+    //inline float vec4_length(const vec4& a) { return std::sqrt(a.x*a.x + a.y*a.y + a.z*a.z + a.w*a.w); }
     //inline float vec4_distance_sq(const vec4& a, const vec4& b) { return ((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z) + (a.w - b.w)*(a.w - b.w)); }
-    //inline float vec4_distance(const vec4& a, const vec4& b) { return sqrtf((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z) + (a.w - b.w)*(a.w - b.w)); }
+    //inline float vec4_distance(const vec4& a, const vec4& b) { return std::sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z) + (a.w - b.w)*(a.w - b.w)); }
     //---
     //inline float vec4_dot(const vec4& a, const vec4& b) { float sum = 0.0;  for (int i=0; i < vec4::size(); ++i) { sum += a[i] * b[i]; }    return sum; }
     //inline float vec4_length_sq(const vec4& a) { float sum = 0.0;  for (int i=0; i < vec4::size(); ++i) { sum += a[i] * a[i]; }    return sum; }
@@ -145,7 +145,7 @@ public:
 
 unsigned short float_32_to_16(const float in) {
     int exp = 0, origexp;
-    float tmp = fabsf(in);
+    float tmp = std::fabs(in);
     int sign = (copysignf(1, in) < 0);
     unsigned int mantissa;
     unsigned short ret;
@@ -255,7 +255,7 @@ float* D3DXFloat16To32Array(float* pout, const D3DXFLOAT16* pin, unsigned int n)
 float fresnel_term(float cos_theta, float refraction_index) {
     float a, d, g, result;
 
-    g = sqrtf(refraction_index * refraction_index + cos_theta * cos_theta - 1.0f);
+    g = std::sqrt(refraction_index * refraction_index + cos_theta * cos_theta - 1.0f);
     a = g + cos_theta;
     d = g - cos_theta;
     result = (cos_theta * a - 1.0f) * (cos_theta * a - 1.0f) / ((cos_theta * d + 1.0f) * (cos_theta * d + 1.0f)) + 1.0f;

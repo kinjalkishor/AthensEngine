@@ -18,22 +18,8 @@ inline vec3 vec3_transform_pos3(const vec3& a, const mat4& ma) {
 }
 
 
-inline vec3 vec3_translation_mat4(const mat4& value) {
-    return vec3(value.r[3][0], value.r[3][1], value.r[3][2]);
-}
-
-
-inline plane plane_transform_quat(const plane& value, const quat& rotation) {
-    vec4 planeAsVector(value.normal, value.d);
-    return plane(transform(planeAsVector, rotation)); //vec4_transform_v4_quat
-}
-
-inline quat quat_from_axis_angle(const vec3& axis, float angle) {
-    float halfAngle = angle * 0.5f;
-    float s = sinf(halfAngle);
-    float c = cosf(halfAngle);
-
-    return quat(axis * s, c);
+inline vec3 vec3_translation_mat4(const mat4& ma) {
+    return vec3(ma.r[3][0], ma.r[3][1], ma.r[3][2]);
 }
 
 
@@ -137,6 +123,21 @@ inline vec4 vec4_transform_v4_quat(const vec4& a, const quat& rotation) {
 }
 
 
+
+inline plane plane_transform_quat(const plane& pa, const quat& rotation) {
+    vec4 planeAsVector(pa.a, pa.b, pa.c, pa.d);
+    return plane(vec4_transform_v4_quat(planeAsVector, rotation)); //vec4_transform_v4_quat
+}
+
+inline quat quat_from_axis_angle(const vec3& axis, float angle) {
+    float halfAngle = angle * 0.5f;
+    float s = std::sin(halfAngle);
+    float c = std::cos(halfAngle);
+
+    return quat(axis * s, c);
+}
+
+
 inline quat lerp(const quat& a, const quat& b, float s) {
     float t2 = s;
     float t1 = 1.0f - s;
@@ -153,6 +154,7 @@ inline quat lerp(const quat& a, const quat& b, float s) {
 }
 
 inline quat quat_concatenate(const quat& a, const quat& b) { return (b * a); }
+
 
 
 inline mat4 mat4_transform_quat(const mat4& ma, const quat& rotation) {
@@ -212,9 +214,9 @@ inline mat4 mat4_transform_quat(const mat4& ma, const quat& rotation) {
 
 
 
-inline mat4 mat4_rotation_x_pt(float angle, const vec3& center_point) {
-    float c = cosf(angle);
-    float s = sinf(angle);
+inline mat4 mat4_rotation_x_pt(float angle, const vec3& center_point) {    
+    float s = std::sin(angle);
+    float c = std::cos(angle);
 
     float y = center_point.y * (1 - c) + center_point.z * s;
     float z = center_point.z * (1 - c) - center_point.y * s;
@@ -226,8 +228,8 @@ inline mat4 mat4_rotation_x_pt(float angle, const vec3& center_point) {
 }
 
 inline mat4 mat4_rotation_y_pt(float angle, const vec3& center_point) {
-    float c = cosf(angle);
-    float s = sinf(angle);
+    float s = std::sin(angle);
+    float c = std::cos(angle);    
 
     float x = center_point.x * (1 - c) - center_point.z * s;
     float z = center_point.z * (1 - c) + center_point.x * s;
@@ -239,8 +241,8 @@ inline mat4 mat4_rotation_y_pt(float angle, const vec3& center_point) {
 }
 
 inline mat4 mat4_rotation_z_pt(float angle, const vec3& center_point) {
-    float c = cosf(angle);
-    float s = sinf(angle);
+    float s = std::sin(angle);
+    float c = std::cos(angle);    
 
     float x = center_point.x * (1 - c) + center_point.y * s;
     float y = center_point.y * (1 - c) - center_point.x * s;
@@ -263,10 +265,10 @@ inline mat4 mat4_scale_pt(const vec3& scales, const vec3& center_point) {
 				t.x,      t.y,      t.z,      1);
 }
 
-
+// rh maybe
 inline mat4 mat4_world(const vec3& position, const vec3& forward, const vec3& up) {
     vec3 zaxis = vec3_normalize(-forward);
-    vec3 xaxis = vec3_normalize(cross(up, zaxis));
+    vec3 xaxis = vec3_normalize(vec3_cross(up, zaxis));
     vec3 yaxis = vec3_cross(zaxis, xaxis);
 
     return mat4(xaxis.x,    xaxis.y,    xaxis.z,    0,
@@ -298,7 +300,7 @@ inline mat4 mat4_from_axis_angle(const vec3& axis, float angle) {
     //      [ 0 0 1 ]
 
     float x = axis.x, y = axis.y, z = axis.z;
-    float sa = sinf(angle), ca = cosf(angle);
+    float sa = std::sin(angle), ca = std::cos(angle);
     float xx = x * x, yy = y * y, zz = z * z;
     float xy = x * y, xz = x * z, yz = y * z;
 
@@ -326,24 +328,21 @@ inline mat4 mat4_shadow_v3(const vec3& light, const plane& pa) {
 
 
 
-
-
-
 inline mat4 mat4_billboard(const vec3& object_position, const vec3& camera_position, const vec3& camera_up_vector, const vec3& camera_forward_vector) {
     const float epsilon = 1e-4f;
 
     vec3 zaxis = object_position - camera_position;
 
-    float norm = length_squared(zaxis);
+    float norm = vec3_length_sq(zaxis);
 
     if (norm < epsilon) {
         zaxis = -camera_forward_vector;
     } else {
-        zaxis = zaxis / sqrtf(norm);
+        zaxis = zaxis / std::sqrt(norm);
     }
 
-    vec3 xaxis = normalize(cross(camera_up_vector, zaxis));
-    vec3 yaxis = cross(zaxis, xaxis);
+    vec3 xaxis = vec3_normalize(vec3_cross(camera_up_vector, zaxis));
+    vec3 yaxis = vec3_cross(zaxis, xaxis);
 
     return mat4(xaxis.x,          xaxis.y,          xaxis.z,          0,
                 yaxis.x,          yaxis.y,          yaxis.z,          0,
@@ -353,17 +352,17 @@ inline mat4 mat4_billboard(const vec3& object_position, const vec3& camera_posit
 
 inline mat4 mat4_constrained_billboard(const vec3& object_position, const vec3& camera_position, const vec3& rotate_axis, const vec3& camera_forward_vector, const vec3& object_forward_vector) {
     const float epsilon = 1e-4f;
-    const float minAngle = 1.0f - (0.1f * (DX_XM_PI / 180.0f)); // 0.1 degrees
+    const float minAngle = 1.0f - (0.1f * (mf::k_pi<float> / 180.0f)); // 0.1 degrees
 
     // Treat the case when object and camera positions are too close.
     vec3 faceDir = object_position - camera_position;
 
-    float norm = length_squared(faceDir);
+    float norm = vec3_length_sq(faceDir);
 
     if (norm < epsilon) {
         faceDir = -camera_forward_vector;
     } else {
-        faceDir = faceDir / sqrtf(norm);
+        faceDir = faceDir / std::sqrt(norm);
     }
 
     vec3 yaxis = rotate_axis;
@@ -371,18 +370,18 @@ inline mat4 mat4_constrained_billboard(const vec3& object_position, const vec3& 
     vec3 zaxis;
 
     // Treat the case when angle between faceDir and rotate_axis is too close to 0.
-    if (fabs(dot(rotate_axis, faceDir)) > minAngle) {
+    if (std::fabs(vec3_dot(rotate_axis, faceDir)) > minAngle) {
         zaxis = object_forward_vector;
 
-        if (fabs(dot(rotate_axis, zaxis)) > minAngle) {
-            zaxis = (fabs(rotate_axis.z) > minAngle) ? vec3(1, 0, 0) : vec3(0, 0, -1);
+        if (std::fabs(vec3_dot(rotate_axis, zaxis)) > minAngle) {
+            zaxis = (std::fabs(rotate_axis.z) > minAngle) ? vec3(1, 0, 0) : vec3(0, 0, -1);
         }
 
-        xaxis = normalize(cross(rotate_axis, zaxis));
-        zaxis = normalize(cross(xaxis, rotate_axis));
+        xaxis = vec3_normalize(vec3_cross(rotate_axis, zaxis));
+        zaxis = vec3_normalize(vec3_cross(xaxis, rotate_axis));
     } else {
-        xaxis = normalize(cross(rotate_axis, faceDir));
-        zaxis = normalize(cross(xaxis, yaxis));
+        xaxis = vec3_normalize(vec3_cross(rotate_axis, faceDir));
+        zaxis = vec3_normalize(vec3_cross(xaxis, yaxis));
     }
 
     return mat4(xaxis.x,          xaxis.y,          xaxis.z,          0,

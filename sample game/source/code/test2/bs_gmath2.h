@@ -383,7 +383,7 @@ inline mat4 mat4_perspective_offcenter_rh(float l, float r, float b, float t, fl
 //        -static_cast<float>(1.0) - static_cast<float>(2.0) * l/(r-l), static_cast<float>(1.0) + static_cast<float>(2.0) * t/(b-t), n/(n-f), static_cast<float>(1.0)
 //	);    
 //}
-inline mat4 mat4_perspective_offcenter_rh(float l, float r, float b, float t, float n, float f) {
+inline mat4 mat4_ortho_offcenter_lh(float l, float r, float b, float t, float n, float f) {
     return mat4(
         static_cast<float>(2.0)/(r-l),      static_cast<float>(0.0),            static_cast<float>(0.0),        static_cast<float>(0.0),
         static_cast<float>(0.0),            static_cast<float>(2.0)/(t-b),      static_cast<float>(0.0),        static_cast<float>(0.0),
@@ -520,10 +520,6 @@ inline plane plane_transform_mat4(const plane& p, const mat4& ma) {
 }
 
 //----------------------
-// Length squared, or "norm"
-inline float quat_length_sq(const quat& a) { return vec4_length_sq(a.v); }	
-inline float quat_length(const quat& a) { return vec4_length(a.v); }
-
 // (-x, -y, -z, w)
 inline quat quat_conjugate(const quat& a) { 
     //return quat(-a.x, -a.y, -a.z, a.w); 
@@ -548,9 +544,8 @@ inline quat quat_inverse(const quat& a) {
 }
 
 
-inline float quat_dot(const quat& a, const quat& b) { return vec4_dot(a.v, b.v); }
 inline bool quat_is_identity(const quat& a) { return (a == quat::k_identity()); }
-inline quat quat_normalize(const quat& a) {	return quat(vec4_normalize(a.v)); }
+
 
 
 //----------------------------------------
@@ -615,7 +610,7 @@ inline void quat_to_axis_angle(const quat& unit_quat, vec3& axis, float& angle) 
 //inline quat make_quaternion_from_rotation_matrix(const mat4& ma)
 inline quat quat_rotation_mat4(const mat4& ma) {
     if (ma.r[0][0] + ma.r[1][1] + ma.r[2][2] > static_cast<float>(0.0)) {
-        float s = sqrtf(static_cast<float>(1.0) + ma.r[0][0] + ma.r[1][1] + ma.r[2][2]);
+        float s = std::sqrt(static_cast<float>(1.0) + ma.r[0][0] + ma.r[1][1] + ma.r[2][2]);
         float inv_s = static_cast<float>(0.5) / s;
 
         return quat((ma.r[1][2] - ma.r[2][1]) * inv_s,
@@ -624,7 +619,7 @@ inline quat quat_rotation_mat4(const mat4& ma) {
                     s * static_cast<float>(0.5));
 
     } else if (ma.r[0][0] >= ma.r[1][1] && ma.r[0][0] >= ma.r[2][2]) {
-        float s = sqrtf(static_cast<float>(1.0) + ma.r[0][0] - ma.r[1][1] - ma.r[2][2]);
+        float s = std::sqrt(static_cast<float>(1.0) + ma.r[0][0] - ma.r[1][1] - ma.r[2][2]);
         float inv_s = static_cast<float>(0.5) / s;
 
         return quat(static_cast<float>(0.5) * s,
@@ -633,7 +628,7 @@ inline quat quat_rotation_mat4(const mat4& ma) {
                     (ma.r[1][2] - ma.r[2][1]) * inv_s);
 
     } else if (ma.r[1][1] > ma.r[2][2]) {
-        float s = sqrtf(static_cast<float>(1.0) + ma.r[1][1] - ma.r[0][0] - ma.r[2][2]);
+        float s = std::sqrt(static_cast<float>(1.0) + ma.r[1][1] - ma.r[0][0] - ma.r[2][2]);
         float inv_s = static_cast<float>(0.5) / s;
 
         return quat((ma.r[1][0] + ma.r[0][1]) * inv_s,
@@ -642,7 +637,7 @@ inline quat quat_rotation_mat4(const mat4& ma) {
                     (ma.r[2][0] - ma.r[0][2]) * inv_s);
 
     } else {
-        float s = sqrtf(static_cast<float>(1.0) + ma.r[2][2] - ma.r[0][0] - ma.r[1][1]);
+        float s = std::sqrt(static_cast<float>(1.0) + ma.r[2][2] - ma.r[0][0] - ma.r[1][1]);
         float inv_s = static_cast<float>(0.5) / s;
 
         return quat((ma.r[2][0] + ma.r[0][2]) * inv_s,
@@ -1173,3 +1168,4 @@ inline vec3 vec3_reflect(const vec3& a, const vec3& normal) {
 
 
 
+}
