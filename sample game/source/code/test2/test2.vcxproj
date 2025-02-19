@@ -135,6 +135,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies />
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -184,11 +185,12 @@
     <ClInclude Include="bs_std_cont.h" />
     <ClInclude Include="bs_types.h" />
     <ClInclude Include="bs_win_util.h" />
-    <ClInclude Include="rs_hdr_sdk_d3d10.h" />
-    <ClInclude Include="rs_hdr_sdk_d3d11.h" />
-    <ClInclude Include="rs_hdr_sdk_d3d12.h" />
-    <ClInclude Include="rs_hdr_sdk_d3d9.h" />
-    <ClInclude Include="rs_hdr_sdk_gl.h" />
+    <ClInclude Include="rs_hf_sdk_d3d10.h" />
+    <ClInclude Include="rs_hf_sdk_d3d11.h" />
+    <ClInclude Include="rs_hf_sdk_d3d12.h" />
+    <ClInclude Include="rs_hf_sdk_d3d9.h" />
+    <ClInclude Include="rs_hf_sdk_gl.h" />
+    <ClInclude Include="rs_hf_sdk_vk.h" />
     <ClInclude Include="win_app_simple.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
