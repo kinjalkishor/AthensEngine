@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma once
+
 #include "bs_gmath.h"
 
 
@@ -8,9 +10,6 @@ namespace gm
 
 
 //========================================================================================================================
-// Template functions for N size
-//========================================================================================================================
-
 //The Vec2Hermite function interpolates from (positionA, tangentA) to (positionB, tangentB) using Hermite spline interpolation.
 //The spline interpolation is a generalization of the ease-in, ease-out spline. The ramp is a function of Q(s) with the following properties.
 //Q(s) = As3 + Bs2 + Cs + D (and therefore, Q'(s) = 3As2 + 2Bs + C)
@@ -27,8 +26,8 @@ namespace gm
 // s (alpha) - distance along spline
 // cubic interpolation
 // Hermite interpolation between position V1, tangent T1 (when s == 0) and position V2, tangent T2 (when s == 1).
-template<class T> inline T vecnt_hermite(const T& v1, const T& t1, const T& v2, const T& t2, float s) {
-    T out = T::k_zero(); 
+inline vec3 vec3_hermite(const vec3& v1, const vec3& t1, const vec3& v2, const vec3& t2, float s) {
+    vec3 out = vec3::k_zero(); 
     float h1, h2, h3, h4;
     //set_hermite_coeffcients(h1, h2, h3, h4, s);
     float s3 = s*s*s;
@@ -44,7 +43,7 @@ template<class T> inline T vecnt_hermite(const T& v1, const T& t1, const T& v2, 
     h3 = (-static_cast<float>(2.0) * s3) + (static_cast<float>(3.0) * s2);
     h4 = (s3) - (s2);    
 
-    for (int i=0; i < T::size(); ++i) { out[i] = h1 * v1[i] + h2 * t1[i] + h3 * v2[i] + h4 * t2[i]; }
+    for (int i=0; i < vec3::size(); ++i) { out[i] = h1 * v1[i] + h2 * t1[i] + h3 * v2[i] + h4 * t2[i]; }
 
     return out;
 }
@@ -57,12 +56,12 @@ template<class T> inline T vecnt_hermite(const T& v1, const T& t1, const T& v2, 
 //The Catmull-Rom spline can be derived from the Hermite spline by setting:
 //Q(s) = [(-s3 + 2s2 - s)p1 + (3s3 - 5s2 + 2)p2 + (-3s3 + 4s2 + s)p3 + (s3 - s2)p4] / 2
 // CatmullRom interpolation between V1 (when s == 0) and V2 (when s == 1)
-template<class T> inline T vecnt_catmull_rom(const T& v0, const T& v1, const T& v2, const T& v3, float s) {
-    T out = T::k_zero(); 
+inline vec3 vec3_catmull_rom(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3, float s) {
+    vec3 out = vec3::k_zero(); 
     float s3 = s*s*s;
 	float s2 = s*s;
 
-    for (int i=0; i < T::size(); ++i) {
+    for (int i=0; i < vec3::size(); ++i) {
         out[i] = static_cast<float>(0.5) * (static_cast<float>(2.0) * v1[i] + (v2[i] - v0[i]) * s 
             + (static_cast<float>(2.0) * v0[i] - static_cast<float>(5.0) * v1[i] + static_cast<float>(4.0) * v2[i] - v3[i]) * s2 
             + (v3[i] -static_cast<float>(3.0) * v2[i] + static_cast<float>(3.0) * v1[i] - v0[i]) * s3);
@@ -86,44 +85,9 @@ template<class T> inline T vecnt_catmull_rom(const T& v0, const T& v1, const T& 
 //    If (f>=0 &, & g>=0 &, & 1-f-g==0), the point is on the line V2V3.
 //Barycentric coordinates define a point inside a triangle in terms of the triangle's vertices.
 // Barycentric coordinates.  V1 + f(V2-V1) + g(V3-V1)
-template<class T> inline T vecnt_bary_centric(const T& v1, const T& v2, const T& v3, float f, float g) {
-    T out = T::k_zero(); for (int i=0; i < T::size(); ++i) { out[i] = (static_cast<float>(1.0)-f-g) * v1[i] + f * v2[i] + g * v3[i]; } return out;
-}
-
-//------------------------------------------------------------------
-inline vec2 vec2_hermite(const vec2& v1, const vec2& t1, const vec2& v2, const vec2& t2, float s) {
-    return vecnt_hermite(v1, t1, v2, t2, s);
-}
-inline vec2 vec2_catmull_rom(const vec2& v0, const vec2& v1, const vec2& v2, const vec2& v3, float s) {
-    return vecnt_catmull_rom(v0, v1, v2, v3, s);
-}
-inline vec2 vec2_bary_centric(const vec2& v1, const vec2& v2, const vec2& v3, float f, float g) {
-    return vecnt_bary_centric(v1, v2, v3, f, g);
-}
-
-//----------------------
-inline vec3 vec3_hermite(const vec3& v1, const vec3& t1, const vec3& v2, const vec3& t2, float s) {
-    return vecnt_hermite(v1, t1, v2, t2, s);
-}
-inline vec3 vec3_catmull_rom(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3, float s) {
-    return vecnt_catmull_rom(v0, v1, v2, v3, s);
-}
 inline vec3 vec3_bary_centric(const vec3& v1, const vec3& v2, const vec3& v3, float f, float g) {
-    return vecnt_bary_centric(v1, v2, v3, f, g);
+    vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = (static_cast<float>(1.0)-f-g) * v1[i] + f * v2[i] + g * v3[i]; } return out;
 }
-
-//----------------------
-inline vec4 vec4_hermite(const vec4& v1, const vec4& t1, const vec4& v2, const vec4& t2, float s) {
-   return vecnt_hermite(v1, t1, v2, t2, s);
-}
-inline vec4 vec4_catmull_rom(const vec4& v0, const vec4& v1, const vec4& v2, const vec4& v3, float s) {
-    return vecnt_catmull_rom(v0, v1, v2, v3, s);
-}
-inline vec4 vec4_bary_centric(const vec4& v1, const vec4& v2, const vec4& v3, float f, float g) {
-    return vecnt_bary_centric(v1, v2, v3, f, g);
-}
-
-
 
 
 //----------------

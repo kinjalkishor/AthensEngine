@@ -6,10 +6,6 @@
 #include "bs_types.h"
 #include "bs_math.h"
 #include "bs_gmath_types.h"
-#include "bs_lib.h"
-
-
-//#define d_assert
 
 
 namespace gm
@@ -86,6 +82,19 @@ public:
 
 //========================================================================
 
+template<class T> inline T tmin(const T a, const T b) { return (a < b) ? a : b; }
+template<class T> inline T tmax(const T a, const T b) { return (a > b) ? a : b; }
+
+// returns x in [low, high].
+template<class T>
+inline T clamp(const T& x, const T& low, const T& high) {
+    if (x < low) { return low; }
+    if (x > high) { return high; }
+    return x;       
+}
+//---------------------------------------------------
+
+
 inline const vec3 k_vec3_one = vec3(1, 1, 1);
 inline const vec3 k_vec3_origin = vec3(0, 0, 0);
 
@@ -131,9 +140,9 @@ inline float vec2_distance(const vec2& a, const vec2& b) { return std::sqrt((a.x
 
 inline vec2 vec2_scale(const vec2& a, float s) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = a[i] * s; } return out; }
 inline vec2 vec2_lerp(const vec2& a, const vec2& b, float s) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = mf::lerp(a[i], b[i], s); } return out; }
-inline vec2 vec2_min(const vec2& a, const vec2& b) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = sdf::tmin(a[i], b[i]); } return out; }
-inline vec2 vec2_max(const vec2& a, const vec2& b) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = sdf::tmax(a[i], b[i]); } return out; }
-inline vec2 vec2_clamp(const vec2& a, const vec2& min, const vec2& max) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = sdf::clamp(a[i], min[i], max[i]); } return out; }
+inline vec2 vec2_min(const vec2& a, const vec2& b) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = tmin(a[i], b[i]); } return out; }
+inline vec2 vec2_max(const vec2& a, const vec2& b) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = tmax(a[i], b[i]); } return out; }
+inline vec2 vec2_clamp(const vec2& a, const vec2& min, const vec2& max) { vec2 out = vec2::k_zero(); for (int i=0; i < vec2::size(); ++i) { out[i] = clamp(a[i], min[i], max[i]); } return out; }
 
 inline vec2 vec2_normalize(const vec2& a) { 
     vec2 out = vec2::k_zero(); 
@@ -202,9 +211,9 @@ inline float vec3_distance(const vec3& a, const vec3& b) { return std::sqrt((a.x
 
 inline vec3 vec3_scale(const vec3& a, float s) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = a[i] * s; } return out; }
 inline vec3 vec3_lerp(const vec3& a, const vec3& b, float s) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = mf::lerp(a[i], b[i], s); } return out; }
-inline vec3 vec3_min(const vec3& a, const vec3& b) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = sdf::tmin(a[i], b[i]); } return out; }
-inline vec3 vec3_max(const vec3& a, const vec3& b) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = sdf::tmax(a[i], b[i]); } return out; }
-inline vec3 vec3_clamp(const vec3& a, const vec3& min, const vec3& max) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = sdf::clamp(a[i], min[i], max[i]); } return out; }
+inline vec3 vec3_min(const vec3& a, const vec3& b) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = tmin(a[i], b[i]); } return out; }
+inline vec3 vec3_max(const vec3& a, const vec3& b) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = tmax(a[i], b[i]); } return out; }
+inline vec3 vec3_clamp(const vec3& a, const vec3& min, const vec3& max) { vec3 out = vec3::k_zero(); for (int i=0; i < vec3::size(); ++i) { out[i] = clamp(a[i], min[i], max[i]); } return out; }
 
 
 inline vec3 vec3_normalize(const vec3& a) { 
@@ -277,9 +286,9 @@ inline float vec4_distance(const vec4& a, const vec4& b) { return std::sqrt((a.x
 
 inline vec4 vec4_scale(const vec4& a, float s) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = a[i] * s; } return out; }
 inline vec4 vec4_lerp(const vec4& a, const vec4& b, float s) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = mf::lerp(a[i], b[i], s); } return out; }
-inline vec4 vec4_min(const vec4& a, const vec4& b) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = sdf::tmin(a[i], b[i]); } return out; }
-inline vec4 vec4_max(const vec4& a, const vec4& b) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = sdf::tmax(a[i], b[i]); } return out; }
-inline vec4 vec4_clamp(const vec4& a, const vec4& min, const vec4& max) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = sdf::clamp(a[i], min[i], max[i]); } return out; }
+inline vec4 vec4_min(const vec4& a, const vec4& b) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = tmin(a[i], b[i]); } return out; }
+inline vec4 vec4_max(const vec4& a, const vec4& b) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = tmax(a[i], b[i]); } return out; }
+inline vec4 vec4_clamp(const vec4& a, const vec4& min, const vec4& max) { vec4 out = vec4::k_zero(); for (int i=0; i < vec4::size(); ++i) { out[i] = clamp(a[i], min[i], max[i]); } return out; }
 
 
 inline vec4 vec4_normalize(const vec4& a) { 

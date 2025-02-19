@@ -1,5 +1,6 @@
 #pragma once
 
+#if 0
 //-----------------------------
 // DXSDK_Jun10
 #include <d3d10.h>
@@ -11,3 +12,4 @@
 //#pragma comment(lib, "legacy_stdio_definitions.lib")
 //#pragma comment(lib,"DXSDK_Jun10/Lib/x64/DxErr.lib")
 //-----------------------------
+#endif

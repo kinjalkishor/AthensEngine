@@ -18,21 +18,21 @@ using uint64 = unsigned long long int;
 
 namespace sdf2
 {
-template <class T, intmax_t N> inline constexpr intmax_t strz_cap(const T (&)[N]) noexcept { return N-1; }
+template <class T, ptrdiff_t N> inline constexpr ptrdiff_t strz_cap(const T (&)[N]) noexcept { return N-1; }
 
-inline intmax_t strz_len(const char* src) { return strlen(src); }
-inline intmax_t strz_len(const wchar_t* src) { return wcslen(src); }
+inline ptrdiff_t strz_len(const char* src) { return strlen(src); }
+inline ptrdiff_t strz_len(const wchar_t* src) { return wcslen(src); }
 
-inline intmax_t strf_assign_mbs(wchar_t* dest, intmax_t dest_capacity, const char* src, intmax_t src_len) {
-    intmax_t copy_len = src_len;
+inline ptrdiff_t strf_assign_mbs(wchar_t* dest, ptrdiff_t dest_capacity, const char* src, ptrdiff_t src_len) {
+    ptrdiff_t copy_len = src_len;
     if (copy_len > dest_capacity) { copy_len = dest_capacity; }
 	const int dest_size_with_null_char = dest_capacity+1;
 	int result = MultiByteToWideChar(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char);
 	dest[copy_len] = L'\0';
 	return copy_len;
 }
-inline intmax_t strf_assign_wcs(char* dest, intmax_t dest_capacity, const wchar_t* src, intmax_t src_len) {
-    intmax_t copy_len = src_len;
+inline ptrdiff_t strf_assign_wcs(char* dest, ptrdiff_t dest_capacity, const wchar_t* src, ptrdiff_t src_len) {
+    ptrdiff_t copy_len = src_len;
     if (copy_len > dest_capacity) { copy_len = dest_capacity; }
 	const int dest_size_with_null_char = dest_capacity+1;
 	int result = WideCharToMultiByte(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char, nullptr, nullptr);	
@@ -170,7 +170,7 @@ public:
 		// Register window class
 		WNDCLASSEX wc = {};
 		wc.cbSize = sizeof(wc);
-		wc.style = CS_OWNDC; //CS_HREDRAW | CS_VREDRAW;
+		wc.style = CS_OWNDC; //CS_HREDRAW|CS_VREDRAW;
 		wc.lpfnWndProc = m_wnd_proc;
 		wc.cbClsExtra = 0;
 		wc.cbWndExtra = 0;
@@ -194,7 +194,7 @@ public:
 		uint dwStyle = 0;
 		uint dwExStyle = 0;
 		dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPSIBLINGS|WS_CLIPCHILDREN;
-		dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
+		dwExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
 
 		int x, y, w, h;
 		RECT window_rect = {0, 0, width, height};
@@ -275,8 +275,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
     //-------------------------
     int xpos = 10;
 	int ypos = 50;
-	int width = 800;
-	int height = 450;
+	int width = 720;
+	int height = 405;
 	bool fullscreen = false;
 	const char* wnd_title = "Sample window";									
 

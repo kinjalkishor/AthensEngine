@@ -1,5 +1,7 @@
+//DONE
 #pragma once
 
+#if 0
 //-----------------------------
 // path realtive to project file
 #if defined(_MSC_VER)	
@@ -29,5 +31,5 @@
 
 //-----------------------------
 
-
+#endif
 

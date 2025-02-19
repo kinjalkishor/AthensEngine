@@ -3,48 +3,6 @@
 namespace gm
 {
 
-class vec2u {
-public:
-	union {
-		struct { unsigned int x, y; };
-		unsigned int e[2];
-    };	
-
-	vec2u() = default;
-	vec2u(unsigned int x, unsigned int y) : x(x), y(y) {}
-    explicit vec2u(unsigned int f) : x(f), y(f) {}
-
-	constexpr static int size() { return 2; }	
-
-	const unsigned int* data() const				{ return &e[0]; }
-	unsigned int* data()							{ return &e[0]; }
-	const unsigned int& operator [](int i) const	{ return e[i]; }
-    unsigned int& operator [](int i)				{ return e[i]; }	
-
-	const static vec2u k_zero() { return vec2u(0, 0); }
-};
-
-class vec2i {
-public:
-	union {
-		struct { int x, y; };
-		int e[2];
-    };	
-
-	vec2i() = default;
-	vec2i(int x, int y) : x(x), y(y) {}
-    explicit vec2i(int f) : x(f), y(f) {}
-
-	constexpr static int size() { return 2; }	
-
-	const int* data() const				{ return &e[0]; }
-	int* data()							{ return &e[0]; }
-	const int& operator [](int i) const	{ return e[i]; }
-    int& operator [](int i)				{ return e[i]; }	
-
-	const static vec2i k_zero() { return vec2i(0, 0); }
-};
-
 
 class vec2 {
 public:
@@ -133,33 +91,7 @@ public:
 	const static color4 k_zero() { return color4(0, 0, 0, 0); }
 };
 
-class mat2 {
-public:
-	union {
-		float e[4];
-		float r[2][2];
-	};
 
-	mat2() = default;
-	
-	mat2(float m11, float m12,
-		 float m21, float m22) 
-    : e{ m11, m12,
-		 m21, m22 } {}
-
-    explicit mat2(float f) 
-    : e{ f, 0,	
-		 0, f } {} 
-   
-
-	constexpr static int size() { return 4; }	
-	constexpr static int dim() 	{ return 2; }	
-	
-	const float* data() const				{ return &e[0]; }
-	float* data()							{ return &e[0]; }
-	const float& operator [](int i) const	{ return e[i]; }
-    float& operator [](int i)				{ return e[i]; }	
-};
 
 class mat3 {
 public:
@@ -228,5 +160,6 @@ public:
 	const static mat4 k_zero() { return mat4(0); }
 	const static mat4 k_identity() { return mat4(1); }
 };
+
 
 }

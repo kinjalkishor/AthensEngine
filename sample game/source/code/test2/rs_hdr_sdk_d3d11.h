@@ -1,6 +1,5 @@
 #pragma once
 
-#if 0
 //------------------------------------
 #include <d3d11.h>
 #include <d3d11_4.h>
@@ -34,6 +33,7 @@
 //#include "tut/d3dxlib/DirectXMath/Inc/DirectXColors.h"
 //#include "tut/d3dxlib/DirectXMath/Inc/DirectXCollision.h"
 
+#if 0
 // For textures
 #include "d3dxlib/TextureLoader/DDSTextureLoader11.h"
 #include "d3dxlib/TextureLoader/WICTextureLoader11.h"

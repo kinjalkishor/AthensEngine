@@ -129,42 +129,38 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>../../../../../gfx_sdk</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../../../../gfx_sdk;../../dep/lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="con_basic.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="con_main_exp.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="stb_libs.cpp" />
     <ClCompile Include="win_basic_wnd3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="win_main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="win_main_d3d9.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="win_main_q3.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="win_main_s.cpp" />
     <ClCompile Include="win_main_t2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="win_main_t3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\ext_empty.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\common\ext_empty2.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\common\ext_not_include.h">
@@ -173,28 +169,27 @@
     <ClInclude Include="..\common\ext_old_ref_lib.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="bs_ds_ex.h" />
-    <ClInclude Include="bs_ds_std_cont.h" />
+    <ClInclude Include="bs_gmath_class.h" />
+    <ClInclude Include="bs_console.h" />
+    <ClInclude Include="bs_def.h" />
+    <ClInclude Include="bs_ds_util.h" />
+    <ClInclude Include="bs_format.h" />
     <ClInclude Include="bs_gmath.h" />
     <ClInclude Include="bs_gmath2.h" />
-    <ClInclude Include="bs_gmath_class.h" />
-    <ClInclude Include="bs_gmath_ex1.h" />
     <ClInclude Include="bs_gmath_glm.h" />
-    <ClInclude Include="bs_gmath_irr.h" />
-    <ClInclude Include="bs_gmath_opengl.h" />
-    <ClInclude Include="bs_gmath_templates.h" />
     <ClInclude Include="bs_gmath_types.h" />
-    <ClInclude Include="bs_gmath_wnm.h" />
-    <ClInclude Include="bs_lib.h" />
     <ClInclude Include="bs_math.h" />
+    <ClInclude Include="bs_mbstr.h" />
+    <ClInclude Include="bs_print.h" />
+    <ClInclude Include="bs_std_cont.h" />
     <ClInclude Include="bs_types.h" />
-    <ClInclude Include="del_checked6.h" />
-    <ClInclude Include="q3_shared.h" />
-    <ClInclude Include="rs_hdr_gl.h" />
+    <ClInclude Include="bs_win_util.h" />
     <ClInclude Include="rs_hdr_sdk_d3d10.h" />
     <ClInclude Include="rs_hdr_sdk_d3d11.h" />
     <ClInclude Include="rs_hdr_sdk_d3d12.h" />
     <ClInclude Include="rs_hdr_sdk_d3d9.h" />
+    <ClInclude Include="rs_hdr_sdk_gl.h" />
+    <ClInclude Include="win_app_simple.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

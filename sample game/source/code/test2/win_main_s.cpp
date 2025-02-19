@@ -1,49 +1,41 @@
-	//#pragma comment(lib, "user32.lib")
-	//#pragma comment(lib, "gdi32.lib")
-	//#pragma comment(lib, "winmm.lib")
-	//#pragma comment(lib, "OpenGL32.lib")
-	//#define __WRL_CLASSIC_COM_STRICT__ 
-	//#include <wrl/client.h> //or
-#if 0
-	#include <wrl.h>
-	// For RoInitializeWrapper required for CreateWICTextureFromFile
-	#pragma comment(lib, "runtimeobject.lib")
-#endif
+//#pragma comment(lib, "user32.lib")
+//#pragma comment(lib, "gdi32.lib")
+//#pragma comment(lib, "winmm.lib")
+//#pragma comment(lib, "OpenGL32.lib")
+//#define __WRL_CLASSIC_COM_STRICT__ 
+//#include <wrl/client.h> //or
+//-------------------------------
+// For RoInitializeWrapper required for CreateWICTextureFromFile include runtimeobject.lib
+//#include <wrl.h>
+//#pragma comment(lib, "runtimeobject.lib")
+//-------------------------------------------------
+
 
 //#include "con_basic.cpp"
-//#include "win_basic_wnd2.cpp"
+//#include "con_main_exp.cpp"
+
+
 //#include "win_basic_wnd3.cpp"
-
-//#include "win_main.cpp"
-
-//#include "win_main_t2.cpp"
-#include "win_main_d3d9.cpp"
-
-
-
-//#include "con_main_ds.cpp"
-//#include "win_main_rs.cpp"
-//#include "win_main_fg.cpp"
-//#include "win_main_fw.cpp"
-//#include "win_main_gl1.cpp"
-
+#include "win_main_t2.cpp"
 //#include "win_main_t3.cpp"
-//#include "win_main_q2.cpp"
+
+
+
+
+
+
+
+
+
+
+
+
+
 //#include "win_main_irr.cpp"
-
-//#include "sample_win_basic1.cpp"
-//#include "sample_d3d9b.cpp"
-//#include "sample_d3d9c.cpp"
-//#include "sample_gl1.cpp"
-//#include "sample_gl4.cpp"
-
-
 //#include "win_main_sb.cpp"
-
+//#include "win_main_q2.cpp"
 
 //#include "chk_math_con_main.cpp"
-
-
 
 //--------------
 //../../dep/Vulkan-Headers/include
