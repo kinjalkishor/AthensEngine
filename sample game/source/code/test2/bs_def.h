@@ -209,7 +209,6 @@ inline char* mbstrz_assign_wcsz_alloc(const wchar_t* src) {
 
 
 //==========================================
-// CHECK:
 // STACK VECTOR
 template<class T, ptrdiff_t N>
 class vector_st {
@@ -217,84 +216,86 @@ private:
     template<class T> inline void element_construct(T* ptr) { new (ptr) T(); }
     template<class T> inline void element_copy_construct(T* ptr, const T& value) { new (ptr) T(value); }
     template<class T> inline void element_destruct(T* ptr) { ptr->~T(); }
+
+    bool is_reserve_needed(ptrdiff_t required_size) { return (required_size > capacity()); }
 public:
     T m_data[N] = {};
     ptrdiff_t m_size = 0;
 
-    const T* data() const { return m_data; }
-	T* data() { return m_data; }
-
     ptrdiff_t size() const { return m_size; }
     ptrdiff_t capacity() const { return N; }
-
-    const T& operator [](ptrdiff_t i) const { return data[i]; }
-	T& operator [](ptrdiff_t i) { return data[i]; }
-
-    void clear() { 
-		if (m_size > 0) { for (ptrdiff_t i=0; i < size(); ++i) { element_destruct(&m_data[i]); } }        
-        m_size = 0;
-	}
     bool empty() { return (size() == 0); }
 
-    void resize(ptrdiff_t count) { 
+    const T* data() const { return m_data; }
+	T* data() { return m_data; }    
+
+    const T& operator [](ptrdiff_t i) const { return m_data[i]; }
+	T& operator [](ptrdiff_t i) { return m_data[i]; } 
+
+    void clear() {
+        for (ptrdiff_t i=0; i < size(); ++i) { element_destruct(&m_data[i]); }
+        m_size = 0;        
+    }
+
+    
+    void resize(ptrdiff_t count) {
+        if (count == size()) { return; }
+
         if (count > size()) {
-            if (count > capacity()) {
-                // Expand.
-                // Memory not available, reallocate.
-                // Only this if part changed from growable vector.                
+            // Expand.
+            if (count > capacity()) {                
+                // Memory not available, reallocate.                
+                //allocate_new_block(count, geometric_growth);
                 // Cannot reallocate fixed size, truncate.               
                 count = capacity();
-                if (count > size()) {
-                    for (ptrdiff_t i=size(); i < count; ++i) { element_construct(&m_data[i]); }
-                }
-                // Cannot change capacity.
-                m_size = count;
-            } else {
-                // Construct extra elements.
-                // Memory available.
-                for (ptrdiff_t i=size(); i < count; ++i) { element_construct(&m_data[i]); }
-                m_size = count;
-            }
+            }           
+            // Memory available.
+            // Construct extra elements.
+            for (ptrdiff_t i=size(); i < count; ++i) { element_construct(&m_data[i]); }
+            m_size = count;
         } else {
-            // Shrink.
-            // Destruct extra elements.
+            // Shrink. 
             // Memory not deallocated.
+            // Destruct extra elements.
             for (ptrdiff_t i=count; i < size(); ++i) { element_destruct(&m_data[i]); }
             m_size = count;
         }        
     }
-
+ 
 
     void push_back(const T& element) {
         const ptrdiff_t required_size = size()+1;
-        if (required_size > capacity()) {
-            // Do nothing and exit.         
+        if (is_reserve_needed(required_size)) {
+            //allocate_new_block(required_size, true);
+            // Cannot reallocate fixed size. Do nothing and exit.
             return;
         }
         element_copy_construct(&m_data[m_size], element);
-        ++m_size;             
+        m_size += 1;             
     }
 
     void pop_back() {
         if (!empty()) {
             element_destruct(&m_data[m_size-1]);
-            --m_size;
+            m_size -= 1;
         }
-    }
+    }    
+
 
     void insert_pos(ptrdiff_t pos_index, const T& element) {
         // Extra space = size()+N
         const ptrdiff_t required_size = size()+1;         
         if (pos_index <= size()) {
-            if (required_size > capacity()) {
-                // Do nothing and exit.      
+            if (is_reserve_needed(required_size)) {
+                //allocate_new_block(required_size, true);
+                // Cannot reallocate fixed size. Do nothing and exit.
                 return;
             }
             // one less than required_size.
             const ptrdiff_t last_pos_index = required_size-1;
             // Construct extra elements at end.
             element_construct(&m_data[last_pos_index]);
-            for (ptrdiff_t i=last_pos_index; i > pos_index; --i) { m_data[i] = m_data[i-1]; }
+            for (ptrdiff_t i=last_pos_index; i>pos_index; --i) { m_data[i] = m_data[i-1]; }
             // Insert element after shifting.
             m_data[pos_index] = element;
             m_size += 1;
@@ -304,47 +305,84 @@ public:
     void remove_pos(ptrdiff_t pos_index) {
         const ptrdiff_t last_pos_index = size()-1;
         if (pos_index <= size()) {
-            for (ptrdiff_t i=pos_index; i < size(); ++i) { m_data[i] = m_data[i+1]; }
+            for (ptrdiff_t i=pos_index; i<size(); ++i) { m_data[i] = m_data[i+1]; }
             element_destruct(&m_data[last_pos_index]);
             m_size -= 1;
         }
-    }    
+    }  
 };
 
-// CHECK:
+
 // STACK STRING
 template<class T, ptrdiff_t N>
 class basic_string_st {
 private:
+    bool is_reserve_needed(ptrdiff_t required_size) { return (required_size > capacity()); }
+
     template<class T> inline constexpr T k_null_char();
     template <> inline constexpr char k_null_char<char>() { return '\0'; }
     template <> inline constexpr wchar_t k_null_char<wchar_t>() { return L'\0'; }
 
+    template<class T> inline constexpr T k_default_char();
+    template <> inline constexpr char k_default_char<char>() { return '-'; }
+    template <> inline constexpr wchar_t k_default_char<wchar_t>() { return L'-'; }
+
     inline ptrdiff_t strz_len(const char* src) { return strlen(src); }
     inline ptrdiff_t strz_len(const wchar_t* src) { return wcslen(src); }
+
 public:
     // CHANGED from vector_st
     // Allocate 1 more for null char
     T m_data[N+1] = {};
     ptrdiff_t m_size = 0;
 
-    const T* data() const { return m_data; }
-	T* data() { return m_data; }
-    const T* c_str() const { return m_data; }
-
     ptrdiff_t size() const { return m_size; }
     ptrdiff_t capacity() const { return N; }
-
-    const T& operator [](ptrdiff_t i) const { return data[i]; }
-	T& operator [](ptrdiff_t i) { return data[i]; }	
-
-    void clear() { m_data[0] = k_null_char<T>(); m_size = 0; }
     bool empty() { return (size() == 0); }
+
+    const T* data() const { return m_data; }
+    T* data() { return m_data; }    
+    const T* c_str() const { return m_data; }  
+
+    const T& operator [](ptrdiff_t i) const { return m_data[i]; }
+    T& operator [](ptrdiff_t i) { return m_data[i]; } 
+
+
+    void clear() {
+        m_size = 0;    
+        if (capacity() > 0) { m_data[0] = k_null_char<T>(); }
+    }
+
+
+    void resize(ptrdiff_t count) {
+        if (count == size()) { return; }
+
+        if (count > size()) {
+            // Expand.
+            if (count > capacity()) {                
+                // Memory not available, reallocate.                
+                //allocate_new_block(count, geometric_growth);
+                // Cannot reallocate fixed size, truncate.               
+                count = capacity();
+            }           
+            // Memory available.
+            // Set elements to default char so that no element is null in expanded memory.
+            for (ptrdiff_t i=size(); i < count; ++i) { m_data[i] = k_default_char<T>(); }
+            m_size = count;
+            m_data[m_size] = k_null_char<T>();
+        } else {
+            // Shrink.
+            // Memory not deallocated.
+            m_size = count;
+            m_data[m_size] = k_null_char<T>();
+        }        
+    }
+
 
     void assign_data(const T* src, ptrdiff_t src_len) {
         //m_size = sdf::str_assign(m_data, capacity(), src, src_len);
         ptrdiff_t copy_len = (src_len > capacity()) ? capacity() : src_len;
-        memcpy(&m_data[0], &src[0], copy_len*sizeof(char));
+        memcpy(&m_data[0], &src[0], copy_len*sizeof(T));
         m_data[copy_len] = k_null_char<T>();
         m_size = copy_len;
     }
@@ -355,7 +393,7 @@ public:
         ptrdiff_t total_len = dest_len + src_len;  
         if (total_len > capacity()) { total_len = capacity(); }
         ptrdiff_t append_len = total_len - dest_len;
-        memcpy(&m_data[dest_len], &src[0], append_len*sizeof(char));
+        memcpy(&m_data[dest_len], &src[0], append_len*sizeof(T));
         m_data[total_len] = k_null_char<T>();
         m_size = total_len;
     }

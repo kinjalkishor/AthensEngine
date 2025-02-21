@@ -142,6 +142,9 @@
     <ClCompile Include="con_basic.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="con_main_ds.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="con_main_exp.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -170,6 +173,13 @@
     <ClInclude Include="..\common\ext_old_ref_lib.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="bs_ds_dequeue.h" />
+    <ClInclude Include="bs_ds_hashmap_rh.h" />
+    <ClInclude Include="bs_ds_list.h" />
+    <ClInclude Include="bs_ds_optional.h" />
+    <ClInclude Include="bs_ds_string.h" />
+    <ClInclude Include="bs_ds_unord_map.h" />
+    <ClInclude Include="bs_ds_vector.h" />
     <ClInclude Include="bs_gmath_class.h" />
     <ClInclude Include="bs_console.h" />
     <ClInclude Include="bs_def.h" />

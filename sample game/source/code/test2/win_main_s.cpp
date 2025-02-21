@@ -13,6 +13,7 @@
 
 //#include "con_basic.cpp"
 //#include "con_main_exp.cpp"
+//#include "con_main_ds.cpp"
 
 
 //#include "win_basic_wnd3.cpp"

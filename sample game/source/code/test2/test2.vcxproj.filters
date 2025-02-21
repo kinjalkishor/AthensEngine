@@ -103,6 +103,9 @@
     <ClCompile Include="con_main_exp.cpp">
       <Filter>main\more</Filter>
     </ClCompile>
+    <ClCompile Include="con_main_ds.cpp">
+      <Filter>main\more</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bs_types.h">
@@ -179,6 +182,27 @@
     </ClInclude>
     <ClInclude Include="rs_hf_sdk_vk.h">
       <Filter>base\rs_hf_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_vector.h">
+      <Filter>a_zexp\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_string.h">
+      <Filter>a_zexp\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_list.h">
+      <Filter>a_zexp\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_optional.h">
+      <Filter>a_zexp\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_hashmap_rh.h">
+      <Filter>a_zexp\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_unord_map.h">
+      <Filter>a_zexp\ds</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_ds_dequeue.h">
+      <Filter>a_zexp\ds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

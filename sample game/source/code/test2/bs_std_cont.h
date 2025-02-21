@@ -7,13 +7,28 @@
 #include <string>
 #include <optional>
 
+
 template<class T>
 inline void vec_clear_memory(std::pmr::vector<T>& v) {
-	sdr::vector<T>().swap(v);
+	std::pmr::::vector<T>().swap(v);
 }
 
+template<class T>
+inline void vec_assign_data(std::pmr::vector<T>& v, const T* src, ptrdiff_t src_len) {
+    v.clear();
+    v.resize(src_len);
+    for (ptrdiff_t i=0; i < src_len; ++i) { v[i] = src[i]; }
+}
 
-//-------------------------
+//----------------------------------------------------------------------
+template<class T>
+inline void string_assign_data(std::pmr::basic_string<T>& v, const T* src, ptrdiff_t src_len) {
+    v.clear();
+    v.resize(src_len);    
+    memcpy(v.data(), src, src_len);
+}
+
+//-----------------
 inline ptrdiff_t wstring_assign_mbs(std::pmr::wstring& dest, const char* src, ptrdiff_t src_len) {
     ptrdiff_t copy_len = src_len;
 	if (copy_len > dest.size()) { dest.resize(copy_len); }
