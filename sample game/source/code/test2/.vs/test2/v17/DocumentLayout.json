@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_t2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:win_main_t2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_s.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:win_main_s.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_def.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:bs_def.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_t2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|solutionrelative:win_main_t2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E9B26B8A-0DE3-402B-A48E-38044F02386E}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_basic_wnd3.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d3750d8a-574b-4fb3-b7e2-aa8af40e8231}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "win_main_s.cpp",
+              "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_s.cpp",
+              "RelativeDocumentMoniker": "win_main_s.cpp",
+              "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_s.cpp",
+              "RelativeToolTip": "win_main_s.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-21T17:21:53.449Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -36,14 +53,14 @@
               "RelativeDocumentMoniker": "bs_def.h",
               "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\bs_def.h",
               "RelativeToolTip": "bs_def.h",
-              "ViewState": "AgIAAEsBAAAAAAAAAAAAAGEBAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAAANAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-21T09:56:37.316Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "win_basic_wnd3.cpp",
               "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_basic_wnd3.cpp",
               "RelativeDocumentMoniker": "win_basic_wnd3.cpp",
@@ -55,7 +72,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "win_main_t2.cpp",
               "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_t2.cpp",
               "RelativeDocumentMoniker": "win_main_t2.cpp",
@@ -63,8 +80,7 @@
               "RelativeToolTip": "win_main_t2.cpp",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-02-17T14:22:42.909Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-17T14:22:42.909Z"
             }
           ]
         }

@@ -279,37 +279,7 @@ public:
             element_destruct(&m_data[m_size-1]);
             m_size -= 1;
         }
-    }    
-
-
-    void insert_pos(ptrdiff_t pos_index, const T& element) {
-        // Extra space = size()+N
-        const ptrdiff_t required_size = size()+1;         
-        if (pos_index <= size()) {
-            if (is_reserve_needed(required_size)) {
-                //allocate_new_block(required_size, true);
-                // Cannot reallocate fixed size. Do nothing and exit.
-                return;
-            }
-            // one less than required_size.
-            const ptrdiff_t last_pos_index = required_size-1;
-            // Construct extra elements at end.
-            element_construct(&m_data[last_pos_index]);
-            for (ptrdiff_t i=last_pos_index; i>pos_index; --i) { m_data[i] = m_data[i-1]; }
-            // Insert element after shifting.
-            m_data[pos_index] = element;
-            m_size += 1;
-        }        
     }
-
-    void remove_pos(ptrdiff_t pos_index) {
-        const ptrdiff_t last_pos_index = size()-1;
-        if (pos_index <= size()) {
-            for (ptrdiff_t i=pos_index; i<size(); ++i) { m_data[i] = m_data[i+1]; }
-            element_destruct(&m_data[last_pos_index]);
-            m_size -= 1;
-        }
-    }  
 };
 
 

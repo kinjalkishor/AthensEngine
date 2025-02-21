@@ -3,7 +3,7 @@
 namespace sdf 
 {
 
-
+// CHECK:
 // OPTIONAL
 struct tag_nullopt { 
     struct tag_f {};
@@ -43,6 +43,7 @@ public:
 
 
 //-----------------------------------
+// CHECK:
 // SPAN
 template<class T>
 class span {
@@ -63,6 +64,7 @@ using wstring_view = basic_string_view<wchar_t>;
 
 
 //-----------------------------------
+// CHECK:
 // UNIQUE_PTR
 template<class T>
 class unique_ptr {

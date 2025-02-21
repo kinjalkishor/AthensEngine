@@ -174,33 +174,79 @@ public:
     }    
 
 
-    void insert_pos(ptrdiff_t pos_index, const T& element) {
+    //------------------
+    // insert
+    // 0 1 2 3 4 5 6 7
+    // 0 1 2 . . 3 4 5 6 7 
+    // 0 1 2 3 4 5 6 7 8 9
+    // req size 8+2=10 //for N=2, pi=3
+    // construct [8]..[9]
+    // shift [9]..[5]    
+    // remove
+    // 0 1 2 3 4 5 6 7
+    // 0 1 2 5 6 7 . .
+    // 0 1 2 3 4 5 6 7
+    // shift [3]..[5]
+    // destruct [6]..[7]
+
+    void insert_range(ptrdiff_t pos_index, T* src, ptrdiff_t src_len) {
+        const ptrdiff_t N = src_len;
         // Extra space = size()+N
-        const ptrdiff_t required_size = size()+1;         
+        const ptrdiff_t required_size = size()+N;         
         if (pos_index <= size()) {
             if (is_reserve_needed(required_size)) {
                 allocate_new_block(required_size, true);
             }
-            // one less than required_size.
-            const ptrdiff_t last_pos_index = required_size-1;
             // Construct extra elements at end.
-            dsf::element_construct(&m_data[last_pos_index]);
-            for (ptrdiff_t i=last_pos_index; i>pos_index; --i) { m_data[i] = m_data[i-1]; }
+            for (ptrdiff_t i=size(); i < N; ++i) { dsf::element_construct(&m_data[i]); }
+            // Shift elements.
+            const ptrdiff_t last_pos_index = required_size-1;
+            const ptrdiff_t shift_till_index = pos_index + N;
+            for (ptrdiff_t i=last_pos_index; i >= shift_till_index; --i) { m_data[i] = m_data[i-N]; }
             // Insert element after shifting.
-            m_data[pos_index] = element;
-            m_size += 1;
-        }        
+            for (ptrdiff_t i=0; i < N; ++i) { m_data[i+pos_index] = src[i]; }
+            m_size += N;
+        } 
     }
-
-    void remove_pos(ptrdiff_t pos_index) {
+    
+    void remove_range(ptrdiff_t pos_index, ptrdiff_t remove_len) {
+        const ptrdiff_t N = remove_len;
         const ptrdiff_t last_pos_index = size()-1;
         if (pos_index <= size()) {
-            for (ptrdiff_t i=pos_index; i<size(); ++i) { m_data[i] = m_data[i+1]; }
-            dsf::element_destruct(&m_data[last_pos_index]);
-            m_size -= 1;
+            // Shift elements.
+            const ptrdiff_t shift_till_index = last_pos_index-N;
+            for (ptrdiff_t i=pos_index; i <= shift_till_index; ++i) { m_data[i] = m_data[i+N]; }
+            // Destruct extra elements at end.
+            ptrdiff_t start_delete_index = shift_till_index+1;
+            for (ptrdiff_t i=0; i < N; ++i) { dsf::element_destruct(&m_data[i+start_delete_index]); }
+            m_size -= N;
         }
     }
 
+    void insert_pos(ptrdiff_t pos_index, const T& element) { 
+        const ptrdiff_t N = 1;
+        // Extra space = size()+N
+        const ptrdiff_t required_size = size()+N;         
+        if (pos_index <= size()) {
+            if (is_reserve_needed(required_size)) {
+                allocate_new_block(required_size, true);
+            }
+            // Construct extra elements at end.
+            for (ptrdiff_t i=size(); i < N; ++i) { dsf::element_construct(&m_data[i]); }
+            // Shift elements.
+            const ptrdiff_t last_pos_index = required_size-1;
+            const ptrdiff_t shift_till_index = pos_index + N;
+            for (ptrdiff_t i=last_pos_index; i >= shift_till_index; --i) { m_data[i] = m_data[i-N]; }
+            // Insert element after shifting.
+            //for (ptrdiff_t i=0; i < N; ++i) { m_data[i+pos_index] = src[i]; }
+            m_data[pos_index] = element;
+            m_size += N;
+        } 
+    }
+
+    void remove_pos(ptrdiff_t pos_index) {
+        remove_range(pos_index, 1);
+    }
 
     //------------------
     void swap(vector& other) noexcept {

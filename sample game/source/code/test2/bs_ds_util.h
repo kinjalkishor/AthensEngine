@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-namespace dsf
-{
+
+namespace sdf {
 
 class sys_allocator {
 public:
@@ -12,8 +12,11 @@ public:
     void deallocate(void* ptr) { free(ptr); }	
 };
 
+}
 
 
+namespace dsf
+{
 //=========================================================
 template<class T> inline void element_construct(T* ptr) { new (ptr) T(); }
 template<class T> inline void element_copy_construct(T* ptr, const T& value) { new (ptr) T(value); }

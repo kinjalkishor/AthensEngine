@@ -173,32 +173,61 @@ public:
     }    
 
     
-    void insert_pos(ptrdiff_t pos_index, const T& element) {
+    //------------------
+    void insert_range(ptrdiff_t pos_index, T* src, ptrdiff_t src_len) {
+        const ptrdiff_t N = src_len;
         // Extra space = size()+N
-        const ptrdiff_t required_size = size()+1;         
+        const ptrdiff_t required_size = size()+N;         
         if (pos_index <= size()) {
             if (is_reserve_needed(required_size)) {
                 allocate_new_block(required_size, true);
             }
-            // one less than required_size.
+             // Shift elements.
             const ptrdiff_t last_pos_index = required_size-1;
-            for (ptrdiff_t i=last_pos_index; i>pos_index; --i) { m_data[i] = m_data[i-1]; }
+            const ptrdiff_t shift_till_index = pos_index + N;
+            for (ptrdiff_t i=last_pos_index; i >= shift_till_index; --i) { m_data[i] = m_data[i-N]; }
             // Insert element after shifting.
-            m_data[pos_index] = element;
-            m_size += 1;
+            for (ptrdiff_t i=0; i < N; ++i) { m_data[i+pos_index] = src[i]; }
+            m_size += N;
             m_data[m_size] = dsf::k_null_char<T>();
-        }        
+        } 
     }
-
-    void remove_pos(ptrdiff_t pos_index) {
-        //const ptrdiff_t last_pos_index = size()-1;
+    
+    void remove_range(ptrdiff_t pos_index, ptrdiff_t remove_len) {
+        const ptrdiff_t N = remove_len;
+        const ptrdiff_t last_pos_index = size()-1;
         if (pos_index <= size()) {
-            for (ptrdiff_t i=pos_index; i<size(); ++i) { m_data[i] = m_data[i+1]; }
-            m_size -= 1;
+            // Shift elements.
+            const ptrdiff_t shift_till_index = last_pos_index-N;
+            for (ptrdiff_t i=pos_index; i <= shift_till_index; ++i) { m_data[i] = m_data[i+N]; }
+            m_size -= N;
             m_data[m_size] = dsf::k_null_char<T>();
         }
     }
 
+    void insert_pos(ptrdiff_t pos_index, const T& element) { 
+        const ptrdiff_t N = 1;
+        // Extra space = size()+N
+        const ptrdiff_t required_size = size()+N;         
+        if (pos_index <= size()) {
+            if (is_reserve_needed(required_size)) {
+                allocate_new_block(required_size, true);
+            }
+            // Shift elements.
+            const ptrdiff_t last_pos_index = required_size-1;
+            const ptrdiff_t shift_till_index = pos_index + N;
+            for (ptrdiff_t i=last_pos_index; i >= shift_till_index; --i) { m_data[i] = m_data[i-N]; }
+            // Insert element after shifting.
+            //for (ptrdiff_t i=0; i < N; ++i) { m_data[i+pos_index] = src[i]; }
+            m_data[pos_index] = element;
+            m_size += N;
+            m_data[m_size] = dsf::k_null_char<T>();
+        } 
+    }
+
+    void remove_pos(ptrdiff_t pos_index) {
+        remove_range(pos_index, 1);
+    }
 
     //------------------
     void swap(basic_string& other) noexcept {
@@ -251,7 +280,7 @@ public:
     }
     basic_string& append(const T* src) { return append(src, dsf::strz_len(src)); }
 
-    bool operator==(const basic_string& src) { return dsf::str_equals<T>(data(), size(), src.data(), src.size(), ) }
+    bool operator==(const basic_string& src) { return dsf::str_equals<T>(data(), size(), src.data(), src.size()); }
 
 };
 
