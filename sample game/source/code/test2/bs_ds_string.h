@@ -103,6 +103,11 @@ public:
         allocate_new_block(count, true);
     }
 
+    void reserve_exact(ptrdiff_t count) {
+        // Does not shrink.
+        if (count <= capacity()) { return; }
+        allocate_new_block(count, false);
+    }
 
     void resize_helper(ptrdiff_t count, bool geometric_growth, bool allocate_on_shrink) {
         if (count == size()) { return; }
@@ -187,7 +192,8 @@ public:
             const ptrdiff_t shift_till_index = pos_index + N;
             for (ptrdiff_t i=last_pos_index; i >= shift_till_index; --i) { m_data[i] = m_data[i-N]; }
             // Insert element after shifting.
-            for (ptrdiff_t i=0; i < N; ++i) { m_data[i+pos_index] = src[i]; }
+            //for (ptrdiff_t i=0; i < N; ++i) { m_data[i+pos_index] = src[i]; }
+            memcpy(&m_data[pos_index], src, N*sizeof(T));
             m_size += N;
             m_data[m_size] = dsf::k_null_char<T>();
         } 

@@ -38,14 +38,14 @@ class std_console {
 private:
 	void* hconsole = nullptr;	
 
-	static const unsigned int color_black			= 0;
-	static const unsigned int color_blue			= 1; 
-	static const unsigned int color_green			= 2;  
-	static const unsigned int color_cyan			= 3;  
-	static const unsigned int color_red				= 4;    
-	static const unsigned int color_magenta			= 5;
-	static const unsigned int color_yellow			= 6;
-	static const unsigned int color_white			= 7;
+	static const uint32_t color_black			= 0;
+	static const uint32_t color_blue			= 1; 
+	static const uint32_t color_green			= 2;  
+	static const uint32_t color_cyan			= 3;  
+	static const uint32_t color_red				= 4;    
+	static const uint32_t color_magenta			= 5;
+	static const uint32_t color_yellow			= 6;
+	static const uint32_t color_white			= 7;
 
 
 	ptrdiff_t wstr_assign_ansi(wchar_t* dest, ptrdiff_t dest_capacity, const char* src, ptrdiff_t src_len) {

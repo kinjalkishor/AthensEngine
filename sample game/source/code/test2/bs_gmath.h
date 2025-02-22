@@ -1,9 +1,9 @@
 #pragma once
 
 #include <stdio.h>
+#include <stdint.h>
 #include <limits>
 
-#include "bs_types.h"
 #include "bs_math.h"
 #include "bs_gmath_types.h"
 
@@ -470,122 +470,122 @@ inline const color4 ck_lt_grey = color4(0.2, 0.2, 0.2, 1.0);
 // Integer Packing Unpacking
 //===============================
 
-// Packs uint8 a, b, c, d [0-255] components in a uint.
+// Packs uint8_t a, b, c, d [0-255] components in a uint32_t.
 // Maps unsigned 8 bits/channel to UColor.
 // RGBA format
-inline uint pack_u32(uint8 a, uint8 b, uint8 c, uint8 d) {
-	//return ((uint)(a) << 24) | ((uint)(b) << 16) | ((uint)(c) << 8) | ((uint)(d));
-    return (static_cast<uint>(a) << 24) | (static_cast<uint>(b) << 16) | (static_cast<uint>(c) << 8) | (static_cast<uint>(d));
+inline uint32_t pack_u32(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
+	//return ((uint32_t)(a) << 24) | ((uint32_t)(b) << 16) | ((uint32_t)(c) << 8) | ((uint32_t)(d));
+    return (static_cast<uint32_t>(a) << 24) | (static_cast<uint32_t>(b) << 16) | (static_cast<uint32_t>(c) << 8) | (static_cast<uint32_t>(d));
 }
 
-// Unpacks four uint8 components out of uint and assign to uint.
-inline void unpack_u32(uint val, uint8& a, uint8& b, uint8& c, uint8& d) {
-	//a = (uint8)((val)>>24);
-	//b = (uint8)((val)>>16);
-	//c = (uint8)((val)>>8);
-	//d = (uint8)(val);
+// Unpacks four uint8_t components out of uint32_t and assign to uint32_t.
+inline void unpack_u32(uint32_t val, uint8_t& a, uint8_t& b, uint8_t& c, uint8_t& d) {
+	//a = (uint8_t)((val)>>24);
+	//b = (uint8_t)((val)>>16);
+	//c = (uint8_t)((val)>>8);
+	//d = (uint8_t)(val);
     
-    a = static_cast<uint8>((val)>>24);
-	b = static_cast<uint8>((val)>>16);
-	c = static_cast<uint8>((val)>>8);
-	d = static_cast<uint8>(val);
+    a = static_cast<uint8_t>((val)>>24);
+	b = static_cast<uint8_t>((val)>>16);
+	c = static_cast<uint8_t>((val)>>8);
+	d = static_cast<uint8_t>(val);
 }
 
-inline uint u8_to_xbgr(uint8 r, uint8 g, uint8 b) {
+inline uint32_t u8_to_xbgr(uint8_t r, uint8_t g, uint8_t b) {
 	return pack_u32(0x00, b, g, r);
 }
 
 //UCHAR_MAX; //0xff;
-inline uint byte_order_swap_u32(uint x) {
-	uint8 A = (x >> 24) & UCHAR_MAX;
-	uint8 R = (x >> 16) & UCHAR_MAX;
-	uint8 G = (x >>  8) & UCHAR_MAX;
-	uint8 B = (x >>  0) & UCHAR_MAX;
+inline uint32_t byte_order_swap_u32(uint32_t x) {
+	uint8_t A = (x >> 24) & UCHAR_MAX;
+	uint8_t R = (x >> 16) & UCHAR_MAX;
+	uint8_t G = (x >>  8) & UCHAR_MAX;
+	uint8_t B = (x >>  0) & UCHAR_MAX;
 
 	return ((A << 24) | (B << 16) | (G << 8) | (R << 0));
 }
 
-inline uint argb_to_abgr(uint x) {
+inline uint32_t argb_to_abgr(uint32_t x) {
 	return byte_order_swap_u32(x);
 }
 
-inline uint abgr_to_argb(uint x) {
+inline uint32_t abgr_to_argb(uint32_t x) {
 	return byte_order_swap_u32(x);
 }
 
 
 //-------------
-// float to uint component of a packed uint.
-inline uint ftouc(float x) {
-	//return ((uint)((x)*255.f)&0xff);
-	//return (static_cast<uint>(x*255.f) & UCHAR_MAX);	
-	return static_cast<uint>(x >= 1.0f ? UCHAR_MAX : x <= 0.0f ? 0x00 : static_cast<uint>(x * 255.0f));
+// float to uint32_t component of a packed uint32_t.
+inline uint32_t ftouc(float x) {
+	//return ((uint32_t)((x)*255.f)&0xff);
+	//return (static_cast<uint32_t>(x*255.f) & UCHAR_MAX);	
+	return static_cast<uint32_t>(x >= 1.0f ? UCHAR_MAX : x <= 0.0f ? 0x00 : static_cast<uint32_t>(x * 255.0f));
 }
 
-inline uint ftouc_d3dx9(float x) {
+inline uint32_t ftouc_d3dx9(float x) {
 	//255.0f + 0.5f changes value
-    //return (uint) (x >= 1.0f ? 0xff : x <= 0.0f ? 0x00 : (uint) (x * 255.0f + 0.5f));
-	return static_cast<uint>(x >= 1.0f ? UCHAR_MAX : x <= 0.0f ? 0x00 : static_cast<uint>(x * 255.0f + 0.5f)); 
+    //return (uint32_t) (x >= 1.0f ? 0xff : x <= 0.0f ? 0x00 : (uint32_t) (x * 255.0f + 0.5f));
+	return static_cast<uint32_t>(x >= 1.0f ? UCHAR_MAX : x <= 0.0f ? 0x00 : static_cast<uint32_t>(x * 255.0f + 0.5f)); 
 }
 
 
-// Packs float a, b, c, d [0-1.0] components in a uint.
+// Packs float a, b, c, d [0-1.0] components in a uint32_t.
 // ARGB format
-inline uint packf_u32(float a, float b, float c, float d) {
-	//uint ua = ftouc(a);
-	//uint ub = ftouc(b);
-	//uint uc = ftouc(c);
-	//uint ud = ftouc(d);
+inline uint32_t packf_u32(float a, float b, float c, float d) {
+	//uint32_t ua = ftouc(a);
+	//uint32_t ub = ftouc(b);
+	//uint32_t uc = ftouc(c);
+	//uint32_t ud = ftouc(d);
 	//return ((ua << 24) | (ub << 16) | (uc << 8) | ud);
 
 	return ((ftouc(a) << 24) | (ftouc(b) << 16) | (ftouc(c) << 8) | (ftouc(d)));
 }
 
-inline uint packf_u32_d3dx(float a, float b, float c, float d) {
+inline uint32_t packf_u32_d3dx(float a, float b, float c, float d) {
 	return ((ftouc_d3dx9(a) << 24) | (ftouc_d3dx9(b) << 16) | (ftouc_d3dx9(c) << 8) | (ftouc_d3dx9(d)));
 }
 
 
-// Unpacks four uint8 components out of uint and assign to floats.
-inline void unpackf_u32(uint x, float& a, float& b, float& c, float& d) {
-    // Multiply with this to get float value in [0-1.0] from a component of packed uint. (1.0 / 255.0)
+// Unpacks four uint8_t components out of uint32_t and assign to floats.
+inline void unpackf_u32(uint32_t x, float& a, float& b, float& c, float& d) {
+    // Multiply with this to get float value in [0-1.0] from a component of packed uint32_t. (1.0 / 255.0)
     // (0.003921568627);
     //inline constexpr float k_uc_inv = static_cast<float>(0.00392156862745098039);
     //template <class T> inline constexpr T k_uc_inv = static_cast<T>(0.00392156862745098039);
     //const float k_uc_inv = static_cast<float>(1.0)/static_cast<float>(255.0);
     const float k_uc_inv = static_cast<float>(0.00392156862745098039);
 
-	//a = k_uc_inv * (float) (uint8) (x >> 24);
-	//b = k_uc_inv * (float) (uint8) (x >> 16);
-	//c = k_uc_inv * (float) (uint8) (x >>  8);
-	//d = k_uc_inv * (float) (uint8) (x >>  0);
-    a = k_uc_inv * static_cast<float>( static_cast<uint8>(x >> 24) );
-	b = k_uc_inv * static_cast<float>( static_cast<uint8>(x >> 16) );
-	c = k_uc_inv * static_cast<float>( static_cast<uint8>(x >>  8) );
-	d = k_uc_inv * static_cast<float>( static_cast<uint8>(x >>  0) );
+	//a = k_uc_inv * (float) (uint8_t) (x >> 24);
+	//b = k_uc_inv * (float) (uint8_t) (x >> 16);
+	//c = k_uc_inv * (float) (uint8_t) (x >>  8);
+	//d = k_uc_inv * (float) (uint8_t) (x >>  0);
+    a = k_uc_inv * static_cast<float>( static_cast<uint8_t>(x >> 24) );
+	b = k_uc_inv * static_cast<float>( static_cast<uint8_t>(x >> 16) );
+	c = k_uc_inv * static_cast<float>( static_cast<uint8_t>(x >>  8) );
+	d = k_uc_inv * static_cast<float>( static_cast<uint8_t>(x >>  0) );
 }
 //-------------
 
 //---
-inline color4 argb_to_color4(uint uc) {
+inline color4 argb_to_color4(uint32_t uc) {
 	color4 out = color4::k_zero();
 	//const float f = static_cast<float>(1.0)/static_cast<float>(255.0);
-	//out.r = f * (float) (uint8) (uc >> 16);
-	//out.g = f * (float) (uint8) (uc >>  8);
-	//out.b = f * (float) (uint8) (uc >>  0);
-	//out.a = f * (float) (uint8) (uc >> 24);
+	//out.r = f * (float) (uint8_t) (uc >> 16);
+	//out.g = f * (float) (uint8_t) (uc >>  8);
+	//out.b = f * (float) (uint8_t) (uc >>  0);
+	//out.a = f * (float) (uint8_t) (uc >> 24);
 
 	unpackf_u32(uc, out.a, out.r, out.g, out.b);
 	return out;
 }
 
-inline color4 abgr_to_color4(uint uc) {
+inline color4 abgr_to_color4(uint32_t uc) {
 	color4 out = color4::k_zero();
 	unpackf_u32(uc, out.a, out.b, out.g, out.r);
 	return out;
 }
 
-inline color4 rgba_to_color4(uint uc) {
+inline color4 rgba_to_color4(uint32_t uc) {
 	color4 out = color4::k_zero();
 	unpackf_u32(uc, out.r, out.g, out.b, out.a);
 	return out;
@@ -593,34 +593,34 @@ inline color4 rgba_to_color4(uint uc) {
 
 
 // d3dx9
-inline uint color4_to_argb(const color4& a) {
+inline uint32_t color4_to_argb(const color4& a) {
 	return packf_u32(a.a, a.r, a.g ,a.b);
 }
 
 // Only in d3dx9math D3DXCOLOR DWORD operator: D3DXCOLOR::operator DWORD() const {}
-inline uint color4_to_argb_d3dx(const color4& a) {
-	////(uint) (x * 255.0f + 0.5f)) (d3dx9) instead of (uint) (x * 255.0f)) (packf_u32)
-	//uint ur = a.r >= 1.0f ? 0xff : a.r <= 0.0f ? 0x00 : (uint) (a.r * 255.0f + 0.5f);
-	//uint ug = a.g >= 1.0f ? 0xff : a.g <= 0.0f ? 0x00 : (uint) (a.g * 255.0f + 0.5f);
-	//uint ub = a.b >= 1.0f ? 0xff : a.b <= 0.0f ? 0x00 : (uint) (a.b * 255.0f + 0.5f);
-	//uint ua = a.a >= 1.0f ? 0xff : a.a <= 0.0f ? 0x00 : (uint) (a.a * 255.0f + 0.5f);
+inline uint32_t color4_to_argb_d3dx(const color4& a) {
+	////(uint32_t) (x * 255.0f + 0.5f)) (d3dx9) instead of (uint32_t) (x * 255.0f)) (packf_u32)
+	//uint32_t ur = a.r >= 1.0f ? 0xff : a.r <= 0.0f ? 0x00 : (uint32_t) (a.r * 255.0f + 0.5f);
+	//uint32_t ug = a.g >= 1.0f ? 0xff : a.g <= 0.0f ? 0x00 : (uint32_t) (a.g * 255.0f + 0.5f);
+	//uint32_t ub = a.b >= 1.0f ? 0xff : a.b <= 0.0f ? 0x00 : (uint32_t) (a.b * 255.0f + 0.5f);
+	//uint32_t ua = a.a >= 1.0f ? 0xff : a.a <= 0.0f ? 0x00 : (uint32_t) (a.a * 255.0f + 0.5f);
 	//return (ua << 24) | (ur << 16) | (ug << 8) | ub;
 
 	return packf_u32_d3dx(a.a, a.r, a.g ,a.b);
 }
 
 // gl2
-inline uint color4_to_abgr(const color4& a) {
+inline uint32_t color4_to_abgr(const color4& a) {
 	return packf_u32(a.a, a.b, a.g, a.r);
 }
 
-inline uint color4_to_rgba(const color4& a) {
+inline uint32_t color4_to_rgba(const color4& a) {
 	return packf_u32(a.r, a.g, a.b ,a.a);
 }
 
 
 // Same as RGB macro of Windows. Packs color in format of Win32 Api.
-inline uint color4_to_xbgr(const color4& a) {
+inline uint32_t color4_to_xbgr(const color4& a) {
 	return packf_u32(static_cast<float>(0.0), a.b, a.g, a.r);
 }
 //-----------

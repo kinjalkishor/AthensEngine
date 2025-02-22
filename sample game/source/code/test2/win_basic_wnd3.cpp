@@ -1,4 +1,3 @@
-
 #if defined(_MSC_VER)		
 	#pragma comment(lib, "user32.lib")
 	#pragma comment(lib, "gdi32.lib")
@@ -8,53 +7,43 @@
 #include <Windows.h>
 
 #include <stdio.h>
-
-using int64 = signed long long int;
-using uint = unsigned int;
-using uint64 = unsigned long long int;
-
+#include <stdint.h>
 
 #include <format>
 
+
 namespace sdf2
 {
-template <class T, ptrdiff_t N> inline constexpr ptrdiff_t strz_cap(const T (&)[N]) noexcept { return N-1; }
-
-inline ptrdiff_t strz_len(const char* src) { return strlen(src); }
-inline ptrdiff_t strz_len(const wchar_t* src) { return wcslen(src); }
-
-inline ptrdiff_t strf_assign_mbs(wchar_t* dest, ptrdiff_t dest_capacity, const char* src, ptrdiff_t src_len) {
-    ptrdiff_t copy_len = src_len;
-    if (copy_len > dest_capacity) { copy_len = dest_capacity; }
-	const int dest_size_with_null_char = dest_capacity+1;
-	int result = MultiByteToWideChar(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char);
-	dest[copy_len] = L'\0';
-	return copy_len;
-}
-inline ptrdiff_t strf_assign_wcs(char* dest, ptrdiff_t dest_capacity, const wchar_t* src, ptrdiff_t src_len) {
-    ptrdiff_t copy_len = src_len;
-    if (copy_len > dest_capacity) { copy_len = dest_capacity; }
-	const int dest_size_with_null_char = dest_capacity+1;
-	int result = WideCharToMultiByte(CP_UTF8, 0, src, src_len, dest, dest_size_with_null_char, nullptr, nullptr);	
-	dest[copy_len] = '\0';
-	return copy_len;
-}
 
 //-------------------
 template <class... _Types>
-inline void print(const std::string_view _Fmt, const _Types&... _Args) {
-	std::printf("%s", std::vformat(_Fmt, std::make_format_args(_Args...)).c_str());
+inline void print(const std::string_view _Fmt, const _Types&... _Args) {	    
+	printf("%s", std::vformat(_Fmt, std::make_format_args(_Args...)).c_str());
 }
-template <class... _Types>
-inline void println(const std::string_view _Fmt, const _Types&... _Args) {
-	std::printf("%s\n", std::vformat(_Fmt, std::make_format_args(_Args...)).c_str());
-}
-//-------------------
 
+//-------------------
 class std_console {
 private:
 	void* hconsole = nullptr;	
-	const uint color_yellow = 6;
+
+	static const uint32_t color_black			= 0;
+	static const uint32_t color_blue			= 1; 
+	static const uint32_t color_green			= 2;  
+	static const uint32_t color_cyan			= 3;  
+	static const uint32_t color_red				= 4;    
+	static const uint32_t color_magenta			= 5;
+	static const uint32_t color_yellow			= 6;
+	static const uint32_t color_white			= 7;
+
+
+	ptrdiff_t wstr_assign_ansi(wchar_t* dest, ptrdiff_t dest_capacity, const char* src, ptrdiff_t src_len) {
+		ptrdiff_t copy_len = (src_len > dest_capacity) ? dest_capacity : src_len;
+		const int dest_cap_with_null_char = dest_capacity+1;
+		int result = MultiByteToWideChar(CP_UTF8, 0, src, copy_len, dest, dest_cap_with_null_char);
+		if (!result) { return 0; }
+		dest[copy_len] = L'\0';
+		return copy_len;
+	}
 
 public:
 	std_console() {}
@@ -70,33 +59,40 @@ public:
 		MoveWindow(console_window, xpos, ypos, width, height, TRUE);
 
 		wchar_t wconsole_title[256] = {};
-		sdf2::strf_assign_mbs(wconsole_title, sdf2::strz_cap(wconsole_title), window_title, sdf2::strz_len(window_title));
+		//sdf::wstr_assign_ansi(wconsole_title, sdf::strz_cap(wconsole_title), window_title, sdf::strz_len(window_title));
+		wstr_assign_ansi(wconsole_title, (sizeof(wconsole_title)/sizeof(wconsole_title[0])-1), window_title, strlen(window_title));
 		SetWindowTextW(console_window, wconsole_title);	
 
 		// The freopen_s function closes the file currently associated with stream and reassigns stream to the file specified by path.
 		freopen("conin$", "r", stdin);
 		freopen("conout$", "w", stdout);
 		freopen("conout$", "w", stderr);
+		//printf("Debugging Window:\n");
 
 		hconsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hconsole, color_yellow);
+
+		//win_console_enable_color_print();
+
 		return true;
 	}
 
 };
 
+//-------------------
 //#include <thread>
 //#include <chrono>
-void sys_sleep(uint dwMilliseconds) {
+void sys_sleep(uint32_t dwMilliseconds) {
 	Sleep(dwMilliseconds);
 	//std::this_thread::sleep_for(std::chrono::milliseconds(dwMilliseconds));	
 }
 
+//-------------------
 class game_timer_qpc {
 public:
 
 	float period() {
-		int64 cnts_per_sec = 0;
+		int64_t cnts_per_sec = 0;
 		QueryPerformanceFrequency((LARGE_INTEGER*)&cnts_per_sec);
 		// secs_per_cnt_qpc is 0.0000001f, 1e-07;
 		float secs_per_cnt_qpc = 1.0f / static_cast<float>(cnts_per_sec);
@@ -104,10 +100,10 @@ public:
 		return secs_per_cnt_qpc;
 	}
 
-	int64 get_time() {
+	int64_t get_time() {
 		// Retrieves the current value of the performance counter, 
 		// which is a high resolution (<1 micro second) time stamp.
-		int64 prev_time_qpc = 0;
+		int64_t prev_time_qpc = 0;
 		QueryPerformanceCounter((LARGE_INTEGER*)&prev_time_qpc);
 		return prev_time_qpc;
 	}
@@ -116,8 +112,8 @@ public:
 }
 
 using namespace sdf2;
-//-------------------------
 
+//-------------------------
 namespace wm_wnd2
 {
 
@@ -154,7 +150,19 @@ public:
 };
 app_vars g_av;
 
+
+//-------------------------
 class winapp {
+private:
+	ptrdiff_t wstr_assign_ansi(wchar_t* dest, ptrdiff_t dest_capacity, const char* src, ptrdiff_t src_len) {
+		ptrdiff_t copy_len = (src_len > dest_capacity) ? dest_capacity : src_len;
+		const int dest_cap_with_null_char = dest_capacity+1;
+		int result = MultiByteToWideChar(CP_UTF8, 0, src, copy_len, dest, dest_cap_with_null_char);
+		if (!result) { return 0; }
+		dest[copy_len] = L'\0';
+		return copy_len;
+	}
+
 public:
 	wchar_t m_app_class_name[64] = {L'S', L'A', L'\0'};
 	WNDPROC m_wnd_proc = nullptr;
@@ -163,7 +171,10 @@ public:
 	MSG m_msg = {};
 
 	bool init(WNDPROC wnd_proc, HINSTANCE hInstance, const char* app_class_name) {
-		sdf2::strf_assign_mbs(m_app_class_name, sdf2::strz_cap(m_app_class_name), app_class_name, sdf2::strz_len(app_class_name));
+
+		//sdf::wstr_assign_ansi(m_app_class_name, sdf::strz_cap(m_app_class_name), app_class_name, sdf::strz_len(app_class_name));
+		wstr_assign_ansi(m_app_class_name, (sizeof(m_app_class_name)/sizeof(m_app_class_name[0])-1), app_class_name, strlen(app_class_name));
+
 		m_wnd_proc = wnd_proc;
 		m_hInstance = hInstance;
 
@@ -191,8 +202,8 @@ public:
 	}
 
 	bool create_window(const char* wnd_title, int xpos, int ypos, int width, int height, bool fullscreen, bool borderless) {
-		uint dwStyle = 0;
-		uint dwExStyle = 0;
+		uint32_t dwStyle = 0;
+		uint32_t dwExStyle = 0;
 		dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPSIBLINGS|WS_CLIPCHILDREN;
 		dwExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
 
@@ -205,7 +216,8 @@ public:
 		h = window_rect.bottom - window_rect.top;	
 
 		wchar_t wstr_wnd_title[256] = {};
-		sdf2::strf_assign_mbs(wstr_wnd_title, sdf2::strz_cap(wstr_wnd_title), wnd_title, sdf2::strz_len(wnd_title));
+		//sdf::wstr_assign_ansi(wstr_wnd_title, sdf::strz_cap(wstr_wnd_title), wnd_title, sdf::strz_len(wnd_title));
+		wstr_assign_ansi(wstr_wnd_title, (sizeof(wstr_wnd_title)/sizeof(wstr_wnd_title[0])-1), wnd_title, strlen(wnd_title));
 
 		HWND handle_wnd = CreateWindowExW(dwExStyle,					
 							m_app_class_name,			        
@@ -219,7 +231,6 @@ public:
 			return false;
 		}  
 		
-		//ShowWindow(handle_wnd, iCmdShow);
 		ShowWindow(handle_wnd, SW_SHOW);   	
 		UpdateWindow(handle_wnd); 
 		SetForegroundWindow(handle_wnd);						
@@ -234,7 +245,7 @@ public:
 	}
 
 	void poll_events() {
-		if(PeekMessageW(&m_msg, nullptr, 0, 0, PM_REMOVE)) {
+		if (PeekMessageW(&m_msg, nullptr, 0, 0, PM_REMOVE)) {
 			TranslateMessage(&m_msg);
 			DispatchMessageW(&m_msg);
 		}
@@ -256,21 +267,20 @@ public:
 
 }
 
-
 using namespace wm_wnd2;
 
 //---------------------------------------------
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+
 //======================================
 // WinMain
 //======================================
-
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
 	std_console gconstd;
 	gconstd.create_window("Std Console", 864, 0, 640, 640);
 	printf("SysConsole Initialized.\n");
-	println("Sample program");	    
+	print("Sample program\n");	    
 
     //-------------------------
     int xpos = 10;
@@ -294,7 +304,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 	rs->setup();
 	//---
 	game_timer_qpc nw_timer;
-	int64 prev_time_qpc = nw_timer.get_time();
+	int64_t prev_time_qpc = nw_timer.get_time();
     
 	// program main loop
     while (!g_av.app_quit) {
@@ -305,7 +315,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 		if (nw_app.is_quit_msg()) { g_av.app_quit = true; }	
 
 		if (g_av.app_active && !g_av.app_minimized) {
-			int64 curr_time_qpc = nw_timer.get_time();
+			int64_t curr_time_qpc = nw_timer.get_time();
 			float delta_time_qpc = (curr_time_qpc - prev_time_qpc)*nw_timer.period();					
 
 			//process_input();
@@ -334,10 +344,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine
 //======================================
 // Window Procedure
 //======================================
-
 LRESULT CALLBACK MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
-
     case WM_ACTIVATE:							
 		g_av.app_active = static_cast<bool>(LOWORD(wParam) != WA_INACTIVE);
 		g_av.app_minimized = static_cast<bool>(HIWORD(wParam));

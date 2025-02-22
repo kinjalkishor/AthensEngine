@@ -4,6 +4,7 @@
 #include <Windows.h>
 
 #include <stdio.h>
+#include <stdint.h>
 
 class winapp {
 private:
@@ -55,8 +56,8 @@ public:
 	}
 
 	bool create_window(const char* wnd_title, int xpos, int ypos, int width, int height, bool fullscreen, bool borderless) {
-		unsigned int dwStyle = 0;
-		unsigned int dwExStyle = 0;
+		uint32_t dwStyle = 0;
+		uint32_t dwExStyle = 0;
 		dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE | WS_CLIPSIBLINGS|WS_CLIPCHILDREN;
 		dwExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
 
@@ -69,8 +70,8 @@ public:
 		h = window_rect.bottom - window_rect.top;	
 
 		wchar_t wstr_wnd_title[256] = {};
-		//sdf::wstr_assign_mbs(wstr_wnd_title, sdf::strz_cap(wstr_wnd_title), wnd_title, sdf::strz_len(wnd_title));
-		wstr_assign_mbs(wstr_wnd_title, (sizeof(wstr_wnd_title)/sizeof(wstr_wnd_title[0])-1), wnd_title, strlen(wnd_title));
+		//sdf::wstr_assign_ansi(wstr_wnd_title, sdf::strz_cap(wstr_wnd_title), wnd_title, sdf::strz_len(wnd_title));
+		wstr_assign_ansi(wstr_wnd_title, (sizeof(wstr_wnd_title)/sizeof(wstr_wnd_title[0])-1), wnd_title, strlen(wnd_title));
 
 		HWND handle_wnd = CreateWindowExW(dwExStyle,					
 							m_app_class_name,			        

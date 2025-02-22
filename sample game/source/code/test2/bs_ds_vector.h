@@ -22,7 +22,6 @@ private:
 	ptrdiff_t m_capacity = 0;      
     sys_allocator* m_allocator = nullptr; 
 
-
 	T* allocate(size_t count) {
         if (m_allocator) {
             return static_cast<T*>(m_allocator->allocate(count*sizeof(T)));
@@ -106,6 +105,11 @@ public:
         allocate_new_block(count, true);
     }
 
+    void reserve_exact(ptrdiff_t count) {
+        // Does not shrink.
+        if (count <= capacity()) { return; }
+        allocate_new_block(count, false);
+    }
 
     void resize_helper(ptrdiff_t count, bool geometric_growth, bool allocate_on_shrink) {
         if (count == size()) { return; }
