@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{14ECDE91-0EA6-4E55-B2B0-0361BE3B8D5F}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_t2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14ECDE91-0EA6-4E55-B2B0-0361BE3B8D5F}|test2.vcxproj|solutionrelative:win_main_t2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{14ECDE91-0EA6-4E55-B2B0-0361BE3B8D5F}|test2.vcxproj|E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_as.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{14ECDE91-0EA6-4E55-B2B0-0361BE3B8D5F}|test2.vcxproj|solutionrelative:win_main_as.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d3750d8a-574b-4fb3-b7e2-aa8af40e8231}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "win_main_as.cpp",
+              "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_as.cpp",
+              "RelativeDocumentMoniker": "win_main_as.cpp",
+              "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_as.cpp",
+              "RelativeToolTip": "win_main_as.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-31T13:15:35.785Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "win_main_t2.cpp",
+              "DocumentMoniker": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_t2.cpp",
+              "RelativeDocumentMoniker": "win_main_t2.cpp",
+              "ToolTip": "E:\\nex\\AthensEngine\\arena front\\source\\code\\test2\\win_main_t2.cpp",
+              "RelativeToolTip": "win_main_t2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-10-31T13:30:44.956Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

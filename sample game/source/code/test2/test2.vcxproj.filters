@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="main\basic">
+      <UniqueIdentifier>{7a7aa9c9-defb-4be0-92a1-8d5d12a7cec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\more">
+      <UniqueIdentifier>{b22c2d12-4fd0-490d-ba78-48d783309c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="a_libs">
+      <UniqueIdentifier>{c5512256-3d5f-4e9a-a21a-b63c49a58e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{ccea2b78-84a5-40ee-9590-8b7ea16c0056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rs_shared">
+      <UniqueIdentifier>{3d35526a-eae5-45ce-9036-6220dafe0c7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rs_hf">
+      <UniqueIdentifier>{ad1b0d77-4ad4-4ef3-a78f-4b638be05b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\w_gmath">
+      <UniqueIdentifier>{bdc2c05a-79f0-4549-ae3d-ca8f1e1e938f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\z_base">
+      <UniqueIdentifier>{6f18fc5b-149f-47dd-a1db-a1ade5e2d356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\en_shared">
+      <UniqueIdentifier>{282bd828-2638-49e8-8acc-5882fdcc1130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\rs_t2">
+      <UniqueIdentifier>{028edef8-cf6e-40c4-9905-b2b4610690e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\wa">
+      <UniqueIdentifier>{783dfacf-7b94-40c9-b6ff-7436e73eb211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="b_en">
+      <UniqueIdentifier>{b198f151-a210-46b3-a167-79ef93171082}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="win_main_as.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_t2.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="con_basic.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="win_basic_wnd3.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="win_main_rb.cpp">
+      <Filter>main\basic</Filter>
+    </ClCompile>
+    <ClCompile Include="con_main_exp.cpp">
+      <Filter>main\more</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="t2_irenderer.h">
+      <Filter>base\rs_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="t2_rs_d3d11.h">
+      <Filter>base\rs_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="t2_rs_d3d12.h">
+      <Filter>base\rs_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="t2_rs_gl4.h">
+      <Filter>base\rs_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="t2_rs_vk.h">
+      <Filter>base\rs_t2</Filter>
+    </ClInclude>
+    <ClInclude Include="wa_app_simple.h">
+      <Filter>base\wa</Filter>
+    </ClInclude>
+    <ClInclude Include="wa_sys.h">
+      <Filter>base\wa</Filter>
+    </ClInclude>
+    <ClInclude Include="wa_util.h">
+      <Filter>base\wa</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hf_d3d11.h">
+      <Filter>base\rs_hf</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hf_d3d12.h">
+      <Filter>base\rs_hf</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hf_gl4.h">
+      <Filter>base\rs_hf</Filter>
+    </ClInclude>
+    <ClInclude Include="rs_hf_vk.h">
+      <Filter>base\rs_hf</Filter>
+    </ClInclude>
+    <ClInclude Include="bg_gmath.h">
+      <Filter>base\w_gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bg_gmath_types.h">
+      <Filter>base\w_gmath</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_console.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_def.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_format.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_math.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_print.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_std_cont.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+    <ClInclude Include="bs_types.h">
+      <Filter>base\z_base</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
