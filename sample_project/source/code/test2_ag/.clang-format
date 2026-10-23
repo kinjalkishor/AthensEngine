@@ -1,0 +1,44 @@
+BasedOnStyle: WebKit
+
+# K&R or One True Brace Style(1TBS)
+# Always attach opening braces to their surrounding context on the exact same line
+BreakBeforeBraces: Attach
+
+# Increase the maximum number of consecutive blank lines allowed to remain
+MaxEmptyLinesToKeep: 3
+# Keep empty lines at the start of blocks (e.g., right after an opening brace)
+KeepEmptyLines:
+  AtStartOfBlock: true
+  AtEndOfFile: true
+  
+  
+# Prevent collapsing the braced initializer list elements into a single line
+Cpp11BracedListStyle: true
+
+# Align subsequent lines of an array initializer under the first line
+#AlignAfterOpenBracket: BlockIndent
+AlignAfterOpenBracket: Align
+
+# Align your trailing comments horizontally across lines
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 0
+
+# Set a high enough column limit so Clang doesn't wrap the lines prematurely
+ColumnLimit: 240
+
+# Force Clang to vertically align the inner elements of your array structures
+AlignArrayOfStructures: Right
+
+# Allow small blocks/lists to stay on a single line
+AllowShortBlocksOnASingleLine: Always
+
+
+
+
+
+
+
+
+
+
